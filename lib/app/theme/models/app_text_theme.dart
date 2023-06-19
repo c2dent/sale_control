@@ -5,47 +5,45 @@ import 'package:flutter/material.dart';
 /// Абстракция фиксирует договоренность по вариантам типографики с командой UX дизайна
 /// Такой подход позволяет зафиксировать UX договоренности, что уменьшает количество багов, связанных с шрифтами
 abstract class AppTextTheme {
-  TextStyle get body1Medium;
+  TextStyle get title1;
 
-  TextStyle get body1Regular;
+  TextStyle get title2;
 
-  TextStyle get buttonMedium;
+  TextStyle get subtitle;
 
-  TextStyle get caption1Medium;
+  TextStyle get bold20;
 
-  TextStyle get caption1Regular;
+  TextStyle get normal20;
 
-  TextStyle get caption2Medium;
+  TextStyle get bold18;
 
-  TextStyle get caption2Regular;
+  TextStyle get normal18;
 
-  TextStyle get caption3Medium;
+  TextStyle get bold17;
 
-  TextStyle get caption3Regular;
+  TextStyle get normal17;
 
-  TextStyle get caption4Bold;
+  TextStyle get italic17;
 
-  TextStyle get caption4Medium;
+  TextStyle get bold16;
 
-  TextStyle get caption4Regular;
+  TextStyle get normal16;
+
+  TextStyle get italic16;
+
+  TextStyle get bold14;
+
+  TextStyle get normal14;
+
+  TextStyle get italic14;
+
+  TextStyle get bold12;
+
+  TextStyle get normal12;
+
+  TextStyle get italic12;
 
   TextStyle get h5Bold;
-
-  TextStyle get h5Medium;
-
-  TextStyle get h5Regular;
-
-  TextStyle get h6Bold;
-
-  TextStyle get h6Medium;
-
-  TextStyle get h6Regular;
-
-  TextStyle get subtitle2Bold;
-
-  TextStyle get subtitle2Medium;
-
-  TextStyle get subtitle2Regular;
 }
 
 /// Реализация договоренностей по типографике
@@ -54,117 +52,151 @@ abstract class AppTextTheme {
 /// Такой подход позволяет жить шрифтам и в Figma и во Flutter в едином контексте
 class BaseTextTheme implements AppTextTheme {
   @override
-  TextStyle get h5Medium => const TextStyle(
-    fontWeight: FontWeight.w500,
+  TextStyle get title1 => const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
     fontStyle: FontStyle.normal,
-    fontSize: 24,
-    height: 28 / 24,
   );
 
   @override
-  TextStyle get h5Bold => h5Medium.copyWith(fontWeight: FontWeight.w700);
+  TextStyle get title2 => title1.copyWith(fontWeight: FontWeight.w400);
 
   @override
-  TextStyle get h5Regular => h5Medium.copyWith(fontWeight: FontWeight.w400);
+  TextStyle get subtitle => title2.copyWith(fontSize: 14);
 
   @override
-  TextStyle get h6Medium => const TextStyle(
-    fontWeight: FontWeight.w500,
+  TextStyle get bold12 => const TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w700,
     fontStyle: FontStyle.normal,
+    letterSpacing: 0.0,
+  );
+
+  @override
+  TextStyle get bold14 => const TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+    fontStyle: FontStyle.normal,
+    letterSpacing: 0.0,
+  );
+
+  @override
+  TextStyle get bold16 => const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    fontStyle: FontStyle.normal,
+    letterSpacing: 0.0,
+  );
+
+  @override
+  TextStyle get bold17 => const TextStyle(
+    fontSize: 17,
+    fontWeight: FontWeight.w700,
+    fontStyle: FontStyle.normal,
+    letterSpacing: 0.0,
+  );
+
+  @override
+  TextStyle get bold18 => const TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    fontStyle: FontStyle.normal,
+    letterSpacing: 0.0,
+  );
+
+  @override
+  TextStyle get bold20 => const TextStyle(
     fontSize: 20,
-    height: 24 / 20,
+    fontWeight: FontWeight.w700,
+    fontStyle: FontStyle.normal,
+    letterSpacing: 0.0,
   );
 
   @override
-  TextStyle get h6Bold => h6Medium.copyWith(fontWeight: FontWeight.w700);
-
-  @override
-  TextStyle get h6Regular => h6Medium.copyWith(fontWeight: FontWeight.w400);
-
-  @override
-  TextStyle get body1Medium => const TextStyle(
-    fontWeight: FontWeight.w500,
+  TextStyle get h5Bold => const TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
     fontStyle: FontStyle.normal,
+    letterSpacing: 0.0,
+  );
+
+  @override
+  TextStyle get italic12 => const TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    fontStyle: FontStyle.italic,
+    letterSpacing: 0.0,
+  );
+
+  @override
+  TextStyle get italic14 => const TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    fontStyle: FontStyle.italic,
+    letterSpacing: 0.0,
+  );
+
+  @override
+  TextStyle get italic16 => const TextStyle(
     fontSize: 16,
-    height: 20 / 16,
-    letterSpacing: 0.1,
+    fontWeight: FontWeight.w400,
+    fontStyle: FontStyle.italic,
+    letterSpacing: 0.0,
   );
 
   @override
-  TextStyle get body1Regular => body1Medium.copyWith(fontWeight: FontWeight.w400);
+  TextStyle get italic17 => const TextStyle(
+    fontSize: 17,
+    fontWeight: FontWeight.w400,
+    fontStyle: FontStyle.italic,
+    letterSpacing: 0.0,
+  );
 
   @override
-  TextStyle get buttonMedium => const TextStyle(
-    fontWeight: FontWeight.w500,
+  TextStyle get normal12 => const TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
     fontStyle: FontStyle.normal,
+    letterSpacing: 0.0,
+  );
+
+  @override
+  TextStyle get normal14 => const TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    fontStyle: FontStyle.normal,
+    letterSpacing: 0.0,
+  );
+
+  @override
+  TextStyle get normal16 => const TextStyle(
     fontSize: 16,
-    height: 20 / 16,
-    letterSpacing: 0.1,
-  );
-
-  @override
-  TextStyle get subtitle2Medium => const TextStyle(
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w400,
     fontStyle: FontStyle.normal,
-    fontSize: 14,
-    height: 18 / 14,
-    letterSpacing: 0.2,
+    letterSpacing: 0.0,
   );
 
   @override
-  TextStyle get subtitle2Bold => subtitle2Medium.copyWith(fontWeight: FontWeight.w700);
-
-  @override
-  TextStyle get subtitle2Regular => subtitle2Medium.copyWith(fontWeight: FontWeight.w400);
-
-  @override
-  TextStyle get caption1Medium => const TextStyle(
-    fontWeight: FontWeight.w500,
+  TextStyle get normal17 => const TextStyle(
+    fontSize: 17,
+    fontWeight: FontWeight.w400,
     fontStyle: FontStyle.normal,
-    fontSize: 14,
-    height: 18 / 14,
-    letterSpacing: 0.2,
+    letterSpacing: 0.0,
   );
 
   @override
-  TextStyle get caption1Regular => caption1Medium.copyWith(fontWeight: FontWeight.w400);
-
-  @override
-  TextStyle get caption2Medium => const TextStyle(
-    fontWeight: FontWeight.w500,
+  TextStyle get normal18 => const TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
     fontStyle: FontStyle.normal,
-    fontSize: 14,
-    height: 18 / 14,
-    letterSpacing: 0.2,
+    letterSpacing: 0.0,
   );
 
   @override
-  TextStyle get caption2Regular => caption2Medium.copyWith(fontWeight: FontWeight.w400);
-
-  @override
-  TextStyle get caption3Medium => const TextStyle(
-    fontWeight: FontWeight.w500,
+  TextStyle get normal20 => const TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
     fontStyle: FontStyle.normal,
-    fontSize: 14,
-    height: 18 / 14,
-    letterSpacing: 0.2,
+    letterSpacing: 0.0,
   );
-
-  @override
-  TextStyle get caption3Regular => caption3Medium.copyWith(fontWeight: FontWeight.w400);
-
-  @override
-  TextStyle get caption4Medium => const TextStyle(
-    fontWeight: FontWeight.w500,
-    fontStyle: FontStyle.normal,
-    fontSize: 14,
-    height: 18 / 14,
-    letterSpacing: 0.2,
-  );
-
-  @override
-  TextStyle get caption4Regular => caption4Medium.copyWith(fontWeight: FontWeight.w400);
-
-  @override
-  TextStyle get caption4Bold => caption4Medium.copyWith(fontWeight: FontWeight.w700);
 }

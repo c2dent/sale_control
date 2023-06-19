@@ -1,31 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'client_models.dart';
+part of 'employee.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Client _$$_ClientFromJson(Map<String, dynamic> json) => _$_Client(
+_$_Employee _$$_EmployeeFromJson(Map<String, dynamic> json) => _$_Employee(
       id: json['id'] as int,
       firstName: json['first_name'] as String,
       lastName: json['last_name'] as String,
-      description: json['description'] as String?,
+      postType: json['post_type'] as String,
       phone: json['phone'] as String,
-      address: Locality.fromJson(json['address'] as Map<String, dynamic>),
-      creator: Employee.fromJson(json['creator'] as Map<String, dynamic>),
+      phone2: json['phone2'] as String?,
       createdAt: DateTime.parse(json['created_at'] as String),
       modifiedAt: DateTime.parse(json['modified_at'] as String),
     );
 
-Map<String, dynamic> _$$_ClientToJson(_$_Client instance) => <String, dynamic>{
+Map<String, dynamic> _$$_EmployeeToJson(_$_Employee instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'first_name': instance.firstName,
       'last_name': instance.lastName,
-      'description': instance.description,
+      'post_type': instance.postType,
       'phone': instance.phone,
-      'address': instance.address,
-      'creator': instance.creator,
+      'phone2': instance.phone2,
       'created_at': instance.createdAt.toIso8601String(),
       'modified_at': instance.modifiedAt.toIso8601String(),
     };

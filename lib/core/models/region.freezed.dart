@@ -20,7 +20,7 @@ Region _$RegionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Region {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -33,7 +33,7 @@ abstract class $RegionCopyWith<$Res> {
   factory $RegionCopyWith(Region value, $Res Function(Region) then) =
       _$RegionCopyWithImpl<$Res, Region>;
   @useResult
-  $Res call({String id, String name});
+  $Res call({int id, String name});
 }
 
 /// @nodoc
@@ -56,7 +56,7 @@ class _$RegionCopyWithImpl<$Res, $Val extends Region>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -71,7 +71,7 @@ abstract class _$$_RegionCopyWith<$Res> implements $RegionCopyWith<$Res> {
       __$$_RegionCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name});
+  $Res call({int id, String name});
 }
 
 /// @nodoc
@@ -91,7 +91,7 @@ class __$$_RegionCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -109,7 +109,7 @@ class _$_Region implements _Region {
       _$$_RegionFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final String name;
 
@@ -146,13 +146,13 @@ class _$_Region implements _Region {
 }
 
 abstract class _Region implements Region {
-  const factory _Region(
-      {required final String id, required final String name}) = _$_Region;
+  const factory _Region({required final int id, required final String name}) =
+      _$_Region;
 
   factory _Region.fromJson(Map<String, dynamic> json) = _$_Region.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   String get name;
   @override

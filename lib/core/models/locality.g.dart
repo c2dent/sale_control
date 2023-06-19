@@ -7,7 +7,7 @@ part of 'locality.dart';
 // **************************************************************************
 
 _$_Locality _$$_LocalityFromJson(Map<String, dynamic> json) => _$_Locality(
-      id: json['id'] as String,
+      id: json['id'] as int,
       name: json['name'] as String,
       area: Area.fromJson(json['area'] as Map<String, dynamic>),
     );

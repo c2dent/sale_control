@@ -8,7 +8,7 @@ part 'locality.g.dart';
 @freezed
 class Locality with _$Locality {
   const factory Locality({
-    required String id,
+    required int id,
     required String name,
     required Area area,
   }) = _Locality;

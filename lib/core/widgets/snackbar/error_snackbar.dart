@@ -19,7 +19,7 @@ class ErrorSnackbar {
 
     final snackBarAction = (actionLabel != null && actionPressedCallback != null)
         ? SnackBarAction(
-      textColor: colorTheme.accentVariant,
+      textColor: colorTheme.onError,
       label: actionLabel,
       onPressed: actionPressedCallback,
     )
@@ -28,7 +28,7 @@ class ErrorSnackbar {
     ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(text),
-          backgroundColor: colorTheme.strokeError,
+          backgroundColor: colorTheme.error,
           action: snackBarAction,
     ));
   }

@@ -51,7 +51,7 @@ class DioClientCreatorImpl implements DioClientCreator {
           accessToken = await storage.read(key: 'accessToken');
         }
 
-        if (!options.path.contains('auth/refreshtoken/') && !options.path.contains('auth/login/') && accessToken != null) {
+        if (!options.path.contains('/refreshtoken/') && !options.path.contains('auth/login/') && accessToken != null) {
           options.headers['Authorization'] = 'Token $accessToken';
         }
         return handler.next(options);
@@ -59,7 +59,7 @@ class DioClientCreatorImpl implements DioClientCreator {
       onError: (DioError error, handler) async {
         Future<bool> refreshToken() async {
           final refreshToken = await storage.read(key: 'refreshToken');
-          final response = await dio.post('/auth/refreshtoken/', data: {'refreshToken': refreshToken});
+          final response = await dio.post('/refreshtoken/', data: {'refreshToken': refreshToken});
           if (response.statusCode == 200) {
             await storage.write(key: 'accessToken', value: response.data['accessToken']);
             return true;
@@ -82,6 +82,8 @@ class DioClientCreatorImpl implements DioClientCreator {
           if (await storage.containsKey(key: 'refreshToken')) {
             if (await refreshToken()) {
               return handler.resolve(await retry(error.requestOptions));
+            } else {
+              return handler.reject(error);
             }
           }
         } else {

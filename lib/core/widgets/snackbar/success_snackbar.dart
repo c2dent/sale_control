@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
 
-/// Базовая сущность для работы со снекбарами
-class BaseSnackbar {
+class SuccessSnackbar {
   /// Метод оторбажающий снекбар c возможностью указать
   /// текст кнопки и колбэка нажатия по кнопке (должны быть указаны и текст и колбэк нажатия)
   ///  [context] - контекст
@@ -19,16 +18,17 @@ class BaseSnackbar {
 
     final snackBarAction = (actionLabel != null && actionPressedCallback != null)
         ? SnackBarAction(
-      textColor: colorTheme.primary,
+      textColor: colorTheme.onSuccess,
       label: actionLabel,
       onPressed: actionPressedCallback,
     )
         : null;
 
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(text),
-      backgroundColor: colorTheme.onSurface,
-      action: snackBarAction,
-    ));
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(text),
+          backgroundColor: colorTheme.success,
+          action: snackBarAction,
+        ));
   }
 }

@@ -82,39 +82,39 @@ class _ThemedApp extends StatelessWidget {
       //В данном примере перечислены лишь некоторые из возможных настроек, подробнее про настройки смотри в ThemeData
       theme: ThemeData(
         colorScheme: ColorScheme(
-          primary: appTheme.colorTheme.accent,
-          primaryContainer: appTheme.colorTheme.accentVariant,
-          onPrimary: appTheme.colorTheme.onAccent,
-          secondary: appTheme.colorTheme.secondaryAccent,
-          secondaryContainer: appTheme.colorTheme.secondaryAccentVariant,
+          primary: appTheme.colorTheme.primary,
+          onPrimary: appTheme.colorTheme.onPrimary,
+
+          secondary: appTheme.colorTheme.secondary,
           onSecondary: appTheme.colorTheme.onSecondary,
-          surface: appTheme.colorTheme.backgroundSurface,
+
+          surface: appTheme.colorTheme.surface,
           onSurface: appTheme.colorTheme.onSurface,
-          background: appTheme.colorTheme.backgroundWindowBackground,
+
+          background: appTheme.colorTheme.background,
           onBackground: appTheme.colorTheme.onBackground,
-          error: appTheme.colorTheme.strokeError,
-          onError: appTheme.colorTheme.onAccent,
+
+          error: appTheme.colorTheme.error,
+          onError: appTheme.colorTheme.onError,
           brightness: appTheme.colorTheme.brightness,
         ),
         textTheme: TextTheme(
-          bodyText1: appTheme.textTheme.body1Medium,
-          headline1: appTheme.textTheme.h5Bold,
-          headline2: appTheme.textTheme.h6Bold,
-          button: appTheme.textTheme.buttonMedium,
-          caption: appTheme.textTheme.caption1Medium,
-          subtitle1: appTheme.textTheme.subtitle2Bold,
-          subtitle2: appTheme.textTheme.subtitle2Medium,
+          bodyLarge: appTheme.textTheme.normal20,
+          displayLarge: appTheme.textTheme.h5Bold,
+          displayMedium: appTheme.textTheme.bold20,
+          labelLarge: appTheme.textTheme.normal18,
+          bodySmall: appTheme.textTheme.normal16,
+          titleMedium: appTheme.textTheme.bold16,
+          titleSmall: appTheme.textTheme.bold14,
         ),
         shadowColor: appTheme.colorTheme.onBackground,
         bottomSheetTheme: BottomSheetThemeData(
-          backgroundColor: appTheme.colorTheme.onAccent,
+          backgroundColor: appTheme.colorTheme.surface,
           elevation: 8,
-          // modalBackgroundColor: appTheme.colorTheme.onBackground.withOpacity(0.3),
           modalElevation: 16,
         ),
-        appBarTheme: AppBarTheme(
-          backgroundColor: appTheme.colorTheme.accent,
-          titleTextStyle: TextStyle(color: appTheme.colorTheme.onAccent, fontWeight: FontWeight.w400, fontSize: 20),
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: appTheme.colorTheme.surface,
         ),
       ),
       showPerformanceOverlay: environment.debugOptions.showPerformanceOverlay,
@@ -122,7 +122,7 @@ class _ThemedApp extends StatelessWidget {
       checkerboardRasterCacheImages: environment.debugOptions.checkerboardRasterCacheImages,
       checkerboardOffscreenLayers: environment.debugOptions.checkerboardOffscreenLayers,
       showSemanticsDebugger: environment.debugOptions.showSemanticsDebugger,
-      debugShowCheckedModeBanner: environment.debugOptions.debugShowCheckedModeBanner,
+      debugShowCheckedModeBanner: false,
       routeInformationParser: appRouter.defaultRouteParser(),
       routerDelegate: AutoRouterDelegate(
         appRouter,

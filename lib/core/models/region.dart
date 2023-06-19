@@ -7,7 +7,7 @@ part 'region.g.dart';
 @freezed
 class Region with _$Region {
  const factory Region({
-   required String id,
+   required int id,
    required String name,
  }) = _Region;
 

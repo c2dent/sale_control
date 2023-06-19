@@ -20,7 +20,7 @@ Locality _$LocalityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Locality {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   Area get area => throw _privateConstructorUsedError;
 
@@ -35,7 +35,7 @@ abstract class $LocalityCopyWith<$Res> {
   factory $LocalityCopyWith(Locality value, $Res Function(Locality) then) =
       _$LocalityCopyWithImpl<$Res, Locality>;
   @useResult
-  $Res call({String id, String name, Area area});
+  $Res call({int id, String name, Area area});
 
   $AreaCopyWith<$Res> get area;
 }
@@ -61,7 +61,7 @@ class _$LocalityCopyWithImpl<$Res, $Val extends Locality>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -89,7 +89,7 @@ abstract class _$$_LocalityCopyWith<$Res> implements $LocalityCopyWith<$Res> {
       __$$_LocalityCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, Area area});
+  $Res call({int id, String name, Area area});
 
   @override
   $AreaCopyWith<$Res> get area;
@@ -114,7 +114,7 @@ class __$$_LocalityCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -136,7 +136,7 @@ class _$_Locality implements _Locality {
       _$$_LocalityFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final String name;
   @override
@@ -177,14 +177,14 @@ class _$_Locality implements _Locality {
 
 abstract class _Locality implements Locality {
   const factory _Locality(
-      {required final String id,
+      {required final int id,
       required final String name,
       required final Area area}) = _$_Locality;
 
   factory _Locality.fromJson(Map<String, dynamic> json) = _$_Locality.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   String get name;
   @override

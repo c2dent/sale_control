@@ -21,15 +21,15 @@ String formattingDate(DateTime d) {
   final dayAfterTomorrow = DateTime(now.year, now.month, now.day + 2);
 
   if (DateUtils.dateOnly(d) == DateUtils.dateOnly(today)) {
-    dateString = "Сегодня ${formatterTime.format(d)}";
+    dateString = "Su gun ${formatterTime.format(d)}";
   } else if (DateUtils.dateOnly(d) == DateUtils.dateOnly(yesterday)) {
-    dateString = "Вчера ${formatterTime.format(d)}";
+    dateString = "Duyn ${formatterTime.format(d)}";
   } else if (DateUtils.dateOnly(d) == DateUtils.dateOnly(tomorrow)) {
-    dateString = "Завтра ${formatterTime.format(d)}";
+    dateString = "Ertir ${formatterTime.format(d)}";
   } else if (DateUtils.dateOnly(d) == DateUtils.dateOnly(dayAfterTomorrow)) {
-    dateString = "Послезавтра ${formatterTime.format(d)}";
+    dateString = "Birun ${formatterTime.format(d)}";
   } else if (DateUtils.dateOnly(d) == DateUtils.dateOnly(dayBeforeYesterday)) {
-    dateString = "Позавчера ${formatterTime.format(d)}";
+    dateString = "Ongun ${formatterTime.format(d)}";
   } else {
     if (now.year == d.year) {
       dateString = DateFormat("d MMMM HH:mm").format(d);

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hasap_admin/app/theme/models/app_palette.dart';
 
 /// Абстракция для поставки базовых цветовых токенов в приложении
 ///
@@ -9,61 +8,37 @@ abstract class AppColorTheme {
   //============================== Main Colors ==============================
   Brightness get brightness;
 
-  Color get accent;
+  Color get primary;
 
-  Color get accentVariant;
+  Color get onPrimary;
 
-  Color get onAccent;
-
-  Color get secondaryAccent;
-
-  Color get secondaryAccentVariant;
+  Color get secondary;
 
   Color get onSecondary;
 
-  //============================== Typography Colors ==============================
-  Color get textPrimary;
+  Color get error;
 
-  Color get textSecondary;
+  Color get onError;
 
-  Color get textTertiary;
-
-  Color get textOnAccent;
-
-  //============================== Divider Colors ==============================
-  Color get dividerPrimary;
-
-  //============================== Background Colors ==============================
-  Color get backgroundSurface;
-
-  Color get backgroundWindowBackground;
-
-  Color get onSurface;
+  Color get background;
 
   Color get onBackground;
 
-  //============================== Icon Colors ==============================
-  Color get iconPrimary;
+  Color get surface;
 
-  Color get iconSecondary;
+  Color get onSurface;
 
-  Color get iconTertiary;
+  Color get success;
 
-  Color get iconSystem;
+  Color get onSuccess;
 
-  Color get iconOnAccent;
+  Color get warning;
 
-  //============================== Overlay Colors ==============================
-  Color get overlayDefault;
+  Color get onWarning;
 
-  //============================== Stroke Colors ==============================
-  Color get strokePrimary;
+  Color get textPrimary;
 
-  Color get strokeSuccess;
-
-  Color get strokeAttention;
-
-  Color get strokeError;
+  Color get textSecondary;
 }
 
 /// Реализация светлой цветовой темы, связывающей цветовые псевдонимы с установленной палитрой
@@ -71,70 +46,53 @@ class LightColorTheme implements AppColorTheme {
   @override
   Brightness get brightness => Brightness.light;
 
-  //============================== Customization color tokens ==============================
   @override
-  Color get accent => AppPallete.lightPurple;
-  @override
-  Color get accentVariant => AppPallete.lightPurpleAccent;
-  @override
-  Color get onAccent => AppPallete.white;
+  Color get primary => Colors.purple;
 
   @override
-  Color get secondaryAccent => accent;
-  @override
-  Color get secondaryAccentVariant => accentVariant;
-  @override
-  Color get onSecondary => onAccent;
+  Color get onPrimary => Colors.white;
 
-  //============================== Typography color tokens ==============================
   @override
-  Color get textPrimary => onBackground;
-  @override
-  Color get textSecondary => AppPallete.blackA70;
-  @override
-  Color get textTertiary => AppPallete.blackA40;
-  @override
-  Color get textOnAccent => onAccent;
+  Color get secondary => Colors.pink;
 
-  //============================== Divider color tokens ==============================
   @override
-  Color get dividerPrimary => AppPallete.blackA10;
+  Color get onSecondary => Colors.white;
 
-  //============================== Background color tokens ==============================
   @override
-  Color get backgroundSurface => AppPallete.white;
-  @override
-  Color get backgroundWindowBackground => AppPallete.grey200;
-  @override
-  Color get onSurface => AppPallete.blackA100;
-  @override
-  Color get onBackground => AppPallete.blackA85;
+  Color get error => Colors.red.shade500;
 
-  //============================== Icon color tokens ==============================
   @override
-  Color get iconPrimary => onBackground;
-  @override
-  Color get iconSecondary => AppPallete.blackA55;
-  @override
-  Color get iconTertiary => AppPallete.blackA25;
-  @override
-  Color get iconSystem => AppPallete.blackA55;
-  @override
-  Color get iconOnAccent => onAccent;
+  Color get onError => Colors.white;
 
-  //============================== Overlay color tokens ==============================
   @override
-  Color get overlayDefault => AppPallete.blackA55;
+  Color get background => Colors.grey.shade100;
 
-  //============================== Stroke color tokens ==============================
   @override
-  Color get strokePrimary => AppPallete.blackA10;
+  Color get onBackground => Colors.black;
+
   @override
-  Color get strokeSuccess => AppPallete.green500;
+  Color get surface => Colors.white;
+
   @override
-  Color get strokeAttention => AppPallete.yellow500;
+  Color get onSurface => Colors.black;
+
   @override
-  Color get strokeError => AppPallete.red500;
+  Color get success => Colors.green.shade500;
+
+  @override
+  Color get onSuccess => Colors.white;
+
+  @override
+  Color get warning => Colors.yellow.shade800;
+
+  @override
+  Color get onWarning => Colors.white;
+
+  @override
+  Color get textPrimary => Colors.black;
+
+  @override
+  Color get textSecondary => Colors.grey.shade800;
 
   const LightColorTheme() : super();
 }
@@ -145,18 +103,52 @@ class DarkRedColorTheme extends LightColorTheme {
   Brightness get brightness => Brightness.dark;
 
   @override
-  Color get accent => AppPallete.red500;
-  @override
-  Color get accentVariant => AppPallete.red500;
+  Color get primary => Colors.deepPurple;
 
   @override
-  Color get backgroundSurface => AppPallete.grey850;
+  Color get onPrimary => Colors.white;
+
   @override
-  Color get backgroundWindowBackground => AppPallete.blackA100;
+  Color get secondary => Colors.pink;
+
   @override
-  Color get onSurface => AppPallete.white;
+  Color get onSecondary => Colors.white;
+
   @override
-  Color get onBackground => AppPallete.grey100;
+  Color get error => Colors.red.shade500;
+
+  @override
+  Color get onError => Colors.white;
+
+  @override
+  Color get background => Colors.grey.shade700;
+
+  @override
+  Color get onBackground => Colors.grey.shade100;
+
+  @override
+  Color get surface => Colors.grey.shade900;
+
+  @override
+  Color get onSurface => Colors.grey.shade100;
+
+  @override
+  Color get success => Colors.green.shade500;
+
+  @override
+  Color get onSuccess => Colors.white;
+
+  @override
+  Color get warning => Colors.yellow.shade800;
+
+  @override
+  Color get onWarning => Colors.white;
+
+  @override
+  Color get textPrimary => Colors.white;
+
+  @override
+  Color get textSecondary => Colors.grey.shade200;
 
   const DarkRedColorTheme() : super();
 }

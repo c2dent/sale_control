@@ -7,7 +7,7 @@ part of 'area.dart';
 // **************************************************************************
 
 _$_Area _$$_AreaFromJson(Map<String, dynamic> json) => _$_Area(
-      id: json['id'] as String,
+      id: json['id'] as int,
       name: json['name'] as String,
       region: Region.fromJson(json['region'] as Map<String, dynamic>),
     );
