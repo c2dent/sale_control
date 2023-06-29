@@ -5,8 +5,8 @@ import 'package:get_it/get_it.dart';
 import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/models/area.dart';
-import 'package:hasap_admin/core/models/debouncer.dart';
 import 'package:hasap_admin/core/models/region.dart';
+import 'package:hasap_admin/core/widgets/drawer_menu.dart';
 import 'package:hasap_admin/core/widgets/filter_modal.dart';
 import 'package:hasap_admin/core/widgets/utils.dart';
 import 'package:hasap_admin/feature/client/data/client_models.dart';
@@ -40,6 +40,7 @@ class ClientListPage extends StatelessWidget {
                       icon: const Icon(Icons.filter_alt_rounded))
                 ],
               ),
+              drawer: const DrawerMenu(),
               body: state.map(
                 empty: (_) => const Center(child: CircularProgressIndicator()),
                 data: (state) => _ClientPage(state: state),
@@ -64,7 +65,6 @@ class _ClientPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppTheme theme = AppTheme.of(context);
-
 
     if (state.data.isLoading) {
       return const Center(child: CircularProgressIndicator());

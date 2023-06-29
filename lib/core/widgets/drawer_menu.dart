@@ -11,52 +11,14 @@ class DrawerMenu extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           ListTile(
-              title: const Text("Операции"),
-              onTap: () => context.router.replaceNamed('/operations')),
+              title: const Text("Musderiler"),
+              onTap: () => context.router.replaceNamed('/client_list')),
           ListTile(
-              title: const Text("Статистика"),
-              onTap: () => context.router.replaceNamed('/statistic')),
+              title: const Text("Contractlar"),
+              onTap: () => context.router.replaceNamed('/contract_list')),
           ListTile(
-              title: const Text("Баланс"),
-              onTap: () => context.router.replaceNamed('/balance')),
-          ListTile(
-              title: const Text("Бюджеты"),
-              onTap: () => context.router.replaceNamed('/budgets')),
-          ListTile(
-              title: const Text("ОПиУ (P&L)"),
-              onTap: () => context.router.replaceNamed('/pnl')),
-          ListTile(
-              title: const Text("ДДС (Cashflow)"),
-              onTap: () => context.router.replaceNamed('/dds')),
-          ExpansionTile(
-            title: const Text("Сущности"),
-            children: [
-              ListTile(
-                  title: const Text("Категории"),
-                  onTap: () => context.router.replaceNamed('/categories')),
-              ListTile(
-                  title: const Text("Счета"),
-                  onTap: () => context.router.replaceNamed('/accounts')),
-              ListTile(
-                  title: const Text("Держатели счетов"),
-                  onTap: () => context.router.replaceNamed('/holders')),
-              ListTile(
-                  title: const Text("Системы оплаты"),
-                  onTap: () => context.router.replaceNamed('/systems')),
-              ListTile(
-                  title: const Text("Контрагенты"),
-                  onTap: () => context.router.replaceNamed('/contractors')),
-              ListTile(
-                  title: const Text("Круги"),
-                  onTap: () => context.router.replaceNamed('/cycles')),
-              ListTile(
-                  title: const Text("Валюты"),
-                  onTap: () => context.router.replaceNamed('/currencies')),
-              ListTile(
-                  title: const Text("Курсы"),
-                  onTap: () => context.router.replaceNamed('/rates')),
-            ],
-          ),
+              title: const Text("Tolegler"),
+              onTap: () => context.router.replaceNamed('/payment_list')),
         ],
       ),
     );

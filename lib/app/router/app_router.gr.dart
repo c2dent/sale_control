@@ -8,27 +8,43 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i3;
+import 'package:auto_route/auto_route.dart' as _i5;
 import 'package:hasap_admin/feature/auth/presentation/ui/login_page.dart'
     as _i1;
 import 'package:hasap_admin/feature/client/presentation/ui/client_list_page.dart'
     as _i2;
+import 'package:hasap_admin/feature/contract/presentation/list/ui/contract_list_page.dart'
+    as _i3;
+import 'package:hasap_admin/feature/payment/presentation/list/ui/payment_list_page.dart'
+    as _i4;
 
-abstract class $AppRouter extends _i3.RootStackRouter {
+abstract class $AppRouter extends _i5.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i3.PageFactory> pagesMap = {
+  final Map<String, _i5.PageFactory> pagesMap = {
     LoginRoute.name: (routeData) {
-      return _i3.AutoRoutePage<dynamic>(
+      return _i5.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i1.LoginPage(),
       );
     },
     ClientListRoute.name: (routeData) {
-      return _i3.AutoRoutePage<dynamic>(
+      return _i5.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i2.ClientListPage(),
+      );
+    },
+    ContractListRoute.name: (routeData) {
+      return _i5.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i3.ContractListPage(),
+      );
+    },
+    PaymentListRoute.name: (routeData) {
+      return _i5.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i4.PaymentListPage(),
       );
     },
   };
@@ -36,8 +52,8 @@ abstract class $AppRouter extends _i3.RootStackRouter {
 
 /// generated route for
 /// [_i1.LoginPage]
-class LoginRoute extends _i3.PageRouteInfo<void> {
-  const LoginRoute({List<_i3.PageRouteInfo>? children})
+class LoginRoute extends _i5.PageRouteInfo<void> {
+  const LoginRoute({List<_i5.PageRouteInfo>? children})
       : super(
           LoginRoute.name,
           initialChildren: children,
@@ -45,13 +61,13 @@ class LoginRoute extends _i3.PageRouteInfo<void> {
 
   static const String name = 'LoginRoute';
 
-  static const _i3.PageInfo<void> page = _i3.PageInfo<void>(name);
+  static const _i5.PageInfo<void> page = _i5.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i2.ClientListPage]
-class ClientListRoute extends _i3.PageRouteInfo<void> {
-  const ClientListRoute({List<_i3.PageRouteInfo>? children})
+class ClientListRoute extends _i5.PageRouteInfo<void> {
+  const ClientListRoute({List<_i5.PageRouteInfo>? children})
       : super(
           ClientListRoute.name,
           initialChildren: children,
@@ -59,5 +75,33 @@ class ClientListRoute extends _i3.PageRouteInfo<void> {
 
   static const String name = 'ClientListRoute';
 
-  static const _i3.PageInfo<void> page = _i3.PageInfo<void>(name);
+  static const _i5.PageInfo<void> page = _i5.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i3.ContractListPage]
+class ContractListRoute extends _i5.PageRouteInfo<void> {
+  const ContractListRoute({List<_i5.PageRouteInfo>? children})
+      : super(
+          ContractListRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ContractListRoute';
+
+  static const _i5.PageInfo<void> page = _i5.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i4.PaymentListPage]
+class PaymentListRoute extends _i5.PageRouteInfo<void> {
+  const PaymentListRoute({List<_i5.PageRouteInfo>? children})
+      : super(
+          PaymentListRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PaymentListRoute';
+
+  static const _i5.PageInfo<void> page = _i5.PageInfo<void>(name);
 }
