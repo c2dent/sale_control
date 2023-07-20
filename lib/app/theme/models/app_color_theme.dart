@@ -47,7 +47,7 @@ class LightColorTheme implements AppColorTheme {
   Brightness get brightness => Brightness.light;
 
   @override
-  Color get primary => Colors.purple;
+  Color get primary => const Color(0xFF096aaa);
 
   @override
   Color get onPrimary => Colors.white;

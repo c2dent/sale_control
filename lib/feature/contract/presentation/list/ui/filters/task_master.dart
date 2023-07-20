@@ -8,7 +8,13 @@ import 'package:hasap_admin/feature/contract/presentation/list/bloc/contract_blo
 class TaskMasterDropdown extends FilterWidget<Employee> {
   final ContractBloc bloc;
 
-  TaskMasterDropdown({super.key, super.value, required this.bloc, required super.onChange});
+  TaskMasterDropdown({
+    super.key,
+    super.value,
+    required this.bloc,
+    required super.onChange,
+    required super.values,
+  });
 
   @override
   Widget build(BuildContext context) {

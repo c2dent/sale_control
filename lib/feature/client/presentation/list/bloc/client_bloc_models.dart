@@ -13,6 +13,8 @@ class ClientEvent with _$ClientEvent {
   const factory ClientEvent.filter() = ClientEventFilter;
 
   const factory ClientEvent.resetFilter() = ClientEventResetFilter;
+
+  const factory ClientEvent.delete({required Client client}) = ClientEVentDelete;
 }
 
 @freezed
@@ -21,6 +23,10 @@ class ClientSR with _$ClientSR {
     required CommonResponseError<DefaultApiError> error,
     required NotifyErrorSnackbar notifyErrorSnackbar,
   }) = _ShowDioErrorSnackbar;
+
+  const factory ClientSR.deleted({required Client client}) = _ClientDeleted;
+
+  const factory ClientSR.successNotify({required String text}) = _SuccessNotify;
 }
 
 @freezed

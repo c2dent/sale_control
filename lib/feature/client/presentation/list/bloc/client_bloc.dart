@@ -3,17 +3,14 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
-import 'package:hasap_admin/core/models/area.dart';
 import 'package:hasap_admin/core/models/filter.dart';
-import 'package:hasap_admin/core/models/locality.dart';
 import 'package:hasap_admin/core/models/region.dart';
 import 'package:hasap_admin/feature/client/domain/client_interactor.dart';
-import 'package:hasap_admin/feature/client/presentation/bloc/client_bloc_models.dart';
-import 'package:hasap_admin/feature/client/presentation/ui/dropdowns/area.dart';
-import 'package:hasap_admin/feature/client/presentation/ui/dropdowns/locality.dart';
-import 'package:hasap_admin/feature/client/presentation/ui/dropdowns/region.dart';
-import 'package:hasap_admin/feature/client/presentation/ui/search_filter.dart';
+import 'package:hasap_admin/feature/client/presentation/list/ui/filter_widgets/region.dart';
+import 'package:hasap_admin/feature/client/presentation/list/ui/filter_widgets/search_filter.dart';
 import 'package:injectable/injectable.dart';
+
+import 'client_bloc_models.dart';
 
 @injectable
 class ClientBloc extends SrBloc<ClientEvent, ClientState, ClientSR> {
@@ -21,36 +18,35 @@ class ClientBloc extends SrBloc<ClientEvent, ClientState, ClientSR> {
   final NotifyErrorSnackbar _notifyErrorSnackbar;
 
   ClientBloc(
-      this.clientInteractor,
-      this._notifyErrorSnackbar,
+    this.clientInteractor,
+    this._notifyErrorSnackbar,
   ) : super(const ClientState.empty()) {
     on<ClientEventInit>(_init);
     on<ClientEventFilter>(_filter);
     on<ClientEventResetFilter>(_resetFilter);
+    on<ClientEVentDelete>(_delete);
   }
 
   FutureOr<void> _init(ClientEventInit event, Emitter<ClientState> emit) async {
-
     List<Filter> filters = [
       Filter<Region>(
         parameterName: 'region',
-        widget: RegionDropdown(bloc: this, onChange: (Region? value) {}),
-        parameterValue: (dynamic region) => region.id.toString(),
-      ),
-      Filter<Area>(
-        parameterName: 'area',
-        widget: AreaDropdown(bloc: this, onChange: (Area? value) {}),
-        parameterValue: (dynamic area) => area.id.toString(),
-      ),
-      Filter<Locality>(
-          parameterName: 'address',
-          widget: LocalityDropdown(bloc: this, onChange: (Locality? locality) {}),
-          parameterValue: (dynamic locality) => locality.id.toString(),
+        widget: RegionDropdown(
+            bloc: this,
+            onChange: (Region? value) {},
+            values: [null, null, null, null, null],
+        ),
+        parameterValue: (dynamic region) => region.id.toString()
       ),
       Filter<String>(
         parameterName: 'name',
-        widget: SearchInput(bloc: this, onChange: (String? locality) {}),
+        widget: SearchInput(
+            bloc: this,
+            onChange: (String? locality) {},
+            values: const [],
+        ),
         parameterValue: (dynamic string) => string,
+        visible: false,
       ),
     ];
 
@@ -60,9 +56,11 @@ class ClientBloc extends SrBloc<ClientEvent, ClientState, ClientSR> {
       addSr(ClientSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
     } else {
-      emit(
-        ClientState.data(isLoading: false, filters: filters, clients: result.right)
-      );
+      emit(ClientState.data(
+          isLoading: false,
+          filters: filters,
+          clients: result.right,
+      ));
     }
   }
 
@@ -93,5 +91,20 @@ class ClientBloc extends SrBloc<ClientEvent, ClientState, ClientSR> {
     }
 
     emit(state.data.copyWith(isLoading: false, clients: result.right));
+  }
+
+  FutureOr<void> _delete(ClientEVentDelete event, Emitter<ClientState> emit) async {
+    emit(state.data.copyWith(isLoading: true));
+
+    final result = await clientInteractor.delete(event.client.id);
+    if (result.isLeft) {
+      emit(state.data.copyWith(isLoading: false));
+      addSr(ClientSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
+      return;
+    } else {
+      addSr(const ClientSR.successNotify(text: "Mushderi pozuldy"));
+      addSr(ClientSR.deleted(client: event.client));
+      emit(state.data.copyWith(isLoading: false));
+    }
   }
 }

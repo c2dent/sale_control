@@ -24,29 +24,30 @@ import '../core/infrastructure/dio_logger_wrapper.dart' as _i6;
 import '../core/infrastructure/infrastructure_module.dart' as _i42;
 import '../core/infrastructure/logger_bloc_observer.dart' as _i10;
 import '../core/infrastructure/notify_error_snackbar.dart' as _i11;
-import '../core/repositories/area_repository.dart' as _i27;
+import '../core/repositories/area_repository.dart' as _i25;
 import '../core/repositories/employee_repository.dart' as _i18;
-import '../core/repositories/locality_repository.dart' as _i20;
-import '../core/repositories/region_repository.dart' as _i24;
-import '../core/services/area_api_service.dart' as _i26;
+import '../core/repositories/region_repository.dart' as _i22;
+import '../core/services/area_api_service.dart' as _i24;
 import '../core/services/employee_api_service.dart' as _i17;
-import '../core/services/locality_api_service.dart' as _i19;
-import '../core/services/region_api_service.dart' as _i23;
-import '../core/user/user_repository.dart' as _i25;
-import '../feature/auth/domain/auth_interactor.dart' as _i28;
-import '../feature/auth/presentation/bloc/login_bloc.dart' as _i33;
-import '../feature/client/data/client_repository.dart' as _i30;
-import '../feature/client/data/services/client_api_service.dart' as _i29;
-import '../feature/client/domain/client_interactor.dart' as _i35;
-import '../feature/client/presentation/bloc/client_bloc.dart' as _i38;
-import '../feature/contract/data/contract_repository.dart' as _i32;
-import '../feature/contract/data/services/contract_api_service.dart' as _i31;
-import '../feature/contract/domain/contract_interactor.dart' as _i36;
+import '../core/services/region_api_service.dart' as _i21;
+import '../core/user/user_repository.dart' as _i23;
+import '../feature/auth/data/auth_repository.dart' as _i26;
+import '../feature/auth/domain/auth_interactor.dart' as _i32;
+import '../feature/auth/presentation/bloc/login_bloc.dart' as _i35;
+import '../feature/client/data/client_repository.dart' as _i28;
+import '../feature/client/data/services/client_api_service.dart' as _i27;
+import '../feature/client/domain/client_interactor.dart' as _i33;
+import '../feature/client/presentation/create/bloc/client_create_bloc.dart'
+    as _i38;
+import '../feature/client/presentation/list/bloc/client_bloc.dart' as _i37;
+import '../feature/contract/data/contract_repository.dart' as _i30;
+import '../feature/contract/data/services/contract_api_service.dart' as _i29;
+import '../feature/contract/domain/contract_interactor.dart' as _i34;
 import '../feature/contract/presentation/list/bloc/contract_bloc.dart' as _i39;
-import '../feature/payment/data/payment_repository.dart' as _i22;
-import '../feature/payment/data/services/payment_api_service.dart' as _i21;
-import '../feature/payment/domain/payment_interactor.dart' as _i34;
-import '../feature/payment/presentation/list/bloc/payment_bloc.dart' as _i37;
+import '../feature/payment/data/payment_repository.dart' as _i20;
+import '../feature/payment/data/services/payment_api_service.dart' as _i19;
+import '../feature/payment/domain/payment_interactor.dart' as _i31;
+import '../feature/payment/presentation/list/bloc/payment_bloc.dart' as _i36;
 import 'app_environment.dart' as _i7;
 import 'router/app_router.dart' as _i3;
 import 'router/router_logging_observer.dart' as _i12;
@@ -103,79 +104,79 @@ Future<_i1.GetIt> $initGetIt(
   ));
   gh.singleton<_i18.EmployeeRepository>(
       _i18.EmployeeRepositoryImpl(gh<_i17.EmployeeApiService>()));
-  gh.singleton<_i19.LocalityApiService>(_i19.LocalityApiServiceImpl(
+  gh.singleton<_i19.PaymentApiService>(_i19.PaymentApiServiceImpl(
     gh<_i16.Dio>(instanceName: 'hasapHttpClient'),
     gh<_i14.DioErrorHandler<_i15.DefaultApiError>>(),
   ));
-  gh.singleton<_i20.LocalityRepository>(
-      _i20.LocalityRepositoryImpl(gh<_i19.LocalityApiService>()));
-  gh.singleton<_i21.PaymentApiService>(_i21.PaymentApiServiceImpl(
+  gh.singleton<_i20.PaymentRepository>(
+      _i20.PaymentRepositoryImpl(gh<_i19.PaymentApiService>()));
+  gh.singleton<_i21.RegionApiService>(_i21.RegionApiServiceImpl(
     gh<_i16.Dio>(instanceName: 'hasapHttpClient'),
     gh<_i14.DioErrorHandler<_i15.DefaultApiError>>(),
   ));
-  gh.singleton<_i22.PaymentRepository>(
-      _i22.PaymentRepositoryImpl(gh<_i21.PaymentApiService>()));
-  gh.singleton<_i23.RegionApiService>(_i23.RegionApiServiceImpl(
+  gh.singleton<_i22.RegionRepository>(
+      _i22.RegionRepositoryImpl(gh<_i21.RegionApiService>()));
+  gh.singleton<_i23.UserRepository>(_i23.UserRepository(
     gh<_i16.Dio>(instanceName: 'hasapHttpClient'),
     gh<_i14.DioErrorHandler<_i15.DefaultApiError>>(),
   ));
-  gh.singleton<_i24.RegionRepository>(
-      _i24.RegionRepositoryImpl(gh<_i23.RegionApiService>()));
-  gh.singleton<_i25.UserRepository>(_i25.UserRepositoryImpl(
+  gh.singleton<_i24.AreaApiService>(_i24.AreaApiServiceImpl(
     gh<_i16.Dio>(instanceName: 'hasapHttpClient'),
     gh<_i14.DioErrorHandler<_i15.DefaultApiError>>(),
   ));
-  gh.singleton<_i26.AreaApiService>(_i26.AreaApiServiceImpl(
+  gh.singleton<_i25.AreaRepository>(
+      _i25.AreaRepositoryImpl(gh<_i24.AreaApiService>()));
+  gh.singleton<_i26.AuthRepository>(_i26.AuthRepositoryImpl(
     gh<_i16.Dio>(instanceName: 'hasapHttpClient'),
     gh<_i14.DioErrorHandler<_i15.DefaultApiError>>(),
   ));
-  gh.singleton<_i27.AreaRepository>(
-      _i27.AreaRepositoryImpl(gh<_i26.AreaApiService>()));
-  gh.singleton<_i28.AuthInteractor>(
-      _i28.AuthInteractorImpl(gh<_i25.UserRepository>()));
-  gh.singleton<_i29.ClientApiService>(_i29.ClientApiServiceImpl(
+  gh.singleton<_i27.ClientApiService>(_i27.ClientApiServiceImpl(
     gh<_i16.Dio>(instanceName: 'hasapHttpClient'),
     gh<_i14.DioErrorHandler<_i15.DefaultApiError>>(),
   ));
-  gh.singleton<_i30.ClientRepository>(
-      _i30.ClientRepositoryImpl(gh<_i29.ClientApiService>()));
-  gh.singleton<_i31.ContractApiService>(_i31.ContractApiServiceImpl(
+  gh.singleton<_i28.ClientRepository>(
+      _i28.ClientRepositoryImpl(gh<_i27.ClientApiService>()));
+  gh.singleton<_i29.ContractApiService>(_i29.ContractApiServiceImpl(
     gh<_i16.Dio>(instanceName: 'hasapHttpClient'),
     gh<_i14.DioErrorHandler<_i15.DefaultApiError>>(),
   ));
-  gh.singleton<_i32.ContractRepository>(
-      _i32.ContractRepositoryImpl(gh<_i31.ContractApiService>()));
-  gh.factory<_i33.LoginBloc>(() => _i33.LoginBloc(
-        gh<_i28.AuthInteractor>(),
-        gh<_i11.NotifyErrorSnackbar>(),
-      ));
-  gh.singleton<_i34.PaymentInteractor>(_i34.PaymentInteractorImpl(
-    gh<_i22.PaymentRepository>(),
+  gh.singleton<_i30.ContractRepository>(
+      _i30.ContractRepositoryImpl(gh<_i29.ContractApiService>()));
+  gh.singleton<_i31.PaymentInteractor>(_i31.PaymentInteractorImpl(
+    gh<_i20.PaymentRepository>(),
     gh<_i18.EmployeeRepository>(),
   ));
-  gh.singleton<_i35.ClientInteractor>(_i35.ClientInteractorImpl(
-    gh<_i30.ClientRepository>(),
-    gh<_i24.RegionRepository>(),
-    gh<_i27.AreaRepository>(),
-    gh<_i20.LocalityRepository>(),
+  gh.singleton<_i32.AuthInteractor>(
+      _i32.AuthInteractorImpl(gh<_i26.AuthRepository>()));
+  gh.singleton<_i33.ClientInteractor>(_i33.ClientInteractorImpl(
+    gh<_i28.ClientRepository>(),
+    gh<_i22.RegionRepository>(),
   ));
-  gh.singleton<_i36.ContractInteractor>(_i36.ContractInteractorImpl(
-    gh<_i32.ContractRepository>(),
-    gh<_i24.RegionRepository>(),
-    gh<_i27.AreaRepository>(),
-    gh<_i20.LocalityRepository>(),
+  gh.singleton<_i34.ContractInteractor>(_i34.ContractInteractorImpl(
+    gh<_i30.ContractRepository>(),
+    gh<_i22.RegionRepository>(),
+    gh<_i25.AreaRepository>(),
+    gh<_i22.RegionRepository>(),
     gh<_i18.EmployeeRepository>(),
   ));
-  gh.factory<_i37.PaymentBloc>(() => _i37.PaymentBloc(
-        gh<_i34.PaymentInteractor>(),
+  gh.factory<_i35.LoginBloc>(() => _i35.LoginBloc(
+        gh<_i32.AuthInteractor>(),
         gh<_i11.NotifyErrorSnackbar>(),
       ));
-  gh.factory<_i38.ClientBloc>(() => _i38.ClientBloc(
-        gh<_i35.ClientInteractor>(),
+  gh.factory<_i36.PaymentBloc>(() => _i36.PaymentBloc(
+        gh<_i31.PaymentInteractor>(),
+        gh<_i11.NotifyErrorSnackbar>(),
+      ));
+  gh.factory<_i37.ClientBloc>(() => _i37.ClientBloc(
+        gh<_i33.ClientInteractor>(),
+        gh<_i11.NotifyErrorSnackbar>(),
+      ));
+  gh.factory<_i38.ClientCreateBloc>(() => _i38.ClientCreateBloc(
+        gh<_i33.ClientInteractor>(),
         gh<_i11.NotifyErrorSnackbar>(),
       ));
   gh.factory<_i39.ContractBloc>(() => _i39.ContractBloc(
-        gh<_i36.ContractInteractor>(),
+        gh<_i34.ContractInteractor>(),
         gh<_i11.NotifyErrorSnackbar>(),
       ));
   return getIt;

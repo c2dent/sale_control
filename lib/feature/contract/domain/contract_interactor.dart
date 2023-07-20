@@ -7,7 +7,6 @@ import 'package:hasap_admin/core/models/locality.dart';
 import 'package:hasap_admin/core/models/region.dart';
 import 'package:hasap_admin/core/repositories/area_repository.dart';
 import 'package:hasap_admin/core/repositories/employee_repository.dart';
-import 'package:hasap_admin/core/repositories/locality_repository.dart';
 import 'package:hasap_admin/core/repositories/region_repository.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/contract/data/contract_repository.dart';
@@ -17,7 +16,6 @@ abstract class ContractInteractor {
   Future<Either<CommonResponseError<DefaultApiError>, List<Contract>>> getContracts({required List<Filter> filters});
   Future<List<Region>> getRegions();
   Future<List<Area>> getAreas();
-  Future<List<Locality>> getLocalities();
   Future<List<Employee>> getEmployees(Map<String, String>? params);
 }
 
@@ -27,7 +25,7 @@ class ContractInteractorImpl extends ContractInteractor {
   final ContractRepository contractRepository;
   final RegionRepository regionRepository;
   final AreaRepository areaRepository;
-  final LocalityRepository localityRepository;
+  final RegionRepository localityRepository;
   final EmployeeRepository employeeRepository;
 
   ContractInteractorImpl(
@@ -63,18 +61,8 @@ class ContractInteractorImpl extends ContractInteractor {
   }
 
   @override
-  Future<List<Locality>> getLocalities() async {
-    final result = await localityRepository.getLocalities();
-
-    if (result.isLeft) {
-      return [];
-    }
-    return result.right;
-  }
-
-  @override
   Future<List<Region>> getRegions() async {
-    final result = await regionRepository.getRegions();
+    final result = await regionRepository.getRegions({});
 
     if (result.isLeft) {
       return [];

@@ -4,6 +4,7 @@ import 'package:hasap_admin/core/models/filter.dart';
 class FilterModal extends StatefulWidget {
   final List<Filter> filters;
   final Function reset;
+
   const FilterModal({super.key, required this.filters, required this.reset});
 
   @override
@@ -35,13 +36,10 @@ class _FilterModalState extends State<FilterModal> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  for (var item in widget.filters) Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      child: item.filterWidget
-                  ),
+                  for (var item in widget.filters)
+                    if (item.visible) Container(margin: const EdgeInsets.only(top: 10), child: item.filterWidget),
                 ],
-              )
-          ),
+              )),
         ));
   }
 }

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hasap_admin/core/models/employee.dart';
-import 'package:hasap_admin/core/models/locality.dart';
+import 'package:hasap_admin/core/models/region.dart';
+import 'package:hasap_admin/core/models/user.dart';
 
 part 'client_models.freezed.dart';
 part 'client_models.g.dart';
@@ -11,10 +11,14 @@ class Client with _$Client {
     required int id,
     @JsonKey(name: "first_name") required String firstName,
     @JsonKey(name: "last_name") required String lastName,
+    @JsonKey(name: "sur_name") required String? surName,
+
     required String? description,
     required String phone,
-    required Locality address,
-    required Employee creator,
+    required String? phone2,
+
+    required Region region,
+    required User creator,
 
     @JsonKey(name: "created_at") required DateTime createdAt,
     @JsonKey(name: "modified_at") required DateTime modifiedAt,

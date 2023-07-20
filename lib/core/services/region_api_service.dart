@@ -7,7 +7,7 @@ import 'package:hasap_admin/core/models/region.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class RegionApiService {
-  Future<Either<CommonResponseError<DefaultApiError>, List<Region>>> getRegions();
+  Future<Either<CommonResponseError<DefaultApiError>, List<Region>>> getRegions(Map<String, String> params);
 }
 
 @Singleton(as: RegionApiService)
@@ -19,10 +19,10 @@ class RegionApiServiceImpl extends RegionApiService {
   RegionApiServiceImpl(@Named(InjectableNames.hasapHttpClient) this._client, this._dioErrorHandler);
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>, List<Region>>> getRegions() async {
+  Future<Either<CommonResponseError<DefaultApiError>, List<Region>>> getRegions(Map<String, String> params) async {
     List<Region> regions = [];
 
-    final result = await _dioErrorHandler.processRequest(() => _client.get('/regions/'));
+    final result = await _dioErrorHandler.processRequest(() => _client.get('/regions/', queryParameters: params));
 
     if (result.isLeft) return Either.left(result.left);
 

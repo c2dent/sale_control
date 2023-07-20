@@ -9,6 +9,7 @@ class CDropDownSearch<T> extends StatelessWidget {
   final Future<List<T>> Function(String)? asyncItems;
   final void Function(T?)? onChanged;
   final bool Function(T, T)? compareFn;
+  final String? Function(T? t)? validation;
 
   const CDropDownSearch({
     required this.label,
@@ -17,6 +18,7 @@ class CDropDownSearch<T> extends StatelessWidget {
     this.itemAsString,
     this.onChanged,
     this.compareFn,
+    this.validation,
     super.key});
 
   @override
@@ -35,6 +37,7 @@ class CDropDownSearch<T> extends StatelessWidget {
             showSelectedItems: true,
             showSearchBox: true
         ),
+        validator: validation,
         compareFn: compareFn,
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(

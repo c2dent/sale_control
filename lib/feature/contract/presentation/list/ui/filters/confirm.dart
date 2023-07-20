@@ -6,7 +6,13 @@ import 'package:hasap_admin/feature/contract/presentation/list/bloc/contract_blo
 class ConfirmCheckBox extends FilterWidget<bool> {
   final ContractBloc bloc;
 
-  ConfirmCheckBox({super.key, required super.value, required super.onChange, required this.bloc});
+  ConfirmCheckBox({
+    super.key,
+    required super.value,
+    required super.onChange,
+    required this.bloc,
+    required super.values,
+  });
 
   @override
   Widget build(BuildContext context) {

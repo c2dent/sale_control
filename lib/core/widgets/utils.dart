@@ -72,3 +72,32 @@ void showEditDeletePopup(BuildContext context, Offset position,
   }
 }
 
+void showContextMenu(BuildContext context, Offset position,
+    {required void Function() edit, required void Function() delete}) async {
+  final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
+
+  final result = await showMenu(
+      context: context,
+      position: RelativeRect.fromRect(Rect.fromLTWH(position.dx, position.dy, 30, 30),
+          Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width, overlay.paintBounds.size.height)),
+      items: [
+        const PopupMenuItem(
+          value: 'edit',
+          child: Text('Uytgetmek'),
+        ),
+        const PopupMenuItem(
+          value: 'delete',
+          child: Text('Pozmak'),
+        ),
+      ]);
+
+  switch (result) {
+    case 'edit':
+      edit();
+      break;
+    case 'delete':
+      delete();
+      break;
+  }
+}
+

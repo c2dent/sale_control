@@ -8,7 +8,7 @@ import 'package:hasap_admin/feature/payment/presentation/list/bloc/payment_bloc_
 class TaskMasterDropdown extends FilterWidget<Employee> {
   final PaymentBloc bloc;
 
-  TaskMasterDropdown({super.key, super.value, required this.bloc, required super.onChange});
+  TaskMasterDropdown({super.key, super.value, required this.bloc, required super.onChange, required super.values});
 
   @override
   Widget build(BuildContext context) {

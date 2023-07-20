@@ -21,6 +21,7 @@ mixin _$ClientEvent {
     required TResult Function() init,
     required TResult Function() filter,
     required TResult Function() resetFilter,
+    required TResult Function(Client client) delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -28,6 +29,7 @@ mixin _$ClientEvent {
     TResult? Function()? init,
     TResult? Function()? filter,
     TResult? Function()? resetFilter,
+    TResult? Function(Client client)? delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,6 +37,7 @@ mixin _$ClientEvent {
     TResult Function()? init,
     TResult Function()? filter,
     TResult Function()? resetFilter,
+    TResult Function(Client client)? delete,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -43,6 +46,7 @@ mixin _$ClientEvent {
     required TResult Function(ClientEventInit value) init,
     required TResult Function(ClientEventFilter value) filter,
     required TResult Function(ClientEventResetFilter value) resetFilter,
+    required TResult Function(ClientEVentDelete value) delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,6 +54,7 @@ mixin _$ClientEvent {
     TResult? Function(ClientEventInit value)? init,
     TResult? Function(ClientEventFilter value)? filter,
     TResult? Function(ClientEventResetFilter value)? resetFilter,
+    TResult? Function(ClientEVentDelete value)? delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +62,7 @@ mixin _$ClientEvent {
     TResult Function(ClientEventInit value)? init,
     TResult Function(ClientEventFilter value)? filter,
     TResult Function(ClientEventResetFilter value)? resetFilter,
+    TResult Function(ClientEVentDelete value)? delete,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -121,6 +127,7 @@ class _$ClientEventInit implements ClientEventInit {
     required TResult Function() init,
     required TResult Function() filter,
     required TResult Function() resetFilter,
+    required TResult Function(Client client) delete,
   }) {
     return init();
   }
@@ -131,6 +138,7 @@ class _$ClientEventInit implements ClientEventInit {
     TResult? Function()? init,
     TResult? Function()? filter,
     TResult? Function()? resetFilter,
+    TResult? Function(Client client)? delete,
   }) {
     return init?.call();
   }
@@ -141,6 +149,7 @@ class _$ClientEventInit implements ClientEventInit {
     TResult Function()? init,
     TResult Function()? filter,
     TResult Function()? resetFilter,
+    TResult Function(Client client)? delete,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -155,6 +164,7 @@ class _$ClientEventInit implements ClientEventInit {
     required TResult Function(ClientEventInit value) init,
     required TResult Function(ClientEventFilter value) filter,
     required TResult Function(ClientEventResetFilter value) resetFilter,
+    required TResult Function(ClientEVentDelete value) delete,
   }) {
     return init(this);
   }
@@ -165,6 +175,7 @@ class _$ClientEventInit implements ClientEventInit {
     TResult? Function(ClientEventInit value)? init,
     TResult? Function(ClientEventFilter value)? filter,
     TResult? Function(ClientEventResetFilter value)? resetFilter,
+    TResult? Function(ClientEVentDelete value)? delete,
   }) {
     return init?.call(this);
   }
@@ -175,6 +186,7 @@ class _$ClientEventInit implements ClientEventInit {
     TResult Function(ClientEventInit value)? init,
     TResult Function(ClientEventFilter value)? filter,
     TResult Function(ClientEventResetFilter value)? resetFilter,
+    TResult Function(ClientEVentDelete value)? delete,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -229,6 +241,7 @@ class _$ClientEventFilter implements ClientEventFilter {
     required TResult Function() init,
     required TResult Function() filter,
     required TResult Function() resetFilter,
+    required TResult Function(Client client) delete,
   }) {
     return filter();
   }
@@ -239,6 +252,7 @@ class _$ClientEventFilter implements ClientEventFilter {
     TResult? Function()? init,
     TResult? Function()? filter,
     TResult? Function()? resetFilter,
+    TResult? Function(Client client)? delete,
   }) {
     return filter?.call();
   }
@@ -249,6 +263,7 @@ class _$ClientEventFilter implements ClientEventFilter {
     TResult Function()? init,
     TResult Function()? filter,
     TResult Function()? resetFilter,
+    TResult Function(Client client)? delete,
     required TResult orElse(),
   }) {
     if (filter != null) {
@@ -263,6 +278,7 @@ class _$ClientEventFilter implements ClientEventFilter {
     required TResult Function(ClientEventInit value) init,
     required TResult Function(ClientEventFilter value) filter,
     required TResult Function(ClientEventResetFilter value) resetFilter,
+    required TResult Function(ClientEVentDelete value) delete,
   }) {
     return filter(this);
   }
@@ -273,6 +289,7 @@ class _$ClientEventFilter implements ClientEventFilter {
     TResult? Function(ClientEventInit value)? init,
     TResult? Function(ClientEventFilter value)? filter,
     TResult? Function(ClientEventResetFilter value)? resetFilter,
+    TResult? Function(ClientEVentDelete value)? delete,
   }) {
     return filter?.call(this);
   }
@@ -283,6 +300,7 @@ class _$ClientEventFilter implements ClientEventFilter {
     TResult Function(ClientEventInit value)? init,
     TResult Function(ClientEventFilter value)? filter,
     TResult Function(ClientEventResetFilter value)? resetFilter,
+    TResult Function(ClientEVentDelete value)? delete,
     required TResult orElse(),
   }) {
     if (filter != null) {
@@ -337,6 +355,7 @@ class _$ClientEventResetFilter implements ClientEventResetFilter {
     required TResult Function() init,
     required TResult Function() filter,
     required TResult Function() resetFilter,
+    required TResult Function(Client client) delete,
   }) {
     return resetFilter();
   }
@@ -347,6 +366,7 @@ class _$ClientEventResetFilter implements ClientEventResetFilter {
     TResult? Function()? init,
     TResult? Function()? filter,
     TResult? Function()? resetFilter,
+    TResult? Function(Client client)? delete,
   }) {
     return resetFilter?.call();
   }
@@ -357,6 +377,7 @@ class _$ClientEventResetFilter implements ClientEventResetFilter {
     TResult Function()? init,
     TResult Function()? filter,
     TResult Function()? resetFilter,
+    TResult Function(Client client)? delete,
     required TResult orElse(),
   }) {
     if (resetFilter != null) {
@@ -371,6 +392,7 @@ class _$ClientEventResetFilter implements ClientEventResetFilter {
     required TResult Function(ClientEventInit value) init,
     required TResult Function(ClientEventFilter value) filter,
     required TResult Function(ClientEventResetFilter value) resetFilter,
+    required TResult Function(ClientEVentDelete value) delete,
   }) {
     return resetFilter(this);
   }
@@ -381,6 +403,7 @@ class _$ClientEventResetFilter implements ClientEventResetFilter {
     TResult? Function(ClientEventInit value)? init,
     TResult? Function(ClientEventFilter value)? filter,
     TResult? Function(ClientEventResetFilter value)? resetFilter,
+    TResult? Function(ClientEVentDelete value)? delete,
   }) {
     return resetFilter?.call(this);
   }
@@ -391,6 +414,7 @@ class _$ClientEventResetFilter implements ClientEventResetFilter {
     TResult Function(ClientEventInit value)? init,
     TResult Function(ClientEventFilter value)? filter,
     TResult Function(ClientEventResetFilter value)? resetFilter,
+    TResult Function(ClientEVentDelete value)? delete,
     required TResult orElse(),
   }) {
     if (resetFilter != null) {
@@ -405,16 +429,170 @@ abstract class ClientEventResetFilter implements ClientEvent {
 }
 
 /// @nodoc
+abstract class _$$ClientEVentDeleteCopyWith<$Res> {
+  factory _$$ClientEVentDeleteCopyWith(
+          _$ClientEVentDelete value, $Res Function(_$ClientEVentDelete) then) =
+      __$$ClientEVentDeleteCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Client client});
+
+  $ClientCopyWith<$Res> get client;
+}
+
+/// @nodoc
+class __$$ClientEVentDeleteCopyWithImpl<$Res>
+    extends _$ClientEventCopyWithImpl<$Res, _$ClientEVentDelete>
+    implements _$$ClientEVentDeleteCopyWith<$Res> {
+  __$$ClientEVentDeleteCopyWithImpl(
+      _$ClientEVentDelete _value, $Res Function(_$ClientEVentDelete) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? client = null,
+  }) {
+    return _then(_$ClientEVentDelete(
+      client: null == client
+          ? _value.client
+          : client // ignore: cast_nullable_to_non_nullable
+              as Client,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ClientCopyWith<$Res> get client {
+    return $ClientCopyWith<$Res>(_value.client, (value) {
+      return _then(_value.copyWith(client: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$ClientEVentDelete implements ClientEVentDelete {
+  const _$ClientEVentDelete({required this.client});
+
+  @override
+  final Client client;
+
+  @override
+  String toString() {
+    return 'ClientEvent.delete(client: $client)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ClientEVentDelete &&
+            (identical(other.client, client) || other.client == client));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, client);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ClientEVentDeleteCopyWith<_$ClientEVentDelete> get copyWith =>
+      __$$ClientEVentDeleteCopyWithImpl<_$ClientEVentDelete>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() filter,
+    required TResult Function() resetFilter,
+    required TResult Function(Client client) delete,
+  }) {
+    return delete(client);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? filter,
+    TResult? Function()? resetFilter,
+    TResult? Function(Client client)? delete,
+  }) {
+    return delete?.call(client);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? filter,
+    TResult Function()? resetFilter,
+    TResult Function(Client client)? delete,
+    required TResult orElse(),
+  }) {
+    if (delete != null) {
+      return delete(client);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ClientEventInit value) init,
+    required TResult Function(ClientEventFilter value) filter,
+    required TResult Function(ClientEventResetFilter value) resetFilter,
+    required TResult Function(ClientEVentDelete value) delete,
+  }) {
+    return delete(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ClientEventInit value)? init,
+    TResult? Function(ClientEventFilter value)? filter,
+    TResult? Function(ClientEventResetFilter value)? resetFilter,
+    TResult? Function(ClientEVentDelete value)? delete,
+  }) {
+    return delete?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ClientEventInit value)? init,
+    TResult Function(ClientEventFilter value)? filter,
+    TResult Function(ClientEventResetFilter value)? resetFilter,
+    TResult Function(ClientEVentDelete value)? delete,
+    required TResult orElse(),
+  }) {
+    if (delete != null) {
+      return delete(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ClientEVentDelete implements ClientEvent {
+  const factory ClientEVentDelete({required final Client client}) =
+      _$ClientEVentDelete;
+
+  Client get client;
+  @JsonKey(ignore: true)
+  _$$ClientEVentDeleteCopyWith<_$ClientEVentDelete> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$ClientSR {
-  CommonResponseError<DefaultApiError> get error =>
-      throw _privateConstructorUsedError;
-  NotifyErrorSnackbar get notifyErrorSnackbar =>
-      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CommonResponseError<DefaultApiError> error,
             NotifyErrorSnackbar notifyErrorSnackbar)
         showDioError,
+    required TResult Function(Client client) deleted,
+    required TResult Function(String text) successNotify,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -422,6 +600,8 @@ mixin _$ClientSR {
     TResult? Function(CommonResponseError<DefaultApiError> error,
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
+    TResult? Function(Client client)? deleted,
+    TResult? Function(String text)? successNotify,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -429,28 +609,32 @@ mixin _$ClientSR {
     TResult Function(CommonResponseError<DefaultApiError> error,
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
+    TResult Function(Client client)? deleted,
+    TResult Function(String text)? successNotify,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_ShowDioErrorSnackbar value) showDioError,
+    required TResult Function(_ClientDeleted value) deleted,
+    required TResult Function(_SuccessNotify value) successNotify,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ShowDioErrorSnackbar value)? showDioError,
+    TResult? Function(_ClientDeleted value)? deleted,
+    TResult? Function(_SuccessNotify value)? successNotify,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ShowDioErrorSnackbar value)? showDioError,
+    TResult Function(_ClientDeleted value)? deleted,
+    TResult Function(_SuccessNotify value)? successNotify,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $ClientSRCopyWith<ClientSR> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -458,12 +642,6 @@ mixin _$ClientSR {
 abstract class $ClientSRCopyWith<$Res> {
   factory $ClientSRCopyWith(ClientSR value, $Res Function(ClientSR) then) =
       _$ClientSRCopyWithImpl<$Res, ClientSR>;
-  @useResult
-  $Res call(
-      {CommonResponseError<DefaultApiError> error,
-      NotifyErrorSnackbar notifyErrorSnackbar});
-
-  $CommonResponseErrorCopyWith<DefaultApiError, $Res> get error;
 }
 
 /// @nodoc
@@ -475,48 +653,18 @@ class _$ClientSRCopyWithImpl<$Res, $Val extends ClientSR>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? error = null,
-    Object? notifyErrorSnackbar = null,
-  }) {
-    return _then(_value.copyWith(
-      error: null == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as CommonResponseError<DefaultApiError>,
-      notifyErrorSnackbar: null == notifyErrorSnackbar
-          ? _value.notifyErrorSnackbar
-          : notifyErrorSnackbar // ignore: cast_nullable_to_non_nullable
-              as NotifyErrorSnackbar,
-    ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $CommonResponseErrorCopyWith<DefaultApiError, $Res> get error {
-    return $CommonResponseErrorCopyWith<DefaultApiError, $Res>(_value.error,
-        (value) {
-      return _then(_value.copyWith(error: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$_ShowDioErrorSnackbarCopyWith<$Res>
-    implements $ClientSRCopyWith<$Res> {
+abstract class _$$_ShowDioErrorSnackbarCopyWith<$Res> {
   factory _$$_ShowDioErrorSnackbarCopyWith(_$_ShowDioErrorSnackbar value,
           $Res Function(_$_ShowDioErrorSnackbar) then) =
       __$$_ShowDioErrorSnackbarCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call(
       {CommonResponseError<DefaultApiError> error,
       NotifyErrorSnackbar notifyErrorSnackbar});
 
-  @override
   $CommonResponseErrorCopyWith<DefaultApiError, $Res> get error;
 }
 
@@ -544,6 +692,15 @@ class __$$_ShowDioErrorSnackbarCopyWithImpl<$Res>
           : notifyErrorSnackbar // ignore: cast_nullable_to_non_nullable
               as NotifyErrorSnackbar,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CommonResponseErrorCopyWith<DefaultApiError, $Res> get error {
+    return $CommonResponseErrorCopyWith<DefaultApiError, $Res>(_value.error,
+        (value) {
+      return _then(_value.copyWith(error: value));
+    });
   }
 }
 
@@ -589,6 +746,8 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
     required TResult Function(CommonResponseError<DefaultApiError> error,
             NotifyErrorSnackbar notifyErrorSnackbar)
         showDioError,
+    required TResult Function(Client client) deleted,
+    required TResult Function(String text) successNotify,
   }) {
     return showDioError(error, notifyErrorSnackbar);
   }
@@ -599,6 +758,8 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
     TResult? Function(CommonResponseError<DefaultApiError> error,
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
+    TResult? Function(Client client)? deleted,
+    TResult? Function(String text)? successNotify,
   }) {
     return showDioError?.call(error, notifyErrorSnackbar);
   }
@@ -609,6 +770,8 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
     TResult Function(CommonResponseError<DefaultApiError> error,
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
+    TResult Function(Client client)? deleted,
+    TResult Function(String text)? successNotify,
     required TResult orElse(),
   }) {
     if (showDioError != null) {
@@ -621,6 +784,8 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_ShowDioErrorSnackbar value) showDioError,
+    required TResult Function(_ClientDeleted value) deleted,
+    required TResult Function(_SuccessNotify value) successNotify,
   }) {
     return showDioError(this);
   }
@@ -629,6 +794,8 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ShowDioErrorSnackbar value)? showDioError,
+    TResult? Function(_ClientDeleted value)? deleted,
+    TResult? Function(_SuccessNotify value)? successNotify,
   }) {
     return showDioError?.call(this);
   }
@@ -637,6 +804,8 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ShowDioErrorSnackbar value)? showDioError,
+    TResult Function(_ClientDeleted value)? deleted,
+    TResult Function(_SuccessNotify value)? successNotify,
     required TResult orElse(),
   }) {
     if (showDioError != null) {
@@ -652,13 +821,311 @@ abstract class _ShowDioErrorSnackbar implements ClientSR {
           required final NotifyErrorSnackbar notifyErrorSnackbar}) =
       _$_ShowDioErrorSnackbar;
 
-  @override
   CommonResponseError<DefaultApiError> get error;
-  @override
   NotifyErrorSnackbar get notifyErrorSnackbar;
-  @override
   @JsonKey(ignore: true)
   _$$_ShowDioErrorSnackbarCopyWith<_$_ShowDioErrorSnackbar> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_ClientDeletedCopyWith<$Res> {
+  factory _$$_ClientDeletedCopyWith(
+          _$_ClientDeleted value, $Res Function(_$_ClientDeleted) then) =
+      __$$_ClientDeletedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Client client});
+
+  $ClientCopyWith<$Res> get client;
+}
+
+/// @nodoc
+class __$$_ClientDeletedCopyWithImpl<$Res>
+    extends _$ClientSRCopyWithImpl<$Res, _$_ClientDeleted>
+    implements _$$_ClientDeletedCopyWith<$Res> {
+  __$$_ClientDeletedCopyWithImpl(
+      _$_ClientDeleted _value, $Res Function(_$_ClientDeleted) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? client = null,
+  }) {
+    return _then(_$_ClientDeleted(
+      client: null == client
+          ? _value.client
+          : client // ignore: cast_nullable_to_non_nullable
+              as Client,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ClientCopyWith<$Res> get client {
+    return $ClientCopyWith<$Res>(_value.client, (value) {
+      return _then(_value.copyWith(client: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$_ClientDeleted implements _ClientDeleted {
+  const _$_ClientDeleted({required this.client});
+
+  @override
+  final Client client;
+
+  @override
+  String toString() {
+    return 'ClientSR.deleted(client: $client)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ClientDeleted &&
+            (identical(other.client, client) || other.client == client));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, client);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ClientDeletedCopyWith<_$_ClientDeleted> get copyWith =>
+      __$$_ClientDeletedCopyWithImpl<_$_ClientDeleted>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(CommonResponseError<DefaultApiError> error,
+            NotifyErrorSnackbar notifyErrorSnackbar)
+        showDioError,
+    required TResult Function(Client client) deleted,
+    required TResult Function(String text) successNotify,
+  }) {
+    return deleted(client);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(CommonResponseError<DefaultApiError> error,
+            NotifyErrorSnackbar notifyErrorSnackbar)?
+        showDioError,
+    TResult? Function(Client client)? deleted,
+    TResult? Function(String text)? successNotify,
+  }) {
+    return deleted?.call(client);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(CommonResponseError<DefaultApiError> error,
+            NotifyErrorSnackbar notifyErrorSnackbar)?
+        showDioError,
+    TResult Function(Client client)? deleted,
+    TResult Function(String text)? successNotify,
+    required TResult orElse(),
+  }) {
+    if (deleted != null) {
+      return deleted(client);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ShowDioErrorSnackbar value) showDioError,
+    required TResult Function(_ClientDeleted value) deleted,
+    required TResult Function(_SuccessNotify value) successNotify,
+  }) {
+    return deleted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ShowDioErrorSnackbar value)? showDioError,
+    TResult? Function(_ClientDeleted value)? deleted,
+    TResult? Function(_SuccessNotify value)? successNotify,
+  }) {
+    return deleted?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ShowDioErrorSnackbar value)? showDioError,
+    TResult Function(_ClientDeleted value)? deleted,
+    TResult Function(_SuccessNotify value)? successNotify,
+    required TResult orElse(),
+  }) {
+    if (deleted != null) {
+      return deleted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ClientDeleted implements ClientSR {
+  const factory _ClientDeleted({required final Client client}) =
+      _$_ClientDeleted;
+
+  Client get client;
+  @JsonKey(ignore: true)
+  _$$_ClientDeletedCopyWith<_$_ClientDeleted> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_SuccessNotifyCopyWith<$Res> {
+  factory _$$_SuccessNotifyCopyWith(
+          _$_SuccessNotify value, $Res Function(_$_SuccessNotify) then) =
+      __$$_SuccessNotifyCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String text});
+}
+
+/// @nodoc
+class __$$_SuccessNotifyCopyWithImpl<$Res>
+    extends _$ClientSRCopyWithImpl<$Res, _$_SuccessNotify>
+    implements _$$_SuccessNotifyCopyWith<$Res> {
+  __$$_SuccessNotifyCopyWithImpl(
+      _$_SuccessNotify _value, $Res Function(_$_SuccessNotify) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? text = null,
+  }) {
+    return _then(_$_SuccessNotify(
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SuccessNotify implements _SuccessNotify {
+  const _$_SuccessNotify({required this.text});
+
+  @override
+  final String text;
+
+  @override
+  String toString() {
+    return 'ClientSR.successNotify(text: $text)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SuccessNotify &&
+            (identical(other.text, text) || other.text == text));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, text);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SuccessNotifyCopyWith<_$_SuccessNotify> get copyWith =>
+      __$$_SuccessNotifyCopyWithImpl<_$_SuccessNotify>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(CommonResponseError<DefaultApiError> error,
+            NotifyErrorSnackbar notifyErrorSnackbar)
+        showDioError,
+    required TResult Function(Client client) deleted,
+    required TResult Function(String text) successNotify,
+  }) {
+    return successNotify(text);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(CommonResponseError<DefaultApiError> error,
+            NotifyErrorSnackbar notifyErrorSnackbar)?
+        showDioError,
+    TResult? Function(Client client)? deleted,
+    TResult? Function(String text)? successNotify,
+  }) {
+    return successNotify?.call(text);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(CommonResponseError<DefaultApiError> error,
+            NotifyErrorSnackbar notifyErrorSnackbar)?
+        showDioError,
+    TResult Function(Client client)? deleted,
+    TResult Function(String text)? successNotify,
+    required TResult orElse(),
+  }) {
+    if (successNotify != null) {
+      return successNotify(text);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ShowDioErrorSnackbar value) showDioError,
+    required TResult Function(_ClientDeleted value) deleted,
+    required TResult Function(_SuccessNotify value) successNotify,
+  }) {
+    return successNotify(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ShowDioErrorSnackbar value)? showDioError,
+    TResult? Function(_ClientDeleted value)? deleted,
+    TResult? Function(_SuccessNotify value)? successNotify,
+  }) {
+    return successNotify?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ShowDioErrorSnackbar value)? showDioError,
+    TResult Function(_ClientDeleted value)? deleted,
+    TResult Function(_SuccessNotify value)? successNotify,
+    required TResult orElse(),
+  }) {
+    if (successNotify != null) {
+      return successNotify(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SuccessNotify implements ClientSR {
+  const factory _SuccessNotify({required final String text}) = _$_SuccessNotify;
+
+  String get text;
+  @JsonKey(ignore: true)
+  _$$_SuccessNotifyCopyWith<_$_SuccessNotify> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

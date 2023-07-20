@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
 import 'package:hasap_admin/core/models/debouncer.dart';
 import 'package:hasap_admin/core/widgets/filter_widget.dart';
-import 'package:hasap_admin/feature/client/presentation/bloc/client_bloc.dart';
-import 'package:hasap_admin/feature/client/presentation/bloc/client_bloc_models.dart';
+import 'package:hasap_admin/feature/client/presentation/list/bloc/client_bloc.dart';
+import 'package:hasap_admin/feature/client/presentation/list/bloc/client_bloc_models.dart';
 
 class SearchInput extends FilterWidget<String> {
   final ClientBloc bloc;
 
-  SearchInput({super.key, super.value, required super.onChange, required this.bloc});
+  SearchInput({
+    super.key,
+    super.value,
+    required super.onChange,
+    required this.bloc,
+    required super.values,
+  });
 
   TextEditingController textEditingController = TextEditingController();
 

@@ -28,7 +28,7 @@ class PaymentBloc extends SrBloc<PaymentEvent, PaymentState, PaymentSR> {
     List<Filter> filters = [
       Filter<Employee>(
         parameterName: 'task_master',
-        widget: TaskMasterDropdown(bloc: this, onChange: (Employee? value) {}),
+        widget: TaskMasterDropdown(bloc: this, onChange: (Employee? value) {}, values: const []),
         parameterValue: (dynamic employee) => employee.id.toString(),
       ),
     ];

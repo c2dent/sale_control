@@ -25,10 +25,13 @@ mixin _$Client {
   String get firstName => throw _privateConstructorUsedError;
   @JsonKey(name: "last_name")
   String get lastName => throw _privateConstructorUsedError;
+  @JsonKey(name: "sur_name")
+  String? get surName => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
-  Locality get address => throw _privateConstructorUsedError;
-  Employee get creator => throw _privateConstructorUsedError;
+  String? get phone2 => throw _privateConstructorUsedError;
+  Region get region => throw _privateConstructorUsedError;
+  User get creator => throw _privateConstructorUsedError;
   @JsonKey(name: "created_at")
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: "modified_at")
@@ -48,15 +51,17 @@ abstract class $ClientCopyWith<$Res> {
       {int id,
       @JsonKey(name: "first_name") String firstName,
       @JsonKey(name: "last_name") String lastName,
+      @JsonKey(name: "sur_name") String? surName,
       String? description,
       String phone,
-      Locality address,
-      Employee creator,
+      String? phone2,
+      Region region,
+      User creator,
       @JsonKey(name: "created_at") DateTime createdAt,
       @JsonKey(name: "modified_at") DateTime modifiedAt});
 
-  $LocalityCopyWith<$Res> get address;
-  $EmployeeCopyWith<$Res> get creator;
+  $RegionCopyWith<$Res> get region;
+  $UserCopyWith<$Res> get creator;
 }
 
 /// @nodoc
@@ -75,9 +80,11 @@ class _$ClientCopyWithImpl<$Res, $Val extends Client>
     Object? id = null,
     Object? firstName = null,
     Object? lastName = null,
+    Object? surName = freezed,
     Object? description = freezed,
     Object? phone = null,
-    Object? address = null,
+    Object? phone2 = freezed,
+    Object? region = null,
     Object? creator = null,
     Object? createdAt = null,
     Object? modifiedAt = null,
@@ -95,6 +102,10 @@ class _$ClientCopyWithImpl<$Res, $Val extends Client>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
+      surName: freezed == surName
+          ? _value.surName
+          : surName // ignore: cast_nullable_to_non_nullable
+              as String?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -103,14 +114,18 @@ class _$ClientCopyWithImpl<$Res, $Val extends Client>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String,
-      address: null == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as Locality,
+      phone2: freezed == phone2
+          ? _value.phone2
+          : phone2 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      region: null == region
+          ? _value.region
+          : region // ignore: cast_nullable_to_non_nullable
+              as Region,
       creator: null == creator
           ? _value.creator
           : creator // ignore: cast_nullable_to_non_nullable
-              as Employee,
+              as User,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -124,16 +139,16 @@ class _$ClientCopyWithImpl<$Res, $Val extends Client>
 
   @override
   @pragma('vm:prefer-inline')
-  $LocalityCopyWith<$Res> get address {
-    return $LocalityCopyWith<$Res>(_value.address, (value) {
-      return _then(_value.copyWith(address: value) as $Val);
+  $RegionCopyWith<$Res> get region {
+    return $RegionCopyWith<$Res>(_value.region, (value) {
+      return _then(_value.copyWith(region: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $EmployeeCopyWith<$Res> get creator {
-    return $EmployeeCopyWith<$Res>(_value.creator, (value) {
+  $UserCopyWith<$Res> get creator {
+    return $UserCopyWith<$Res>(_value.creator, (value) {
       return _then(_value.copyWith(creator: value) as $Val);
     });
   }
@@ -149,17 +164,19 @@ abstract class _$$_ClientCopyWith<$Res> implements $ClientCopyWith<$Res> {
       {int id,
       @JsonKey(name: "first_name") String firstName,
       @JsonKey(name: "last_name") String lastName,
+      @JsonKey(name: "sur_name") String? surName,
       String? description,
       String phone,
-      Locality address,
-      Employee creator,
+      String? phone2,
+      Region region,
+      User creator,
       @JsonKey(name: "created_at") DateTime createdAt,
       @JsonKey(name: "modified_at") DateTime modifiedAt});
 
   @override
-  $LocalityCopyWith<$Res> get address;
+  $RegionCopyWith<$Res> get region;
   @override
-  $EmployeeCopyWith<$Res> get creator;
+  $UserCopyWith<$Res> get creator;
 }
 
 /// @nodoc
@@ -175,9 +192,11 @@ class __$$_ClientCopyWithImpl<$Res>
     Object? id = null,
     Object? firstName = null,
     Object? lastName = null,
+    Object? surName = freezed,
     Object? description = freezed,
     Object? phone = null,
-    Object? address = null,
+    Object? phone2 = freezed,
+    Object? region = null,
     Object? creator = null,
     Object? createdAt = null,
     Object? modifiedAt = null,
@@ -195,6 +214,10 @@ class __$$_ClientCopyWithImpl<$Res>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
+      surName: freezed == surName
+          ? _value.surName
+          : surName // ignore: cast_nullable_to_non_nullable
+              as String?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -203,14 +226,18 @@ class __$$_ClientCopyWithImpl<$Res>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String,
-      address: null == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as Locality,
+      phone2: freezed == phone2
+          ? _value.phone2
+          : phone2 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      region: null == region
+          ? _value.region
+          : region // ignore: cast_nullable_to_non_nullable
+              as Region,
       creator: null == creator
           ? _value.creator
           : creator // ignore: cast_nullable_to_non_nullable
-              as Employee,
+              as User,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -230,9 +257,11 @@ class _$_Client implements _Client {
       {required this.id,
       @JsonKey(name: "first_name") required this.firstName,
       @JsonKey(name: "last_name") required this.lastName,
+      @JsonKey(name: "sur_name") required this.surName,
       required this.description,
       required this.phone,
-      required this.address,
+      required this.phone2,
+      required this.region,
       required this.creator,
       @JsonKey(name: "created_at") required this.createdAt,
       @JsonKey(name: "modified_at") required this.modifiedAt});
@@ -249,13 +278,18 @@ class _$_Client implements _Client {
   @JsonKey(name: "last_name")
   final String lastName;
   @override
+  @JsonKey(name: "sur_name")
+  final String? surName;
+  @override
   final String? description;
   @override
   final String phone;
   @override
-  final Locality address;
+  final String? phone2;
   @override
-  final Employee creator;
+  final Region region;
+  @override
+  final User creator;
   @override
   @JsonKey(name: "created_at")
   final DateTime createdAt;
@@ -265,7 +299,7 @@ class _$_Client implements _Client {
 
   @override
   String toString() {
-    return 'Client(id: $id, firstName: $firstName, lastName: $lastName, description: $description, phone: $phone, address: $address, creator: $creator, createdAt: $createdAt, modifiedAt: $modifiedAt)';
+    return 'Client(id: $id, firstName: $firstName, lastName: $lastName, surName: $surName, description: $description, phone: $phone, phone2: $phone2, region: $region, creator: $creator, createdAt: $createdAt, modifiedAt: $modifiedAt)';
   }
 
   @override
@@ -278,10 +312,12 @@ class _$_Client implements _Client {
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
+            (identical(other.surName, surName) || other.surName == surName) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.address, address) || other.address == address) &&
+            (identical(other.phone2, phone2) || other.phone2 == phone2) &&
+            (identical(other.region, region) || other.region == region) &&
             (identical(other.creator, creator) || other.creator == creator) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -291,8 +327,8 @@ class _$_Client implements _Client {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, firstName, lastName,
-      description, phone, address, creator, createdAt, modifiedAt);
+  int get hashCode => Object.hash(runtimeType, id, firstName, lastName, surName,
+      description, phone, phone2, region, creator, createdAt, modifiedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -313,10 +349,12 @@ abstract class _Client implements Client {
           {required final int id,
           @JsonKey(name: "first_name") required final String firstName,
           @JsonKey(name: "last_name") required final String lastName,
+          @JsonKey(name: "sur_name") required final String? surName,
           required final String? description,
           required final String phone,
-          required final Locality address,
-          required final Employee creator,
+          required final String? phone2,
+          required final Region region,
+          required final User creator,
           @JsonKey(name: "created_at") required final DateTime createdAt,
           @JsonKey(name: "modified_at") required final DateTime modifiedAt}) =
       _$_Client;
@@ -332,13 +370,18 @@ abstract class _Client implements Client {
   @JsonKey(name: "last_name")
   String get lastName;
   @override
+  @JsonKey(name: "sur_name")
+  String? get surName;
+  @override
   String? get description;
   @override
   String get phone;
   @override
-  Locality get address;
+  String? get phone2;
   @override
-  Employee get creator;
+  Region get region;
+  @override
+  User get creator;
   @override
   @JsonKey(name: "created_at")
   DateTime get createdAt;

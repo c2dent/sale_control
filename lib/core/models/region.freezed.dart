@@ -22,6 +22,11 @@ Region _$RegionFromJson(Map<String, dynamic> json) {
 mixin _$Region {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  int get level => throw _privateConstructorUsedError;
+  @JsonKey(name: "children_count")
+  int get childrenCount => throw _privateConstructorUsedError;
+  @JsonKey(name: "full_name")
+  String get fullName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +38,12 @@ abstract class $RegionCopyWith<$Res> {
   factory $RegionCopyWith(Region value, $Res Function(Region) then) =
       _$RegionCopyWithImpl<$Res, Region>;
   @useResult
-  $Res call({int id, String name});
+  $Res call(
+      {int id,
+      String name,
+      int level,
+      @JsonKey(name: "children_count") int childrenCount,
+      @JsonKey(name: "full_name") String fullName});
 }
 
 /// @nodoc
@@ -51,6 +61,9 @@ class _$RegionCopyWithImpl<$Res, $Val extends Region>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? level = null,
+    Object? childrenCount = null,
+    Object? fullName = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -60,6 +73,18 @@ class _$RegionCopyWithImpl<$Res, $Val extends Region>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      level: null == level
+          ? _value.level
+          : level // ignore: cast_nullable_to_non_nullable
+              as int,
+      childrenCount: null == childrenCount
+          ? _value.childrenCount
+          : childrenCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      fullName: null == fullName
+          ? _value.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -71,7 +96,12 @@ abstract class _$$_RegionCopyWith<$Res> implements $RegionCopyWith<$Res> {
       __$$_RegionCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name});
+  $Res call(
+      {int id,
+      String name,
+      int level,
+      @JsonKey(name: "children_count") int childrenCount,
+      @JsonKey(name: "full_name") String fullName});
 }
 
 /// @nodoc
@@ -86,6 +116,9 @@ class __$$_RegionCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? level = null,
+    Object? childrenCount = null,
+    Object? fullName = null,
   }) {
     return _then(_$_Region(
       id: null == id
@@ -96,6 +129,18 @@ class __$$_RegionCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      level: null == level
+          ? _value.level
+          : level // ignore: cast_nullable_to_non_nullable
+              as int,
+      childrenCount: null == childrenCount
+          ? _value.childrenCount
+          : childrenCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      fullName: null == fullName
+          ? _value.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -103,7 +148,12 @@ class __$$_RegionCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Region implements _Region {
-  const _$_Region({required this.id, required this.name});
+  const _$_Region(
+      {required this.id,
+      required this.name,
+      required this.level,
+      @JsonKey(name: "children_count") required this.childrenCount,
+      @JsonKey(name: "full_name") required this.fullName});
 
   factory _$_Region.fromJson(Map<String, dynamic> json) =>
       _$$_RegionFromJson(json);
@@ -112,10 +162,18 @@ class _$_Region implements _Region {
   final int id;
   @override
   final String name;
+  @override
+  final int level;
+  @override
+  @JsonKey(name: "children_count")
+  final int childrenCount;
+  @override
+  @JsonKey(name: "full_name")
+  final String fullName;
 
   @override
   String toString() {
-    return 'Region(id: $id, name: $name)';
+    return 'Region(id: $id, name: $name, level: $level, childrenCount: $childrenCount, fullName: $fullName)';
   }
 
   @override
@@ -124,12 +182,18 @@ class _$_Region implements _Region {
         (other.runtimeType == runtimeType &&
             other is _$_Region &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.level, level) || other.level == level) &&
+            (identical(other.childrenCount, childrenCount) ||
+                other.childrenCount == childrenCount) &&
+            (identical(other.fullName, fullName) ||
+                other.fullName == fullName));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, level, childrenCount, fullName);
 
   @JsonKey(ignore: true)
   @override
@@ -146,8 +210,12 @@ class _$_Region implements _Region {
 }
 
 abstract class _Region implements Region {
-  const factory _Region({required final int id, required final String name}) =
-      _$_Region;
+  const factory _Region(
+      {required final int id,
+      required final String name,
+      required final int level,
+      @JsonKey(name: "children_count") required final int childrenCount,
+      @JsonKey(name: "full_name") required final String fullName}) = _$_Region;
 
   factory _Region.fromJson(Map<String, dynamic> json) = _$_Region.fromJson;
 
@@ -155,6 +223,14 @@ abstract class _Region implements Region {
   int get id;
   @override
   String get name;
+  @override
+  int get level;
+  @override
+  @JsonKey(name: "children_count")
+  int get childrenCount;
+  @override
+  @JsonKey(name: "full_name")
+  String get fullName;
   @override
   @JsonKey(ignore: true)
   _$$_RegionCopyWith<_$_Region> get copyWith =>
