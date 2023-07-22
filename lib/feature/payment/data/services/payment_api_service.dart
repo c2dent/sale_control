@@ -7,7 +7,10 @@ import 'package:hasap_admin/feature/payment/data/payment_models.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class PaymentApiService {
-  Future<Either<CommonResponseError<DefaultApiError>, List<Payment>>> getPayments(Map<String, String> params);
+  Future<Either<CommonResponseError<DefaultApiError>, List<Payment>>> list(Map<String, String> params);
+  Future<Either<CommonResponseError<DefaultApiError>, Payment>> create(Map<String, dynamic> data);
+  Future<Either<CommonResponseError<DefaultApiError>, Payment>> update(int id, Map<String, dynamic> data);
+  Future<Either<CommonResponseError<DefaultApiError>,  Map<String, String>>> delete(int id);
 }
 
 @Singleton(as: PaymentApiService)
@@ -18,18 +21,41 @@ class PaymentApiServiceImpl extends PaymentApiService {
   PaymentApiServiceImpl(@Named(InjectableNames.hasapHttpClient) this._client, this._dioErrorHandler);
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>, List<Payment>>> getPayments(Map<String, String> params) async {
+  Future<Either<CommonResponseError<DefaultApiError>, List<Payment>>> list(Map<String, String> params) async {
     List<Payment> payments = [];
 
     final result = await _dioErrorHandler.processRequest(() => _client.get("/payments/", queryParameters: params));
-
     if (result.isLeft) return Either.left(result.left);
 
     for (var item in result.right.data['results']) {
       payments.add(Payment.fromJson(item));
     }
-
     return Either.right(payments);
+  }
+
+  @override
+  Future<Either<CommonResponseError<DefaultApiError>, Payment>> create(Map<String, dynamic> data) async {
+    final result = await _dioErrorHandler.processRequest(() => _client.post("/payments/", data: data));
+    if (result.isLeft) return Either.left(result.left);
+
+    Payment payment = Payment.fromJson(result.right.data);
+    return Either.right(payment);
+  }
+
+  @override
+  Future<Either<CommonResponseError<DefaultApiError>, Payment>> update(int id, Map<String, dynamic> data) async {
+    final result = await _dioErrorHandler.processRequest(() => _client.put("/payments/$id/", data: data));
+    if (result.isLeft) return Either.left(result.left);
+
+    Payment payment = Payment.fromJson(result.right.data);
+    return Either.right(payment);
+  }
+
+  @override
+  Future<Either<CommonResponseError<DefaultApiError>,  Map<String, String>>> delete(int id) async {
+    final result = await _dioErrorHandler.processRequest(() => _client.delete("/payments/$id/"));
+    if (result.isLeft) return Either.left(result.left);
+    return const Either.right({});
   }
 
 }

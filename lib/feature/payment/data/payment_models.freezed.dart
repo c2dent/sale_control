@@ -21,13 +21,16 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Payment {
   int get id => throw _privateConstructorUsedError;
-  String get sum => throw _privateConstructorUsedError;
+  int get amount => throw _privateConstructorUsedError;
+  @JsonKey(name: "remainder_amount")
+  String get remainderAmount => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
-  Client get client => throw _privateConstructorUsedError;
   Contract get contract => throw _privateConstructorUsedError;
-  String get status => throw _privateConstructorUsedError;
-  @JsonKey(name: "expected_sum")
-  String get expectedSum => throw _privateConstructorUsedError;
+  User get creator => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_confirm")
+  bool get isConfirm => throw _privateConstructorUsedError;
+  @JsonKey(name: "confirm_date")
+  DateTime? get confirmDate => throw _privateConstructorUsedError;
   @JsonKey(name: "created_at")
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: "modified_at")
@@ -45,17 +48,18 @@ abstract class $PaymentCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      String sum,
+      int amount,
+      @JsonKey(name: "remainder_amount") String remainderAmount,
       DateTime date,
-      Client client,
       Contract contract,
-      String status,
-      @JsonKey(name: "expected_sum") String expectedSum,
+      User creator,
+      @JsonKey(name: "is_confirm") bool isConfirm,
+      @JsonKey(name: "confirm_date") DateTime? confirmDate,
       @JsonKey(name: "created_at") DateTime createdAt,
       @JsonKey(name: "modified_at") DateTime modifiedAt});
 
-  $ClientCopyWith<$Res> get client;
   $ContractCopyWith<$Res> get contract;
+  $UserCopyWith<$Res> get creator;
 }
 
 /// @nodoc
@@ -72,12 +76,13 @@ class _$PaymentCopyWithImpl<$Res, $Val extends Payment>
   @override
   $Res call({
     Object? id = null,
-    Object? sum = null,
+    Object? amount = null,
+    Object? remainderAmount = null,
     Object? date = null,
-    Object? client = null,
     Object? contract = null,
-    Object? status = null,
-    Object? expectedSum = null,
+    Object? creator = null,
+    Object? isConfirm = null,
+    Object? confirmDate = freezed,
     Object? createdAt = null,
     Object? modifiedAt = null,
   }) {
@@ -86,30 +91,34 @@ class _$PaymentCopyWithImpl<$Res, $Val extends Payment>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      sum: null == sum
-          ? _value.sum
-          : sum // ignore: cast_nullable_to_non_nullable
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as int,
+      remainderAmount: null == remainderAmount
+          ? _value.remainderAmount
+          : remainderAmount // ignore: cast_nullable_to_non_nullable
               as String,
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      client: null == client
-          ? _value.client
-          : client // ignore: cast_nullable_to_non_nullable
-              as Client,
       contract: null == contract
           ? _value.contract
           : contract // ignore: cast_nullable_to_non_nullable
               as Contract,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      expectedSum: null == expectedSum
-          ? _value.expectedSum
-          : expectedSum // ignore: cast_nullable_to_non_nullable
-              as String,
+      creator: null == creator
+          ? _value.creator
+          : creator // ignore: cast_nullable_to_non_nullable
+              as User,
+      isConfirm: null == isConfirm
+          ? _value.isConfirm
+          : isConfirm // ignore: cast_nullable_to_non_nullable
+              as bool,
+      confirmDate: freezed == confirmDate
+          ? _value.confirmDate
+          : confirmDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -123,17 +132,17 @@ class _$PaymentCopyWithImpl<$Res, $Val extends Payment>
 
   @override
   @pragma('vm:prefer-inline')
-  $ClientCopyWith<$Res> get client {
-    return $ClientCopyWith<$Res>(_value.client, (value) {
-      return _then(_value.copyWith(client: value) as $Val);
+  $ContractCopyWith<$Res> get contract {
+    return $ContractCopyWith<$Res>(_value.contract, (value) {
+      return _then(_value.copyWith(contract: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $ContractCopyWith<$Res> get contract {
-    return $ContractCopyWith<$Res>(_value.contract, (value) {
-      return _then(_value.copyWith(contract: value) as $Val);
+  $UserCopyWith<$Res> get creator {
+    return $UserCopyWith<$Res>(_value.creator, (value) {
+      return _then(_value.copyWith(creator: value) as $Val);
     });
   }
 }
@@ -147,19 +156,20 @@ abstract class _$$_PaymentCopyWith<$Res> implements $PaymentCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      String sum,
+      int amount,
+      @JsonKey(name: "remainder_amount") String remainderAmount,
       DateTime date,
-      Client client,
       Contract contract,
-      String status,
-      @JsonKey(name: "expected_sum") String expectedSum,
+      User creator,
+      @JsonKey(name: "is_confirm") bool isConfirm,
+      @JsonKey(name: "confirm_date") DateTime? confirmDate,
       @JsonKey(name: "created_at") DateTime createdAt,
       @JsonKey(name: "modified_at") DateTime modifiedAt});
 
   @override
-  $ClientCopyWith<$Res> get client;
-  @override
   $ContractCopyWith<$Res> get contract;
+  @override
+  $UserCopyWith<$Res> get creator;
 }
 
 /// @nodoc
@@ -173,12 +183,13 @@ class __$$_PaymentCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? sum = null,
+    Object? amount = null,
+    Object? remainderAmount = null,
     Object? date = null,
-    Object? client = null,
     Object? contract = null,
-    Object? status = null,
-    Object? expectedSum = null,
+    Object? creator = null,
+    Object? isConfirm = null,
+    Object? confirmDate = freezed,
     Object? createdAt = null,
     Object? modifiedAt = null,
   }) {
@@ -187,30 +198,34 @@ class __$$_PaymentCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      sum: null == sum
-          ? _value.sum
-          : sum // ignore: cast_nullable_to_non_nullable
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as int,
+      remainderAmount: null == remainderAmount
+          ? _value.remainderAmount
+          : remainderAmount // ignore: cast_nullable_to_non_nullable
               as String,
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      client: null == client
-          ? _value.client
-          : client // ignore: cast_nullable_to_non_nullable
-              as Client,
       contract: null == contract
           ? _value.contract
           : contract // ignore: cast_nullable_to_non_nullable
               as Contract,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      expectedSum: null == expectedSum
-          ? _value.expectedSum
-          : expectedSum // ignore: cast_nullable_to_non_nullable
-              as String,
+      creator: null == creator
+          ? _value.creator
+          : creator // ignore: cast_nullable_to_non_nullable
+              as User,
+      isConfirm: null == isConfirm
+          ? _value.isConfirm
+          : isConfirm // ignore: cast_nullable_to_non_nullable
+              as bool,
+      confirmDate: freezed == confirmDate
+          ? _value.confirmDate
+          : confirmDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -228,12 +243,13 @@ class __$$_PaymentCopyWithImpl<$Res>
 class _$_Payment implements _Payment {
   const _$_Payment(
       {required this.id,
-      required this.sum,
+      required this.amount,
+      @JsonKey(name: "remainder_amount") required this.remainderAmount,
       required this.date,
-      required this.client,
       required this.contract,
-      required this.status,
-      @JsonKey(name: "expected_sum") required this.expectedSum,
+      required this.creator,
+      @JsonKey(name: "is_confirm") required this.isConfirm,
+      @JsonKey(name: "confirm_date") this.confirmDate,
       @JsonKey(name: "created_at") required this.createdAt,
       @JsonKey(name: "modified_at") required this.modifiedAt});
 
@@ -243,18 +259,22 @@ class _$_Payment implements _Payment {
   @override
   final int id;
   @override
-  final String sum;
+  final int amount;
+  @override
+  @JsonKey(name: "remainder_amount")
+  final String remainderAmount;
   @override
   final DateTime date;
   @override
-  final Client client;
-  @override
   final Contract contract;
   @override
-  final String status;
+  final User creator;
   @override
-  @JsonKey(name: "expected_sum")
-  final String expectedSum;
+  @JsonKey(name: "is_confirm")
+  final bool isConfirm;
+  @override
+  @JsonKey(name: "confirm_date")
+  final DateTime? confirmDate;
   @override
   @JsonKey(name: "created_at")
   final DateTime createdAt;
@@ -264,7 +284,7 @@ class _$_Payment implements _Payment {
 
   @override
   String toString() {
-    return 'Payment(id: $id, sum: $sum, date: $date, client: $client, contract: $contract, status: $status, expectedSum: $expectedSum, createdAt: $createdAt, modifiedAt: $modifiedAt)';
+    return 'Payment(id: $id, amount: $amount, remainderAmount: $remainderAmount, date: $date, contract: $contract, creator: $creator, isConfirm: $isConfirm, confirmDate: $confirmDate, createdAt: $createdAt, modifiedAt: $modifiedAt)';
   }
 
   @override
@@ -273,14 +293,17 @@ class _$_Payment implements _Payment {
         (other.runtimeType == runtimeType &&
             other is _$_Payment &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.sum, sum) || other.sum == sum) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.remainderAmount, remainderAmount) ||
+                other.remainderAmount == remainderAmount) &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.client, client) || other.client == client) &&
             (identical(other.contract, contract) ||
                 other.contract == contract) &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.expectedSum, expectedSum) ||
-                other.expectedSum == expectedSum) &&
+            (identical(other.creator, creator) || other.creator == creator) &&
+            (identical(other.isConfirm, isConfirm) ||
+                other.isConfirm == isConfirm) &&
+            (identical(other.confirmDate, confirmDate) ||
+                other.confirmDate == confirmDate) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.modifiedAt, modifiedAt) ||
@@ -289,8 +312,8 @@ class _$_Payment implements _Payment {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, sum, date, client, contract,
-      status, expectedSum, createdAt, modifiedAt);
+  int get hashCode => Object.hash(runtimeType, id, amount, remainderAmount,
+      date, contract, creator, isConfirm, confirmDate, createdAt, modifiedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -308,34 +331,39 @@ class _$_Payment implements _Payment {
 
 abstract class _Payment implements Payment {
   const factory _Payment(
-          {required final int id,
-          required final String sum,
-          required final DateTime date,
-          required final Client client,
-          required final Contract contract,
-          required final String status,
-          @JsonKey(name: "expected_sum") required final String expectedSum,
-          @JsonKey(name: "created_at") required final DateTime createdAt,
-          @JsonKey(name: "modified_at") required final DateTime modifiedAt}) =
-      _$_Payment;
+      {required final int id,
+      required final int amount,
+      @JsonKey(name: "remainder_amount") required final String remainderAmount,
+      required final DateTime date,
+      required final Contract contract,
+      required final User creator,
+      @JsonKey(name: "is_confirm") required final bool isConfirm,
+      @JsonKey(name: "confirm_date") final DateTime? confirmDate,
+      @JsonKey(name: "created_at") required final DateTime createdAt,
+      @JsonKey(name: "modified_at")
+      required final DateTime modifiedAt}) = _$_Payment;
 
   factory _Payment.fromJson(Map<String, dynamic> json) = _$_Payment.fromJson;
 
   @override
   int get id;
   @override
-  String get sum;
+  int get amount;
+  @override
+  @JsonKey(name: "remainder_amount")
+  String get remainderAmount;
   @override
   DateTime get date;
   @override
-  Client get client;
-  @override
   Contract get contract;
   @override
-  String get status;
+  User get creator;
   @override
-  @JsonKey(name: "expected_sum")
-  String get expectedSum;
+  @JsonKey(name: "is_confirm")
+  bool get isConfirm;
+  @override
+  @JsonKey(name: "confirm_date")
+  DateTime? get confirmDate;
   @override
   @JsonKey(name: "created_at")
   DateTime get createdAt;

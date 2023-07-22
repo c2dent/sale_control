@@ -3,22 +3,56 @@ import 'package:hasap_admin/arch/functional_models/either.dart';
 import 'package:hasap_admin/core/models/employee.dart';
 import 'package:hasap_admin/core/models/filter.dart';
 import 'package:hasap_admin/core/repositories/employee_repository.dart';
+import 'package:hasap_admin/feature/contract/data/contract_models.dart';
+import 'package:hasap_admin/feature/contract/data/contract_repository.dart';
 import 'package:hasap_admin/feature/payment/data/payment_models.dart';
 import 'package:hasap_admin/feature/payment/data/payment_repository.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class PaymentInteractor {
-  Future<Either<CommonResponseError<DefaultApiError>, List<Payment>>> getPayments({required List<Filter> filters});
+  Future<Either<CommonResponseError<DefaultApiError>, List<Payment>>> list({required List<Filter> filters});
+  Future<Either<CommonResponseError<DefaultApiError>, Payment>> create(Map<String, dynamic> data);
+  Future<Either<CommonResponseError<DefaultApiError>, Payment>> update(int id, Map<String, dynamic> data);
+  Future<Either<CommonResponseError<DefaultApiError>,  Map<String, String>>> delete(int id);
 
   Future<List<Employee>> getEmployees(Map<String, String>? params);
+  Future<List<Contract>> getContracts();
 }
 
 @Singleton(as: PaymentInteractor)
 class PaymentInteractorImpl extends PaymentInteractor {
   final EmployeeRepository employeeRepository;
-  final PaymentRepository paymentRepository;
+  final ContractRepository contractRepository;
+  final PaymentRepository repository;
 
-  PaymentInteractorImpl(this.paymentRepository, this.employeeRepository);
+  PaymentInteractorImpl(this.repository, this.employeeRepository, this.contractRepository);
+
+  @override
+  Future<Either<CommonResponseError<DefaultApiError>, List<Payment>>> list({required List<Filter> filters}) {
+    Map<String, String> params = {};
+    for (Filter filter in filters) {
+      if (filter.filterWidget.value != null) {
+        params[filter.parameterName] = filter.parameterValue(filter.filterWidget.value);
+      }
+    }
+
+    return repository.list(params);
+  }
+
+  @override
+  Future<Either<CommonResponseError<DefaultApiError>, Payment>> create(Map<String, dynamic> data) {
+    return repository.create(data);
+  }
+
+  @override
+  Future<Either<CommonResponseError<DefaultApiError>, Payment>> update(int id, Map<String, dynamic> data) {
+    return repository.update(id, data);
+  }
+
+  @override
+  Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(int id) {
+    return repository.delete(id);
+  }
 
   @override
   Future<List<Employee>> getEmployees(Map<String, String>? params) async {
@@ -32,15 +66,9 @@ class PaymentInteractorImpl extends PaymentInteractor {
   }
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>, List<Payment>>> getPayments({required List<Filter> filters}) async {
-    Map<String, String> params = {};
-
-    for (Filter filter in filters) {
-      if (filter.filterWidget.value != null) {
-        params[filter.parameterName] = filter.parameterValue(filter.filterWidget.value);
-      }
-    }
-
-    return paymentRepository.getPayments(params);
+  Future<List<Contract>> getContracts() async {
+    final result = await contractRepository.list({});
+    if (result.isLeft) return [];
+    return result.right;
   }
 }

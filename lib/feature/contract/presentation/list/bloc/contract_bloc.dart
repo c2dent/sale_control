@@ -33,7 +33,7 @@ class ContractBloc extends SrBloc<ContractEvent, ContractState, ContractSR> {
       ),
     ];
 
-    final result = await contractInteractor.getContracts(filters: filters);
+    final result = await contractInteractor.list(filters: filters);
 
     if (result.isLeft) {
       addSr(ContractSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
@@ -56,7 +56,7 @@ class ContractBloc extends SrBloc<ContractEvent, ContractState, ContractSR> {
       item.clear();
     }
 
-    final result = await contractInteractor.getContracts(filters: state.data.filters);
+    final result = await contractInteractor.list(filters: state.data.filters);
 
     if (result.isLeft) {
       addSr(ContractSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
@@ -69,7 +69,7 @@ class ContractBloc extends SrBloc<ContractEvent, ContractState, ContractSR> {
   FutureOr<void> _filter(ContractEventFilter event, Emitter<ContractState> emit) async {
     emit(state.data.copyWith(isLoading: true));
 
-    final result = await contractInteractor.getContracts(filters: state.data.filters);
+    final result = await contractInteractor.list(filters: state.data.filters);
 
     if (result.isLeft) {
       addSr(ContractSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));

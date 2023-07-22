@@ -21,6 +21,7 @@ mixin _$PaymentEvent {
     required TResult Function() init,
     required TResult Function() filter,
     required TResult Function() resetFilter,
+    required TResult Function(Payment payment) delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -28,6 +29,7 @@ mixin _$PaymentEvent {
     TResult? Function()? init,
     TResult? Function()? filter,
     TResult? Function()? resetFilter,
+    TResult? Function(Payment payment)? delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,6 +37,7 @@ mixin _$PaymentEvent {
     TResult Function()? init,
     TResult Function()? filter,
     TResult Function()? resetFilter,
+    TResult Function(Payment payment)? delete,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -43,6 +46,7 @@ mixin _$PaymentEvent {
     required TResult Function(PaymentEventInit value) init,
     required TResult Function(PaymentEventFilter value) filter,
     required TResult Function(PaymentEventResetFilter value) resetFilter,
+    required TResult Function(PaymentEventDelete value) delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,6 +54,7 @@ mixin _$PaymentEvent {
     TResult? Function(PaymentEventInit value)? init,
     TResult? Function(PaymentEventFilter value)? filter,
     TResult? Function(PaymentEventResetFilter value)? resetFilter,
+    TResult? Function(PaymentEventDelete value)? delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +62,7 @@ mixin _$PaymentEvent {
     TResult Function(PaymentEventInit value)? init,
     TResult Function(PaymentEventFilter value)? filter,
     TResult Function(PaymentEventResetFilter value)? resetFilter,
+    TResult Function(PaymentEventDelete value)? delete,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -121,6 +127,7 @@ class _$PaymentEventInit implements PaymentEventInit {
     required TResult Function() init,
     required TResult Function() filter,
     required TResult Function() resetFilter,
+    required TResult Function(Payment payment) delete,
   }) {
     return init();
   }
@@ -131,6 +138,7 @@ class _$PaymentEventInit implements PaymentEventInit {
     TResult? Function()? init,
     TResult? Function()? filter,
     TResult? Function()? resetFilter,
+    TResult? Function(Payment payment)? delete,
   }) {
     return init?.call();
   }
@@ -141,6 +149,7 @@ class _$PaymentEventInit implements PaymentEventInit {
     TResult Function()? init,
     TResult Function()? filter,
     TResult Function()? resetFilter,
+    TResult Function(Payment payment)? delete,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -155,6 +164,7 @@ class _$PaymentEventInit implements PaymentEventInit {
     required TResult Function(PaymentEventInit value) init,
     required TResult Function(PaymentEventFilter value) filter,
     required TResult Function(PaymentEventResetFilter value) resetFilter,
+    required TResult Function(PaymentEventDelete value) delete,
   }) {
     return init(this);
   }
@@ -165,6 +175,7 @@ class _$PaymentEventInit implements PaymentEventInit {
     TResult? Function(PaymentEventInit value)? init,
     TResult? Function(PaymentEventFilter value)? filter,
     TResult? Function(PaymentEventResetFilter value)? resetFilter,
+    TResult? Function(PaymentEventDelete value)? delete,
   }) {
     return init?.call(this);
   }
@@ -175,6 +186,7 @@ class _$PaymentEventInit implements PaymentEventInit {
     TResult Function(PaymentEventInit value)? init,
     TResult Function(PaymentEventFilter value)? filter,
     TResult Function(PaymentEventResetFilter value)? resetFilter,
+    TResult Function(PaymentEventDelete value)? delete,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -229,6 +241,7 @@ class _$PaymentEventFilter implements PaymentEventFilter {
     required TResult Function() init,
     required TResult Function() filter,
     required TResult Function() resetFilter,
+    required TResult Function(Payment payment) delete,
   }) {
     return filter();
   }
@@ -239,6 +252,7 @@ class _$PaymentEventFilter implements PaymentEventFilter {
     TResult? Function()? init,
     TResult? Function()? filter,
     TResult? Function()? resetFilter,
+    TResult? Function(Payment payment)? delete,
   }) {
     return filter?.call();
   }
@@ -249,6 +263,7 @@ class _$PaymentEventFilter implements PaymentEventFilter {
     TResult Function()? init,
     TResult Function()? filter,
     TResult Function()? resetFilter,
+    TResult Function(Payment payment)? delete,
     required TResult orElse(),
   }) {
     if (filter != null) {
@@ -263,6 +278,7 @@ class _$PaymentEventFilter implements PaymentEventFilter {
     required TResult Function(PaymentEventInit value) init,
     required TResult Function(PaymentEventFilter value) filter,
     required TResult Function(PaymentEventResetFilter value) resetFilter,
+    required TResult Function(PaymentEventDelete value) delete,
   }) {
     return filter(this);
   }
@@ -273,6 +289,7 @@ class _$PaymentEventFilter implements PaymentEventFilter {
     TResult? Function(PaymentEventInit value)? init,
     TResult? Function(PaymentEventFilter value)? filter,
     TResult? Function(PaymentEventResetFilter value)? resetFilter,
+    TResult? Function(PaymentEventDelete value)? delete,
   }) {
     return filter?.call(this);
   }
@@ -283,6 +300,7 @@ class _$PaymentEventFilter implements PaymentEventFilter {
     TResult Function(PaymentEventInit value)? init,
     TResult Function(PaymentEventFilter value)? filter,
     TResult Function(PaymentEventResetFilter value)? resetFilter,
+    TResult Function(PaymentEventDelete value)? delete,
     required TResult orElse(),
   }) {
     if (filter != null) {
@@ -338,6 +356,7 @@ class _$PaymentEventResetFilter implements PaymentEventResetFilter {
     required TResult Function() init,
     required TResult Function() filter,
     required TResult Function() resetFilter,
+    required TResult Function(Payment payment) delete,
   }) {
     return resetFilter();
   }
@@ -348,6 +367,7 @@ class _$PaymentEventResetFilter implements PaymentEventResetFilter {
     TResult? Function()? init,
     TResult? Function()? filter,
     TResult? Function()? resetFilter,
+    TResult? Function(Payment payment)? delete,
   }) {
     return resetFilter?.call();
   }
@@ -358,6 +378,7 @@ class _$PaymentEventResetFilter implements PaymentEventResetFilter {
     TResult Function()? init,
     TResult Function()? filter,
     TResult Function()? resetFilter,
+    TResult Function(Payment payment)? delete,
     required TResult orElse(),
   }) {
     if (resetFilter != null) {
@@ -372,6 +393,7 @@ class _$PaymentEventResetFilter implements PaymentEventResetFilter {
     required TResult Function(PaymentEventInit value) init,
     required TResult Function(PaymentEventFilter value) filter,
     required TResult Function(PaymentEventResetFilter value) resetFilter,
+    required TResult Function(PaymentEventDelete value) delete,
   }) {
     return resetFilter(this);
   }
@@ -382,6 +404,7 @@ class _$PaymentEventResetFilter implements PaymentEventResetFilter {
     TResult? Function(PaymentEventInit value)? init,
     TResult? Function(PaymentEventFilter value)? filter,
     TResult? Function(PaymentEventResetFilter value)? resetFilter,
+    TResult? Function(PaymentEventDelete value)? delete,
   }) {
     return resetFilter?.call(this);
   }
@@ -392,6 +415,7 @@ class _$PaymentEventResetFilter implements PaymentEventResetFilter {
     TResult Function(PaymentEventInit value)? init,
     TResult Function(PaymentEventFilter value)? filter,
     TResult Function(PaymentEventResetFilter value)? resetFilter,
+    TResult Function(PaymentEventDelete value)? delete,
     required TResult orElse(),
   }) {
     if (resetFilter != null) {
@@ -406,13 +430,171 @@ abstract class PaymentEventResetFilter implements PaymentEvent {
 }
 
 /// @nodoc
+abstract class _$$PaymentEventDeleteCopyWith<$Res> {
+  factory _$$PaymentEventDeleteCopyWith(_$PaymentEventDelete value,
+          $Res Function(_$PaymentEventDelete) then) =
+      __$$PaymentEventDeleteCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Payment payment});
+
+  $PaymentCopyWith<$Res> get payment;
+}
+
+/// @nodoc
+class __$$PaymentEventDeleteCopyWithImpl<$Res>
+    extends _$PaymentEventCopyWithImpl<$Res, _$PaymentEventDelete>
+    implements _$$PaymentEventDeleteCopyWith<$Res> {
+  __$$PaymentEventDeleteCopyWithImpl(
+      _$PaymentEventDelete _value, $Res Function(_$PaymentEventDelete) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? payment = null,
+  }) {
+    return _then(_$PaymentEventDelete(
+      payment: null == payment
+          ? _value.payment
+          : payment // ignore: cast_nullable_to_non_nullable
+              as Payment,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PaymentCopyWith<$Res> get payment {
+    return $PaymentCopyWith<$Res>(_value.payment, (value) {
+      return _then(_value.copyWith(payment: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$PaymentEventDelete implements PaymentEventDelete {
+  const _$PaymentEventDelete({required this.payment});
+
+  @override
+  final Payment payment;
+
+  @override
+  String toString() {
+    return 'PaymentEvent.delete(payment: $payment)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PaymentEventDelete &&
+            (identical(other.payment, payment) || other.payment == payment));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, payment);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PaymentEventDeleteCopyWith<_$PaymentEventDelete> get copyWith =>
+      __$$PaymentEventDeleteCopyWithImpl<_$PaymentEventDelete>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() filter,
+    required TResult Function() resetFilter,
+    required TResult Function(Payment payment) delete,
+  }) {
+    return delete(payment);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? filter,
+    TResult? Function()? resetFilter,
+    TResult? Function(Payment payment)? delete,
+  }) {
+    return delete?.call(payment);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? filter,
+    TResult Function()? resetFilter,
+    TResult Function(Payment payment)? delete,
+    required TResult orElse(),
+  }) {
+    if (delete != null) {
+      return delete(payment);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PaymentEventInit value) init,
+    required TResult Function(PaymentEventFilter value) filter,
+    required TResult Function(PaymentEventResetFilter value) resetFilter,
+    required TResult Function(PaymentEventDelete value) delete,
+  }) {
+    return delete(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PaymentEventInit value)? init,
+    TResult? Function(PaymentEventFilter value)? filter,
+    TResult? Function(PaymentEventResetFilter value)? resetFilter,
+    TResult? Function(PaymentEventDelete value)? delete,
+  }) {
+    return delete?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PaymentEventInit value)? init,
+    TResult Function(PaymentEventFilter value)? filter,
+    TResult Function(PaymentEventResetFilter value)? resetFilter,
+    TResult Function(PaymentEventDelete value)? delete,
+    required TResult orElse(),
+  }) {
+    if (delete != null) {
+      return delete(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PaymentEventDelete implements PaymentEvent {
+  const factory PaymentEventDelete({required final Payment payment}) =
+      _$PaymentEventDelete;
+
+  Payment get payment;
+  @JsonKey(ignore: true)
+  _$$PaymentEventDeleteCopyWith<_$PaymentEventDelete> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$PaymentSR {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CommonResponseError<DefaultApiError> error,
             NotifyErrorSnackbar notifyErrorSnackbar)
         showDioError,
-    required TResult Function(String text) showSuccessSnackbar,
+    required TResult Function(String text) successNotify,
+    required TResult Function(Payment payment) delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -420,7 +602,8 @@ mixin _$PaymentSR {
     TResult? Function(CommonResponseError<DefaultApiError> error,
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
-    TResult? Function(String text)? showSuccessSnackbar,
+    TResult? Function(String text)? successNotify,
+    TResult? Function(Payment payment)? delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -428,26 +611,30 @@ mixin _$PaymentSR {
     TResult Function(CommonResponseError<DefaultApiError> error,
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
-    TResult Function(String text)? showSuccessSnackbar,
+    TResult Function(String text)? successNotify,
+    TResult Function(Payment payment)? delete,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_ShowDioErrorSnackbar value) showDioError,
-    required TResult Function(_ShowClipboardSuccess value) showSuccessSnackbar,
+    required TResult Function(_SuccessNotify value) successNotify,
+    required TResult Function(_PaymentDeleted value) delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ShowDioErrorSnackbar value)? showDioError,
-    TResult? Function(_ShowClipboardSuccess value)? showSuccessSnackbar,
+    TResult? Function(_SuccessNotify value)? successNotify,
+    TResult? Function(_PaymentDeleted value)? delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ShowDioErrorSnackbar value)? showDioError,
-    TResult Function(_ShowClipboardSuccess value)? showSuccessSnackbar,
+    TResult Function(_SuccessNotify value)? successNotify,
+    TResult Function(_PaymentDeleted value)? delete,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -561,7 +748,8 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
     required TResult Function(CommonResponseError<DefaultApiError> error,
             NotifyErrorSnackbar notifyErrorSnackbar)
         showDioError,
-    required TResult Function(String text) showSuccessSnackbar,
+    required TResult Function(String text) successNotify,
+    required TResult Function(Payment payment) delete,
   }) {
     return showDioError(error, notifyErrorSnackbar);
   }
@@ -572,7 +760,8 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
     TResult? Function(CommonResponseError<DefaultApiError> error,
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
-    TResult? Function(String text)? showSuccessSnackbar,
+    TResult? Function(String text)? successNotify,
+    TResult? Function(Payment payment)? delete,
   }) {
     return showDioError?.call(error, notifyErrorSnackbar);
   }
@@ -583,7 +772,8 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
     TResult Function(CommonResponseError<DefaultApiError> error,
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
-    TResult Function(String text)? showSuccessSnackbar,
+    TResult Function(String text)? successNotify,
+    TResult Function(Payment payment)? delete,
     required TResult orElse(),
   }) {
     if (showDioError != null) {
@@ -596,7 +786,8 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_ShowDioErrorSnackbar value) showDioError,
-    required TResult Function(_ShowClipboardSuccess value) showSuccessSnackbar,
+    required TResult Function(_SuccessNotify value) successNotify,
+    required TResult Function(_PaymentDeleted value) delete,
   }) {
     return showDioError(this);
   }
@@ -605,7 +796,8 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ShowDioErrorSnackbar value)? showDioError,
-    TResult? Function(_ShowClipboardSuccess value)? showSuccessSnackbar,
+    TResult? Function(_SuccessNotify value)? successNotify,
+    TResult? Function(_PaymentDeleted value)? delete,
   }) {
     return showDioError?.call(this);
   }
@@ -614,7 +806,8 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ShowDioErrorSnackbar value)? showDioError,
-    TResult Function(_ShowClipboardSuccess value)? showSuccessSnackbar,
+    TResult Function(_SuccessNotify value)? successNotify,
+    TResult Function(_PaymentDeleted value)? delete,
     required TResult orElse(),
   }) {
     if (showDioError != null) {
@@ -638,20 +831,20 @@ abstract class _ShowDioErrorSnackbar implements PaymentSR {
 }
 
 /// @nodoc
-abstract class _$$_ShowClipboardSuccessCopyWith<$Res> {
-  factory _$$_ShowClipboardSuccessCopyWith(_$_ShowClipboardSuccess value,
-          $Res Function(_$_ShowClipboardSuccess) then) =
-      __$$_ShowClipboardSuccessCopyWithImpl<$Res>;
+abstract class _$$_SuccessNotifyCopyWith<$Res> {
+  factory _$$_SuccessNotifyCopyWith(
+          _$_SuccessNotify value, $Res Function(_$_SuccessNotify) then) =
+      __$$_SuccessNotifyCopyWithImpl<$Res>;
   @useResult
   $Res call({String text});
 }
 
 /// @nodoc
-class __$$_ShowClipboardSuccessCopyWithImpl<$Res>
-    extends _$PaymentSRCopyWithImpl<$Res, _$_ShowClipboardSuccess>
-    implements _$$_ShowClipboardSuccessCopyWith<$Res> {
-  __$$_ShowClipboardSuccessCopyWithImpl(_$_ShowClipboardSuccess _value,
-      $Res Function(_$_ShowClipboardSuccess) _then)
+class __$$_SuccessNotifyCopyWithImpl<$Res>
+    extends _$PaymentSRCopyWithImpl<$Res, _$_SuccessNotify>
+    implements _$$_SuccessNotifyCopyWith<$Res> {
+  __$$_SuccessNotifyCopyWithImpl(
+      _$_SuccessNotify _value, $Res Function(_$_SuccessNotify) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -659,7 +852,7 @@ class __$$_ShowClipboardSuccessCopyWithImpl<$Res>
   $Res call({
     Object? text = null,
   }) {
-    return _then(_$_ShowClipboardSuccess(
+    return _then(_$_SuccessNotify(
       text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
@@ -670,22 +863,22 @@ class __$$_ShowClipboardSuccessCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ShowClipboardSuccess implements _ShowClipboardSuccess {
-  const _$_ShowClipboardSuccess({required this.text});
+class _$_SuccessNotify implements _SuccessNotify {
+  const _$_SuccessNotify({required this.text});
 
   @override
   final String text;
 
   @override
   String toString() {
-    return 'PaymentSR.showSuccessSnackbar(text: $text)';
+    return 'PaymentSR.successNotify(text: $text)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ShowClipboardSuccess &&
+            other is _$_SuccessNotify &&
             (identical(other.text, text) || other.text == text));
   }
 
@@ -695,9 +888,8 @@ class _$_ShowClipboardSuccess implements _ShowClipboardSuccess {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ShowClipboardSuccessCopyWith<_$_ShowClipboardSuccess> get copyWith =>
-      __$$_ShowClipboardSuccessCopyWithImpl<_$_ShowClipboardSuccess>(
-          this, _$identity);
+  _$$_SuccessNotifyCopyWith<_$_SuccessNotify> get copyWith =>
+      __$$_SuccessNotifyCopyWithImpl<_$_SuccessNotify>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -705,9 +897,10 @@ class _$_ShowClipboardSuccess implements _ShowClipboardSuccess {
     required TResult Function(CommonResponseError<DefaultApiError> error,
             NotifyErrorSnackbar notifyErrorSnackbar)
         showDioError,
-    required TResult Function(String text) showSuccessSnackbar,
+    required TResult Function(String text) successNotify,
+    required TResult Function(Payment payment) delete,
   }) {
-    return showSuccessSnackbar(text);
+    return successNotify(text);
   }
 
   @override
@@ -716,9 +909,10 @@ class _$_ShowClipboardSuccess implements _ShowClipboardSuccess {
     TResult? Function(CommonResponseError<DefaultApiError> error,
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
-    TResult? Function(String text)? showSuccessSnackbar,
+    TResult? Function(String text)? successNotify,
+    TResult? Function(Payment payment)? delete,
   }) {
-    return showSuccessSnackbar?.call(text);
+    return successNotify?.call(text);
   }
 
   @override
@@ -727,11 +921,12 @@ class _$_ShowClipboardSuccess implements _ShowClipboardSuccess {
     TResult Function(CommonResponseError<DefaultApiError> error,
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
-    TResult Function(String text)? showSuccessSnackbar,
+    TResult Function(String text)? successNotify,
+    TResult Function(Payment payment)? delete,
     required TResult orElse(),
   }) {
-    if (showSuccessSnackbar != null) {
-      return showSuccessSnackbar(text);
+    if (successNotify != null) {
+      return successNotify(text);
     }
     return orElse();
   }
@@ -740,41 +935,199 @@ class _$_ShowClipboardSuccess implements _ShowClipboardSuccess {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_ShowDioErrorSnackbar value) showDioError,
-    required TResult Function(_ShowClipboardSuccess value) showSuccessSnackbar,
+    required TResult Function(_SuccessNotify value) successNotify,
+    required TResult Function(_PaymentDeleted value) delete,
   }) {
-    return showSuccessSnackbar(this);
+    return successNotify(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ShowDioErrorSnackbar value)? showDioError,
-    TResult? Function(_ShowClipboardSuccess value)? showSuccessSnackbar,
+    TResult? Function(_SuccessNotify value)? successNotify,
+    TResult? Function(_PaymentDeleted value)? delete,
   }) {
-    return showSuccessSnackbar?.call(this);
+    return successNotify?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ShowDioErrorSnackbar value)? showDioError,
-    TResult Function(_ShowClipboardSuccess value)? showSuccessSnackbar,
+    TResult Function(_SuccessNotify value)? successNotify,
+    TResult Function(_PaymentDeleted value)? delete,
     required TResult orElse(),
   }) {
-    if (showSuccessSnackbar != null) {
-      return showSuccessSnackbar(this);
+    if (successNotify != null) {
+      return successNotify(this);
     }
     return orElse();
   }
 }
 
-abstract class _ShowClipboardSuccess implements PaymentSR {
-  const factory _ShowClipboardSuccess({required final String text}) =
-      _$_ShowClipboardSuccess;
+abstract class _SuccessNotify implements PaymentSR {
+  const factory _SuccessNotify({required final String text}) = _$_SuccessNotify;
 
   String get text;
   @JsonKey(ignore: true)
-  _$$_ShowClipboardSuccessCopyWith<_$_ShowClipboardSuccess> get copyWith =>
+  _$$_SuccessNotifyCopyWith<_$_SuccessNotify> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_PaymentDeletedCopyWith<$Res> {
+  factory _$$_PaymentDeletedCopyWith(
+          _$_PaymentDeleted value, $Res Function(_$_PaymentDeleted) then) =
+      __$$_PaymentDeletedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Payment payment});
+
+  $PaymentCopyWith<$Res> get payment;
+}
+
+/// @nodoc
+class __$$_PaymentDeletedCopyWithImpl<$Res>
+    extends _$PaymentSRCopyWithImpl<$Res, _$_PaymentDeleted>
+    implements _$$_PaymentDeletedCopyWith<$Res> {
+  __$$_PaymentDeletedCopyWithImpl(
+      _$_PaymentDeleted _value, $Res Function(_$_PaymentDeleted) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? payment = null,
+  }) {
+    return _then(_$_PaymentDeleted(
+      payment: null == payment
+          ? _value.payment
+          : payment // ignore: cast_nullable_to_non_nullable
+              as Payment,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PaymentCopyWith<$Res> get payment {
+    return $PaymentCopyWith<$Res>(_value.payment, (value) {
+      return _then(_value.copyWith(payment: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$_PaymentDeleted implements _PaymentDeleted {
+  const _$_PaymentDeleted({required this.payment});
+
+  @override
+  final Payment payment;
+
+  @override
+  String toString() {
+    return 'PaymentSR.delete(payment: $payment)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_PaymentDeleted &&
+            (identical(other.payment, payment) || other.payment == payment));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, payment);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PaymentDeletedCopyWith<_$_PaymentDeleted> get copyWith =>
+      __$$_PaymentDeletedCopyWithImpl<_$_PaymentDeleted>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(CommonResponseError<DefaultApiError> error,
+            NotifyErrorSnackbar notifyErrorSnackbar)
+        showDioError,
+    required TResult Function(String text) successNotify,
+    required TResult Function(Payment payment) delete,
+  }) {
+    return delete(payment);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(CommonResponseError<DefaultApiError> error,
+            NotifyErrorSnackbar notifyErrorSnackbar)?
+        showDioError,
+    TResult? Function(String text)? successNotify,
+    TResult? Function(Payment payment)? delete,
+  }) {
+    return delete?.call(payment);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(CommonResponseError<DefaultApiError> error,
+            NotifyErrorSnackbar notifyErrorSnackbar)?
+        showDioError,
+    TResult Function(String text)? successNotify,
+    TResult Function(Payment payment)? delete,
+    required TResult orElse(),
+  }) {
+    if (delete != null) {
+      return delete(payment);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ShowDioErrorSnackbar value) showDioError,
+    required TResult Function(_SuccessNotify value) successNotify,
+    required TResult Function(_PaymentDeleted value) delete,
+  }) {
+    return delete(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ShowDioErrorSnackbar value)? showDioError,
+    TResult? Function(_SuccessNotify value)? successNotify,
+    TResult? Function(_PaymentDeleted value)? delete,
+  }) {
+    return delete?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ShowDioErrorSnackbar value)? showDioError,
+    TResult Function(_SuccessNotify value)? successNotify,
+    TResult Function(_PaymentDeleted value)? delete,
+    required TResult orElse(),
+  }) {
+    if (delete != null) {
+      return delete(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _PaymentDeleted implements PaymentSR {
+  const factory _PaymentDeleted({required final Payment payment}) =
+      _$_PaymentDeleted;
+
+  Payment get payment;
+  @JsonKey(ignore: true)
+  _$$_PaymentDeletedCopyWith<_$_PaymentDeleted> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

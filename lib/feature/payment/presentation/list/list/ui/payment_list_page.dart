@@ -6,11 +6,14 @@ import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/widgets/drawer_menu.dart';
 import 'package:hasap_admin/core/widgets/filter_modal.dart';
+import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
+import 'package:hasap_admin/core/widgets/utils.dart';
 import 'package:hasap_admin/feature/client/data/client_models.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/payment/data/payment_models.dart';
-import 'package:hasap_admin/feature/payment/presentation/list/bloc/payment_bloc.dart';
-import 'package:hasap_admin/feature/payment/presentation/list/bloc/payment_bloc_models.dart';
+import 'package:hasap_admin/feature/payment/presentation/list/create/ui/payment_create_page.dart';
+import 'package:hasap_admin/feature/payment/presentation/list/list/bloc/payment_bloc.dart';
+import 'package:hasap_admin/feature/payment/presentation/list/list/bloc/payment_bloc_models.dart';
 
 @RoutePage()
 class PaymentListPage extends StatelessWidget {
@@ -24,6 +27,7 @@ class PaymentListPage extends StatelessWidget {
         onSR: _onSingleResult,
         builder: (context, state) {
           final bloc = context.read<PaymentBloc>();
+          AppTheme theme = AppTheme.of(context);
 
           return Scaffold(
             appBar: AppBar(
@@ -40,6 +44,20 @@ class PaymentListPage extends StatelessWidget {
               ],
             ),
             drawer: const DrawerMenu(),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () async {
+                  Payment? payment = await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const PaymentCreatePage()),
+                  );
+
+                  if (payment != null) {
+                    bloc.add(const PaymentEvent.filter());
+                  }
+                },
+                backgroundColor: theme.colorTheme.primary,
+                child: const Icon(Icons.add_circle_outline),
+              ),
             body: state.map(
               empty: (_) => const Center(child: CircularProgressIndicator()),
               data: (state) => _PaymentPage(state: state),
@@ -51,9 +69,12 @@ class PaymentListPage extends StatelessWidget {
   }
 
   void _onSingleResult(BuildContext context, PaymentSR sr) {
+    final bloc = context.read<PaymentBloc>();
+
     sr.when(
       showDioError: (error, notifier) => notifier.notify(error, context),
-      showSuccessSnackbar: (String text) {  },
+      successNotify: (text) => SuccessSnackbar.show(context: context, text: text),
+      delete: (client) => bloc.add(const PaymentEvent.filter()),
     );
   }
 }
@@ -66,6 +87,8 @@ class _PaymentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppTheme theme = AppTheme.of(context);
+    Offset tapPosition = Offset.zero;
+    final bloc = context.read<PaymentBloc>();
 
     if (state.data.isLoading) {
       return const Center(child: CircularProgressIndicator());
@@ -87,31 +110,47 @@ class _PaymentPage extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 5),
-
           Expanded(
             child: ListView.builder(
               itemCount: state.data.payments.length,
               itemBuilder: (BuildContext context, int index){
                 Payment payment = state.data.payments[index];
-                Client client = payment.client;
+                Client client = payment.contract.client;
                 Contract contract = payment.contract;
 
-                return Card(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "${client.firstName} ${client.lastName}",
-                              style: theme.textTheme.title1.copyWith(color: theme.colorTheme.textPrimary),
-                            ),
-                            Text("${payment.sum} TMT")
-                          ],
-                        )
-                      ],
+                return GestureDetector(
+                  onLongPress: () => showContextMenu(context, tapPosition,
+                      edit: () async {
+                        // Payment? updatedPayment = await Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => ClientCreatePage(client: client)),
+                        // );
+                        //
+                        // if (updatedClient != null) {
+                        //   bloc.add(const ClientEvent.filter());
+                        // }
+                      },
+                      delete: () => bloc.add(PaymentEvent.delete(payment: payment))),
+                  onTapDown: ((details) {
+                    tapPosition = Offset(details.globalPosition.dx, details.globalPosition.dy);
+                  }),
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${client.firstName} ${client.lastName}",
+                                style: theme.textTheme.title1.copyWith(color: theme.colorTheme.textPrimary),
+                              ),
+                              Text("${payment.amount} TMT")
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );

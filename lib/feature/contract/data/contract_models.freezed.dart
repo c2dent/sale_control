@@ -22,29 +22,32 @@ Contract _$ContractFromJson(Map<String, dynamic> json) {
 mixin _$Contract {
   int get id => throw _privateConstructorUsedError;
   Client get client => throw _privateConstructorUsedError;
-  Locality get locality => throw _privateConstructorUsedError;
+  Region get region => throw _privateConstructorUsedError;
   Employee get advertiser => throw _privateConstructorUsedError;
-  @JsonKey(name: "task_master")
-  Employee get taskMaster => throw _privateConstructorUsedError;
   @JsonKey(name: "count_filter")
   int get countFilter => throw _privateConstructorUsedError;
-  @JsonKey(name: "due_date_on_month")
-  int get dueDateOnMonth => throw _privateConstructorUsedError;
+  @JsonKey(name: "month_count")
+  int get monthCount => throw _privateConstructorUsedError;
   @JsonKey(name: "cost_price")
   int get costPrice => throw _privateConstructorUsedError;
-  @JsonKey(name: "sum_contract")
-  int get sumContract => throw _privateConstructorUsedError;
+  @JsonKey(name: "due_date_on_month")
+  int get dueDateOnMonth => throw _privateConstructorUsedError;
+  @JsonKey(name: "price_amount")
+  int get priceAmount => throw _privateConstructorUsedError;
   @JsonKey(name: "start_contribution")
   int get startContribution => throw _privateConstructorUsedError;
-  @JsonKey(name: "setup_date")
-  DateTime get setupDate => throw _privateConstructorUsedError;
+  User get creator => throw _privateConstructorUsedError;
   @JsonKey(name: "remaining_months")
   int get remainingMonths => throw _privateConstructorUsedError;
   @JsonKey(name: "remaining_sum")
   int get remainingSum => throw _privateConstructorUsedError;
-  bool get closed => throw _privateConstructorUsedError;
+  @JsonKey(name: "setup_date")
+  DateTime get setupDate => throw _privateConstructorUsedError;
   @JsonKey(name: "is_confirm")
   bool get isConfirm => throw _privateConstructorUsedError;
+  @JsonKey(name: "confirm_date")
+  DateTime get confirmDate => throw _privateConstructorUsedError;
+  bool get closed => throw _privateConstructorUsedError;
   @JsonKey(name: "created_at")
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: "modified_at")
@@ -64,26 +67,28 @@ abstract class $ContractCopyWith<$Res> {
   $Res call(
       {int id,
       Client client,
-      Locality locality,
+      Region region,
       Employee advertiser,
-      @JsonKey(name: "task_master") Employee taskMaster,
       @JsonKey(name: "count_filter") int countFilter,
-      @JsonKey(name: "due_date_on_month") int dueDateOnMonth,
+      @JsonKey(name: "month_count") int monthCount,
       @JsonKey(name: "cost_price") int costPrice,
-      @JsonKey(name: "sum_contract") int sumContract,
+      @JsonKey(name: "due_date_on_month") int dueDateOnMonth,
+      @JsonKey(name: "price_amount") int priceAmount,
       @JsonKey(name: "start_contribution") int startContribution,
-      @JsonKey(name: "setup_date") DateTime setupDate,
+      User creator,
       @JsonKey(name: "remaining_months") int remainingMonths,
       @JsonKey(name: "remaining_sum") int remainingSum,
-      bool closed,
+      @JsonKey(name: "setup_date") DateTime setupDate,
       @JsonKey(name: "is_confirm") bool isConfirm,
+      @JsonKey(name: "confirm_date") DateTime confirmDate,
+      bool closed,
       @JsonKey(name: "created_at") DateTime createdAt,
       @JsonKey(name: "modified_at") DateTime modifiedAt});
 
   $ClientCopyWith<$Res> get client;
-  $LocalityCopyWith<$Res> get locality;
+  $RegionCopyWith<$Res> get region;
   $EmployeeCopyWith<$Res> get advertiser;
-  $EmployeeCopyWith<$Res> get taskMaster;
+  $UserCopyWith<$Res> get creator;
 }
 
 /// @nodoc
@@ -101,19 +106,21 @@ class _$ContractCopyWithImpl<$Res, $Val extends Contract>
   $Res call({
     Object? id = null,
     Object? client = null,
-    Object? locality = null,
+    Object? region = null,
     Object? advertiser = null,
-    Object? taskMaster = null,
     Object? countFilter = null,
-    Object? dueDateOnMonth = null,
+    Object? monthCount = null,
     Object? costPrice = null,
-    Object? sumContract = null,
+    Object? dueDateOnMonth = null,
+    Object? priceAmount = null,
     Object? startContribution = null,
-    Object? setupDate = null,
+    Object? creator = null,
     Object? remainingMonths = null,
     Object? remainingSum = null,
-    Object? closed = null,
+    Object? setupDate = null,
     Object? isConfirm = null,
+    Object? confirmDate = null,
+    Object? closed = null,
     Object? createdAt = null,
     Object? modifiedAt = null,
   }) {
@@ -126,42 +133,42 @@ class _$ContractCopyWithImpl<$Res, $Val extends Contract>
           ? _value.client
           : client // ignore: cast_nullable_to_non_nullable
               as Client,
-      locality: null == locality
-          ? _value.locality
-          : locality // ignore: cast_nullable_to_non_nullable
-              as Locality,
+      region: null == region
+          ? _value.region
+          : region // ignore: cast_nullable_to_non_nullable
+              as Region,
       advertiser: null == advertiser
           ? _value.advertiser
           : advertiser // ignore: cast_nullable_to_non_nullable
-              as Employee,
-      taskMaster: null == taskMaster
-          ? _value.taskMaster
-          : taskMaster // ignore: cast_nullable_to_non_nullable
               as Employee,
       countFilter: null == countFilter
           ? _value.countFilter
           : countFilter // ignore: cast_nullable_to_non_nullable
               as int,
-      dueDateOnMonth: null == dueDateOnMonth
-          ? _value.dueDateOnMonth
-          : dueDateOnMonth // ignore: cast_nullable_to_non_nullable
+      monthCount: null == monthCount
+          ? _value.monthCount
+          : monthCount // ignore: cast_nullable_to_non_nullable
               as int,
       costPrice: null == costPrice
           ? _value.costPrice
           : costPrice // ignore: cast_nullable_to_non_nullable
               as int,
-      sumContract: null == sumContract
-          ? _value.sumContract
-          : sumContract // ignore: cast_nullable_to_non_nullable
+      dueDateOnMonth: null == dueDateOnMonth
+          ? _value.dueDateOnMonth
+          : dueDateOnMonth // ignore: cast_nullable_to_non_nullable
+              as int,
+      priceAmount: null == priceAmount
+          ? _value.priceAmount
+          : priceAmount // ignore: cast_nullable_to_non_nullable
               as int,
       startContribution: null == startContribution
           ? _value.startContribution
           : startContribution // ignore: cast_nullable_to_non_nullable
               as int,
-      setupDate: null == setupDate
-          ? _value.setupDate
-          : setupDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      creator: null == creator
+          ? _value.creator
+          : creator // ignore: cast_nullable_to_non_nullable
+              as User,
       remainingMonths: null == remainingMonths
           ? _value.remainingMonths
           : remainingMonths // ignore: cast_nullable_to_non_nullable
@@ -170,13 +177,21 @@ class _$ContractCopyWithImpl<$Res, $Val extends Contract>
           ? _value.remainingSum
           : remainingSum // ignore: cast_nullable_to_non_nullable
               as int,
-      closed: null == closed
-          ? _value.closed
-          : closed // ignore: cast_nullable_to_non_nullable
-              as bool,
+      setupDate: null == setupDate
+          ? _value.setupDate
+          : setupDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       isConfirm: null == isConfirm
           ? _value.isConfirm
           : isConfirm // ignore: cast_nullable_to_non_nullable
+              as bool,
+      confirmDate: null == confirmDate
+          ? _value.confirmDate
+          : confirmDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      closed: null == closed
+          ? _value.closed
+          : closed // ignore: cast_nullable_to_non_nullable
               as bool,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -199,9 +214,9 @@ class _$ContractCopyWithImpl<$Res, $Val extends Contract>
 
   @override
   @pragma('vm:prefer-inline')
-  $LocalityCopyWith<$Res> get locality {
-    return $LocalityCopyWith<$Res>(_value.locality, (value) {
-      return _then(_value.copyWith(locality: value) as $Val);
+  $RegionCopyWith<$Res> get region {
+    return $RegionCopyWith<$Res>(_value.region, (value) {
+      return _then(_value.copyWith(region: value) as $Val);
     });
   }
 
@@ -215,9 +230,9 @@ class _$ContractCopyWithImpl<$Res, $Val extends Contract>
 
   @override
   @pragma('vm:prefer-inline')
-  $EmployeeCopyWith<$Res> get taskMaster {
-    return $EmployeeCopyWith<$Res>(_value.taskMaster, (value) {
-      return _then(_value.copyWith(taskMaster: value) as $Val);
+  $UserCopyWith<$Res> get creator {
+    return $UserCopyWith<$Res>(_value.creator, (value) {
+      return _then(_value.copyWith(creator: value) as $Val);
     });
   }
 }
@@ -232,30 +247,32 @@ abstract class _$$_ContractCopyWith<$Res> implements $ContractCopyWith<$Res> {
   $Res call(
       {int id,
       Client client,
-      Locality locality,
+      Region region,
       Employee advertiser,
-      @JsonKey(name: "task_master") Employee taskMaster,
       @JsonKey(name: "count_filter") int countFilter,
-      @JsonKey(name: "due_date_on_month") int dueDateOnMonth,
+      @JsonKey(name: "month_count") int monthCount,
       @JsonKey(name: "cost_price") int costPrice,
-      @JsonKey(name: "sum_contract") int sumContract,
+      @JsonKey(name: "due_date_on_month") int dueDateOnMonth,
+      @JsonKey(name: "price_amount") int priceAmount,
       @JsonKey(name: "start_contribution") int startContribution,
-      @JsonKey(name: "setup_date") DateTime setupDate,
+      User creator,
       @JsonKey(name: "remaining_months") int remainingMonths,
       @JsonKey(name: "remaining_sum") int remainingSum,
-      bool closed,
+      @JsonKey(name: "setup_date") DateTime setupDate,
       @JsonKey(name: "is_confirm") bool isConfirm,
+      @JsonKey(name: "confirm_date") DateTime confirmDate,
+      bool closed,
       @JsonKey(name: "created_at") DateTime createdAt,
       @JsonKey(name: "modified_at") DateTime modifiedAt});
 
   @override
   $ClientCopyWith<$Res> get client;
   @override
-  $LocalityCopyWith<$Res> get locality;
+  $RegionCopyWith<$Res> get region;
   @override
   $EmployeeCopyWith<$Res> get advertiser;
   @override
-  $EmployeeCopyWith<$Res> get taskMaster;
+  $UserCopyWith<$Res> get creator;
 }
 
 /// @nodoc
@@ -271,19 +288,21 @@ class __$$_ContractCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? client = null,
-    Object? locality = null,
+    Object? region = null,
     Object? advertiser = null,
-    Object? taskMaster = null,
     Object? countFilter = null,
-    Object? dueDateOnMonth = null,
+    Object? monthCount = null,
     Object? costPrice = null,
-    Object? sumContract = null,
+    Object? dueDateOnMonth = null,
+    Object? priceAmount = null,
     Object? startContribution = null,
-    Object? setupDate = null,
+    Object? creator = null,
     Object? remainingMonths = null,
     Object? remainingSum = null,
-    Object? closed = null,
+    Object? setupDate = null,
     Object? isConfirm = null,
+    Object? confirmDate = null,
+    Object? closed = null,
     Object? createdAt = null,
     Object? modifiedAt = null,
   }) {
@@ -296,42 +315,42 @@ class __$$_ContractCopyWithImpl<$Res>
           ? _value.client
           : client // ignore: cast_nullable_to_non_nullable
               as Client,
-      locality: null == locality
-          ? _value.locality
-          : locality // ignore: cast_nullable_to_non_nullable
-              as Locality,
+      region: null == region
+          ? _value.region
+          : region // ignore: cast_nullable_to_non_nullable
+              as Region,
       advertiser: null == advertiser
           ? _value.advertiser
           : advertiser // ignore: cast_nullable_to_non_nullable
-              as Employee,
-      taskMaster: null == taskMaster
-          ? _value.taskMaster
-          : taskMaster // ignore: cast_nullable_to_non_nullable
               as Employee,
       countFilter: null == countFilter
           ? _value.countFilter
           : countFilter // ignore: cast_nullable_to_non_nullable
               as int,
-      dueDateOnMonth: null == dueDateOnMonth
-          ? _value.dueDateOnMonth
-          : dueDateOnMonth // ignore: cast_nullable_to_non_nullable
+      monthCount: null == monthCount
+          ? _value.monthCount
+          : monthCount // ignore: cast_nullable_to_non_nullable
               as int,
       costPrice: null == costPrice
           ? _value.costPrice
           : costPrice // ignore: cast_nullable_to_non_nullable
               as int,
-      sumContract: null == sumContract
-          ? _value.sumContract
-          : sumContract // ignore: cast_nullable_to_non_nullable
+      dueDateOnMonth: null == dueDateOnMonth
+          ? _value.dueDateOnMonth
+          : dueDateOnMonth // ignore: cast_nullable_to_non_nullable
+              as int,
+      priceAmount: null == priceAmount
+          ? _value.priceAmount
+          : priceAmount // ignore: cast_nullable_to_non_nullable
               as int,
       startContribution: null == startContribution
           ? _value.startContribution
           : startContribution // ignore: cast_nullable_to_non_nullable
               as int,
-      setupDate: null == setupDate
-          ? _value.setupDate
-          : setupDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      creator: null == creator
+          ? _value.creator
+          : creator // ignore: cast_nullable_to_non_nullable
+              as User,
       remainingMonths: null == remainingMonths
           ? _value.remainingMonths
           : remainingMonths // ignore: cast_nullable_to_non_nullable
@@ -340,13 +359,21 @@ class __$$_ContractCopyWithImpl<$Res>
           ? _value.remainingSum
           : remainingSum // ignore: cast_nullable_to_non_nullable
               as int,
-      closed: null == closed
-          ? _value.closed
-          : closed // ignore: cast_nullable_to_non_nullable
-              as bool,
+      setupDate: null == setupDate
+          ? _value.setupDate
+          : setupDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       isConfirm: null == isConfirm
           ? _value.isConfirm
           : isConfirm // ignore: cast_nullable_to_non_nullable
+              as bool,
+      confirmDate: null == confirmDate
+          ? _value.confirmDate
+          : confirmDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      closed: null == closed
+          ? _value.closed
+          : closed // ignore: cast_nullable_to_non_nullable
               as bool,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -366,19 +393,21 @@ class _$_Contract implements _Contract {
   const _$_Contract(
       {required this.id,
       required this.client,
-      required this.locality,
+      required this.region,
       required this.advertiser,
-      @JsonKey(name: "task_master") required this.taskMaster,
       @JsonKey(name: "count_filter") required this.countFilter,
-      @JsonKey(name: "due_date_on_month") required this.dueDateOnMonth,
+      @JsonKey(name: "month_count") required this.monthCount,
       @JsonKey(name: "cost_price") required this.costPrice,
-      @JsonKey(name: "sum_contract") required this.sumContract,
+      @JsonKey(name: "due_date_on_month") required this.dueDateOnMonth,
+      @JsonKey(name: "price_amount") required this.priceAmount,
       @JsonKey(name: "start_contribution") required this.startContribution,
-      @JsonKey(name: "setup_date") required this.setupDate,
+      required this.creator,
       @JsonKey(name: "remaining_months") required this.remainingMonths,
       @JsonKey(name: "remaining_sum") required this.remainingSum,
-      required this.closed,
+      @JsonKey(name: "setup_date") required this.setupDate,
       @JsonKey(name: "is_confirm") required this.isConfirm,
+      @JsonKey(name: "confirm_date") required this.confirmDate,
+      required this.closed,
       @JsonKey(name: "created_at") required this.createdAt,
       @JsonKey(name: "modified_at") required this.modifiedAt});
 
@@ -390,30 +419,29 @@ class _$_Contract implements _Contract {
   @override
   final Client client;
   @override
-  final Locality locality;
+  final Region region;
   @override
   final Employee advertiser;
-  @override
-  @JsonKey(name: "task_master")
-  final Employee taskMaster;
   @override
   @JsonKey(name: "count_filter")
   final int countFilter;
   @override
-  @JsonKey(name: "due_date_on_month")
-  final int dueDateOnMonth;
+  @JsonKey(name: "month_count")
+  final int monthCount;
   @override
   @JsonKey(name: "cost_price")
   final int costPrice;
   @override
-  @JsonKey(name: "sum_contract")
-  final int sumContract;
+  @JsonKey(name: "due_date_on_month")
+  final int dueDateOnMonth;
+  @override
+  @JsonKey(name: "price_amount")
+  final int priceAmount;
   @override
   @JsonKey(name: "start_contribution")
   final int startContribution;
   @override
-  @JsonKey(name: "setup_date")
-  final DateTime setupDate;
+  final User creator;
   @override
   @JsonKey(name: "remaining_months")
   final int remainingMonths;
@@ -421,10 +449,16 @@ class _$_Contract implements _Contract {
   @JsonKey(name: "remaining_sum")
   final int remainingSum;
   @override
-  final bool closed;
+  @JsonKey(name: "setup_date")
+  final DateTime setupDate;
   @override
   @JsonKey(name: "is_confirm")
   final bool isConfirm;
+  @override
+  @JsonKey(name: "confirm_date")
+  final DateTime confirmDate;
+  @override
+  final bool closed;
   @override
   @JsonKey(name: "created_at")
   final DateTime createdAt;
@@ -434,7 +468,7 @@ class _$_Contract implements _Contract {
 
   @override
   String toString() {
-    return 'Contract(id: $id, client: $client, locality: $locality, advertiser: $advertiser, taskMaster: $taskMaster, countFilter: $countFilter, dueDateOnMonth: $dueDateOnMonth, costPrice: $costPrice, sumContract: $sumContract, startContribution: $startContribution, setupDate: $setupDate, remainingMonths: $remainingMonths, remainingSum: $remainingSum, closed: $closed, isConfirm: $isConfirm, createdAt: $createdAt, modifiedAt: $modifiedAt)';
+    return 'Contract(id: $id, client: $client, region: $region, advertiser: $advertiser, countFilter: $countFilter, monthCount: $monthCount, costPrice: $costPrice, dueDateOnMonth: $dueDateOnMonth, priceAmount: $priceAmount, startContribution: $startContribution, creator: $creator, remainingMonths: $remainingMonths, remainingSum: $remainingSum, setupDate: $setupDate, isConfirm: $isConfirm, confirmDate: $confirmDate, closed: $closed, createdAt: $createdAt, modifiedAt: $modifiedAt)';
   }
 
   @override
@@ -444,31 +478,33 @@ class _$_Contract implements _Contract {
             other is _$_Contract &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.client, client) || other.client == client) &&
-            (identical(other.locality, locality) ||
-                other.locality == locality) &&
+            (identical(other.region, region) || other.region == region) &&
             (identical(other.advertiser, advertiser) ||
                 other.advertiser == advertiser) &&
-            (identical(other.taskMaster, taskMaster) ||
-                other.taskMaster == taskMaster) &&
             (identical(other.countFilter, countFilter) ||
                 other.countFilter == countFilter) &&
-            (identical(other.dueDateOnMonth, dueDateOnMonth) ||
-                other.dueDateOnMonth == dueDateOnMonth) &&
+            (identical(other.monthCount, monthCount) ||
+                other.monthCount == monthCount) &&
             (identical(other.costPrice, costPrice) ||
                 other.costPrice == costPrice) &&
-            (identical(other.sumContract, sumContract) ||
-                other.sumContract == sumContract) &&
+            (identical(other.dueDateOnMonth, dueDateOnMonth) ||
+                other.dueDateOnMonth == dueDateOnMonth) &&
+            (identical(other.priceAmount, priceAmount) ||
+                other.priceAmount == priceAmount) &&
             (identical(other.startContribution, startContribution) ||
                 other.startContribution == startContribution) &&
-            (identical(other.setupDate, setupDate) ||
-                other.setupDate == setupDate) &&
+            (identical(other.creator, creator) || other.creator == creator) &&
             (identical(other.remainingMonths, remainingMonths) ||
                 other.remainingMonths == remainingMonths) &&
             (identical(other.remainingSum, remainingSum) ||
                 other.remainingSum == remainingSum) &&
-            (identical(other.closed, closed) || other.closed == closed) &&
+            (identical(other.setupDate, setupDate) ||
+                other.setupDate == setupDate) &&
             (identical(other.isConfirm, isConfirm) ||
                 other.isConfirm == isConfirm) &&
+            (identical(other.confirmDate, confirmDate) ||
+                other.confirmDate == confirmDate) &&
+            (identical(other.closed, closed) || other.closed == closed) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.modifiedAt, modifiedAt) ||
@@ -477,25 +513,28 @@ class _$_Contract implements _Contract {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      client,
-      locality,
-      advertiser,
-      taskMaster,
-      countFilter,
-      dueDateOnMonth,
-      costPrice,
-      sumContract,
-      startContribution,
-      setupDate,
-      remainingMonths,
-      remainingSum,
-      closed,
-      isConfirm,
-      createdAt,
-      modifiedAt);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        client,
+        region,
+        advertiser,
+        countFilter,
+        monthCount,
+        costPrice,
+        dueDateOnMonth,
+        priceAmount,
+        startContribution,
+        creator,
+        remainingMonths,
+        remainingSum,
+        setupDate,
+        isConfirm,
+        confirmDate,
+        closed,
+        createdAt,
+        modifiedAt
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -515,33 +554,24 @@ abstract class _Contract implements Contract {
   const factory _Contract(
       {required final int id,
       required final Client client,
-      required final Locality locality,
+      required final Region region,
       required final Employee advertiser,
-      @JsonKey(name: "task_master")
-          required final Employee taskMaster,
-      @JsonKey(name: "count_filter")
-          required final int countFilter,
-      @JsonKey(name: "due_date_on_month")
-          required final int dueDateOnMonth,
-      @JsonKey(name: "cost_price")
-          required final int costPrice,
-      @JsonKey(name: "sum_contract")
-          required final int sumContract,
-      @JsonKey(name: "start_contribution")
-          required final int startContribution,
-      @JsonKey(name: "setup_date")
-          required final DateTime setupDate,
-      @JsonKey(name: "remaining_months")
-          required final int remainingMonths,
-      @JsonKey(name: "remaining_sum")
-          required final int remainingSum,
+      @JsonKey(name: "count_filter") required final int countFilter,
+      @JsonKey(name: "month_count") required final int monthCount,
+      @JsonKey(name: "cost_price") required final int costPrice,
+      @JsonKey(name: "due_date_on_month") required final int dueDateOnMonth,
+      @JsonKey(name: "price_amount") required final int priceAmount,
+      @JsonKey(name: "start_contribution") required final int startContribution,
+      required final User creator,
+      @JsonKey(name: "remaining_months") required final int remainingMonths,
+      @JsonKey(name: "remaining_sum") required final int remainingSum,
+      @JsonKey(name: "setup_date") required final DateTime setupDate,
+      @JsonKey(name: "is_confirm") required final bool isConfirm,
+      @JsonKey(name: "confirm_date") required final DateTime confirmDate,
       required final bool closed,
-      @JsonKey(name: "is_confirm")
-          required final bool isConfirm,
-      @JsonKey(name: "created_at")
-          required final DateTime createdAt,
+      @JsonKey(name: "created_at") required final DateTime createdAt,
       @JsonKey(name: "modified_at")
-          required final DateTime modifiedAt}) = _$_Contract;
+      required final DateTime modifiedAt}) = _$_Contract;
 
   factory _Contract.fromJson(Map<String, dynamic> json) = _$_Contract.fromJson;
 
@@ -550,30 +580,29 @@ abstract class _Contract implements Contract {
   @override
   Client get client;
   @override
-  Locality get locality;
+  Region get region;
   @override
   Employee get advertiser;
-  @override
-  @JsonKey(name: "task_master")
-  Employee get taskMaster;
   @override
   @JsonKey(name: "count_filter")
   int get countFilter;
   @override
-  @JsonKey(name: "due_date_on_month")
-  int get dueDateOnMonth;
+  @JsonKey(name: "month_count")
+  int get monthCount;
   @override
   @JsonKey(name: "cost_price")
   int get costPrice;
   @override
-  @JsonKey(name: "sum_contract")
-  int get sumContract;
+  @JsonKey(name: "due_date_on_month")
+  int get dueDateOnMonth;
+  @override
+  @JsonKey(name: "price_amount")
+  int get priceAmount;
   @override
   @JsonKey(name: "start_contribution")
   int get startContribution;
   @override
-  @JsonKey(name: "setup_date")
-  DateTime get setupDate;
+  User get creator;
   @override
   @JsonKey(name: "remaining_months")
   int get remainingMonths;
@@ -581,10 +610,16 @@ abstract class _Contract implements Contract {
   @JsonKey(name: "remaining_sum")
   int get remainingSum;
   @override
-  bool get closed;
+  @JsonKey(name: "setup_date")
+  DateTime get setupDate;
   @override
   @JsonKey(name: "is_confirm")
   bool get isConfirm;
+  @override
+  @JsonKey(name: "confirm_date")
+  DateTime get confirmDate;
+  @override
+  bool get closed;
   @override
   @JsonKey(name: "created_at")
   DateTime get createdAt;

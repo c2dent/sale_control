@@ -129,14 +129,14 @@ class _ContractPage extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Galan toleg: ${contract.sumContract}", style: theme.textTheme.title2),
-                            Text("Umumyy toleg: ${contract.remainingSum}", style: theme.textTheme.title2)
+                            Text("Galan toleg: ${contract.remainingSum}", style: theme.textTheme.title2),
+                            Text("Umumyy toleg: ${contract.priceAmount}", style: theme.textTheme.title2)
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("${contract.taskMaster.firstName} ${contract.taskMaster.lastName}", style: theme.textTheme.title2),
+                            Text("${contract.creator.firstName}", style: theme.textTheme.title2),
                             Text(
                               formattingDate(contract.createdAt),
                               style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),

@@ -9,6 +9,7 @@ class ClipboardWidget extends StatelessWidget {
   final Color? color;
 
   const ClipboardWidget({super.key, required this.titleText, required this.copyText, this.color});
+
   @override
   Widget build(BuildContext context) {
     String copyT = copyText.replaceFirst('.', ',');

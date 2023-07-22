@@ -5,7 +5,13 @@ import 'package:hasap_admin/feature/contract/data/services/contract_api_service.
 import 'package:injectable/injectable.dart';
 
 abstract class ContractRepository {
-  Future<Either<CommonResponseError<DefaultApiError>, List<Contract>>> getContracts(Map<String, String> params);
+  Future<Either<CommonResponseError<DefaultApiError>, List<Contract>>> list(Map<String, String> params);
+
+  Future<Either<CommonResponseError<DefaultApiError>, Contract>> create(Map<String, dynamic> data);
+
+  Future<Either<CommonResponseError<DefaultApiError>, Contract>> update(int id, Map<String, dynamic> data);
+
+  Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(int id);
 }
 
 @Singleton(as: ContractRepository)
@@ -15,8 +21,22 @@ class ContractRepositoryImpl extends ContractRepository {
   ContractRepositoryImpl(this.contractApiService);
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>, List<Contract>>> getContracts(Map<String, String> params) {
-    return contractApiService.getContracts(params);
+  Future<Either<CommonResponseError<DefaultApiError>, List<Contract>>> list(Map<String, String> params) {
+    return contractApiService.list(params);
   }
 
+  @override
+  Future<Either<CommonResponseError<DefaultApiError>, Contract>> create(Map<String, dynamic> data) {
+    return contractApiService.create(data);
+  }
+
+  @override
+  Future<Either<CommonResponseError<DefaultApiError>, Contract>> update(int id, Map<String, dynamic> data) {
+    return contractApiService.update(id, data);
+  }
+
+  @override
+  Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(int id) {
+    return contractApiService.delete(id);
+  }
 }

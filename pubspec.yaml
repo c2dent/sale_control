@@ -15,9 +15,9 @@ dependencies:
   dio: ^5.1.1
   intl: ^0.18.0
   dropdown_search: ^5.0.5
-  flutter_datetime_picker: ^1.5.1
+  flutter_datetime_picker_plus: ^2.0.1
   flutter_masked_text2: ^0.9.1
-  flutter_slidable: ^2.0.0
+  flutter_slidable: ^3.0.0
   dartz: ^0.10.1
   after_layout: ^1.2.0
   get_it: ^7.2.0
@@ -27,12 +27,12 @@ dependencies:
 
   elegant_notification: ^1.7.0
   cupertino_icons: ^1.0.2
-  flutter_secure_storage: ^7.0.1
+  flutter_secure_storage: ^8.0.0
   freezed_annotation: ^2.2.0
   json_annotation: ^4.8.0
   injectable: ^2.1.1
   flutter_bloc: ^8.1.2
-  auto_route: ^6.0.5
+  auto_route: ^7.7.1
 
 
 dev_dependencies:
@@ -43,7 +43,7 @@ dev_dependencies:
   freezed: ^2.3.2
   json_serializable: ^6.6.1
   injectable_generator: ^2.1.5
-  auto_route_generator: ^6.0.3
+  auto_route_generator: ^7.2.0
   flutter_lints: ^2.0.0
 
 

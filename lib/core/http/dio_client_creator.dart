@@ -51,7 +51,7 @@ class DioClientCreatorImpl implements DioClientCreator {
           accessToken = await storage.read(key: 'accessToken');
         }
 
-        if (!options.path.contains('/refreshtoken/') && !options.path.contains('auth/login/') && accessToken != null) {
+        if (!options.path.contains('/refreshtoken/') && !options.path.contains('login/') && accessToken != null) {
           options.headers['Authorization'] = 'Token $accessToken';
         }
         return handler.next(options);
