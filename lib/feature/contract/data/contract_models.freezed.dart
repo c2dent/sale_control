@@ -46,7 +46,7 @@ mixin _$Contract {
   @JsonKey(name: "is_confirm")
   bool get isConfirm => throw _privateConstructorUsedError;
   @JsonKey(name: "confirm_date")
-  DateTime get confirmDate => throw _privateConstructorUsedError;
+  DateTime? get confirmDate => throw _privateConstructorUsedError;
   bool get closed => throw _privateConstructorUsedError;
   @JsonKey(name: "created_at")
   DateTime get createdAt => throw _privateConstructorUsedError;
@@ -80,7 +80,7 @@ abstract class $ContractCopyWith<$Res> {
       @JsonKey(name: "remaining_sum") int remainingSum,
       @JsonKey(name: "setup_date") DateTime setupDate,
       @JsonKey(name: "is_confirm") bool isConfirm,
-      @JsonKey(name: "confirm_date") DateTime confirmDate,
+      @JsonKey(name: "confirm_date") DateTime? confirmDate,
       bool closed,
       @JsonKey(name: "created_at") DateTime createdAt,
       @JsonKey(name: "modified_at") DateTime modifiedAt});
@@ -119,7 +119,7 @@ class _$ContractCopyWithImpl<$Res, $Val extends Contract>
     Object? remainingSum = null,
     Object? setupDate = null,
     Object? isConfirm = null,
-    Object? confirmDate = null,
+    Object? confirmDate = freezed,
     Object? closed = null,
     Object? createdAt = null,
     Object? modifiedAt = null,
@@ -185,10 +185,10 @@ class _$ContractCopyWithImpl<$Res, $Val extends Contract>
           ? _value.isConfirm
           : isConfirm // ignore: cast_nullable_to_non_nullable
               as bool,
-      confirmDate: null == confirmDate
+      confirmDate: freezed == confirmDate
           ? _value.confirmDate
           : confirmDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       closed: null == closed
           ? _value.closed
           : closed // ignore: cast_nullable_to_non_nullable
@@ -260,7 +260,7 @@ abstract class _$$_ContractCopyWith<$Res> implements $ContractCopyWith<$Res> {
       @JsonKey(name: "remaining_sum") int remainingSum,
       @JsonKey(name: "setup_date") DateTime setupDate,
       @JsonKey(name: "is_confirm") bool isConfirm,
-      @JsonKey(name: "confirm_date") DateTime confirmDate,
+      @JsonKey(name: "confirm_date") DateTime? confirmDate,
       bool closed,
       @JsonKey(name: "created_at") DateTime createdAt,
       @JsonKey(name: "modified_at") DateTime modifiedAt});
@@ -301,7 +301,7 @@ class __$$_ContractCopyWithImpl<$Res>
     Object? remainingSum = null,
     Object? setupDate = null,
     Object? isConfirm = null,
-    Object? confirmDate = null,
+    Object? confirmDate = freezed,
     Object? closed = null,
     Object? createdAt = null,
     Object? modifiedAt = null,
@@ -367,10 +367,10 @@ class __$$_ContractCopyWithImpl<$Res>
           ? _value.isConfirm
           : isConfirm // ignore: cast_nullable_to_non_nullable
               as bool,
-      confirmDate: null == confirmDate
+      confirmDate: freezed == confirmDate
           ? _value.confirmDate
           : confirmDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       closed: null == closed
           ? _value.closed
           : closed // ignore: cast_nullable_to_non_nullable
@@ -456,7 +456,7 @@ class _$_Contract implements _Contract {
   final bool isConfirm;
   @override
   @JsonKey(name: "confirm_date")
-  final DateTime confirmDate;
+  final DateTime? confirmDate;
   @override
   final bool closed;
   @override
@@ -567,7 +567,7 @@ abstract class _Contract implements Contract {
       @JsonKey(name: "remaining_sum") required final int remainingSum,
       @JsonKey(name: "setup_date") required final DateTime setupDate,
       @JsonKey(name: "is_confirm") required final bool isConfirm,
-      @JsonKey(name: "confirm_date") required final DateTime confirmDate,
+      @JsonKey(name: "confirm_date") required final DateTime? confirmDate,
       required final bool closed,
       @JsonKey(name: "created_at") required final DateTime createdAt,
       @JsonKey(name: "modified_at")
@@ -617,7 +617,7 @@ abstract class _Contract implements Contract {
   bool get isConfirm;
   @override
   @JsonKey(name: "confirm_date")
-  DateTime get confirmDate;
+  DateTime? get confirmDate;
   @override
   bool get closed;
   @override

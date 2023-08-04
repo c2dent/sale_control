@@ -19,6 +19,9 @@ class DrawerMenu extends StatelessWidget {
           ListTile(
               title: const Text("Tolegler"),
               onTap: () => context.router.replaceNamed('/payment_list')),
+          ListTile(
+              title: const Text("Komur hyzmaty"),
+              onTap: () => context.router.replaceNamed('/coal_list')),
         ],
       ),
     );

@@ -9,8 +9,8 @@ import 'package:injectable/injectable.dart';
 abstract class ClientApiService {
   Future<Either<CommonResponseError<DefaultApiError>, List<Client>>> getClients(Map<String, String> params);
   Future<Either<CommonResponseError<DefaultApiError>, Client>> createClient(Map<String, dynamic> data);
-  Future<Either<CommonResponseError<DefaultApiError>, Client>> update(int clientId, Map<String, dynamic> data);
-  Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(int clientId);
+  Future<Either<CommonResponseError<DefaultApiError>, Client>> update(int id, Map<String, dynamic> data);
+  Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(int id);
 }
 
 @Singleton(as: ClientApiService)
@@ -48,8 +48,8 @@ class ClientApiServiceImpl extends ClientApiService {
   }
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>, Client>> update(int clientId, Map<String, dynamic> data) async {
-    final result = await _dioErrorHandler.processRequest(() => _client.put("/clients/$clientId/", data: data));
+  Future<Either<CommonResponseError<DefaultApiError>, Client>> update(int id, Map<String, dynamic> data) async {
+    final result = await _dioErrorHandler.processRequest(() => _client.put("/clients/$id/", data: data));
 
     if (result.isLeft) return Either.left(result.left);
 
@@ -59,8 +59,8 @@ class ClientApiServiceImpl extends ClientApiService {
   }
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(int clientId) async {
-    final result = await _dioErrorHandler.processRequest(() => _client.delete("/clients/$clientId/"));
+  Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(int id) async {
+    final result = await _dioErrorHandler.processRequest(() => _client.delete("/clients/$id/"));
     if (result.isLeft) return Either.left(result.left);
     return const Either.right({});
   }

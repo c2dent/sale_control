@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
+import 'package:hasap_admin/core/widgets/utils.dart';
 import 'package:hasap_admin/feature/payment/domain/payment_interactor.dart';
-import 'package:hasap_admin/feature/payment/presentation/list/create/bloc/payment_create_bloc_models.dart';
+import 'package:hasap_admin/feature/payment/presentation/create/bloc/payment_create_bloc_models.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -32,15 +33,6 @@ class PaymentCreateBloc extends SrBloc<PaymentCreateEvent, PaymentCreateState, P
     ));
   }
 
-  Map<String, dynamic> _formattingData(PaymentCreateState state) {
-    Map<String, dynamic> data = {
-      "amount": state.data.amount.text,
-      "date": state.data.date,
-      "contract_id": state.data.contract?.id,
-    };
-    return data;
-  }
-
   FutureOr<void> _create(PaymentCreateEventCreate event, Emitter<PaymentCreateState> emit) async {
     emit(state.data.copyWith(isLoading: true));
 
@@ -54,6 +46,15 @@ class PaymentCreateBloc extends SrBloc<PaymentCreateEvent, PaymentCreateState, P
       addSr(const PaymentCreateSR.successNotify(text: "Toleg goshuldyy"));
       addSr(PaymentCreateSR.created(payment: result.right));
     }
+  }
+
+  Map<String, dynamic> _formattingData(PaymentCreateState state) {
+    Map<String, dynamic> data = {
+      "amount": state.data.amount.text,
+      "date": dateFormatterYyyyMmDd.format(state.data.date),
+      "contract_id": state.data.contract?.id,
+    };
+    return data;
   }
 
   FutureOr<void> _update(PaymentCreateEventUpdate event, Emitter<PaymentCreateState> emit) async {

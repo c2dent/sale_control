@@ -9,11 +9,10 @@ import 'package:hasap_admin/core/widgets/filter_modal.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/core/widgets/utils.dart';
 import 'package:hasap_admin/feature/client/data/client_models.dart';
-import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/payment/data/payment_models.dart';
-import 'package:hasap_admin/feature/payment/presentation/list/create/ui/payment_create_page.dart';
-import 'package:hasap_admin/feature/payment/presentation/list/list/bloc/payment_bloc.dart';
-import 'package:hasap_admin/feature/payment/presentation/list/list/bloc/payment_bloc_models.dart';
+import 'package:hasap_admin/feature/payment/presentation/create/ui/payment_create_page.dart';
+import 'package:hasap_admin/feature/payment/presentation/list/bloc/payment_bloc.dart';
+import 'package:hasap_admin/feature/payment/presentation/list/bloc/payment_bloc_models.dart';
 
 @RoutePage()
 class PaymentListPage extends StatelessWidget {
@@ -58,7 +57,7 @@ class PaymentListPage extends StatelessWidget {
                 backgroundColor: theme.colorTheme.primary,
                 child: const Icon(Icons.add_circle_outline),
               ),
-            body: state.map(
+              body: state.map(
               empty: (_) => const Center(child: CircularProgressIndicator()),
               data: (state) => _PaymentPage(state: state),
             )
@@ -116,19 +115,18 @@ class _PaymentPage extends StatelessWidget {
               itemBuilder: (BuildContext context, int index){
                 Payment payment = state.data.payments[index];
                 Client client = payment.contract.client;
-                Contract contract = payment.contract;
 
                 return GestureDetector(
                   onLongPress: () => showContextMenu(context, tapPosition,
                       edit: () async {
-                        // Payment? updatedPayment = await Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => ClientCreatePage(client: client)),
-                        // );
-                        //
-                        // if (updatedClient != null) {
-                        //   bloc.add(const ClientEvent.filter());
-                        // }
+                        Payment? updatedPayment = await Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => PaymentCreatePage(payment: payment)),
+                        );
+
+                        if (updatedPayment != null) {
+                          bloc.add(const PaymentEvent.filter());
+                        }
                       },
                       delete: () => bloc.add(PaymentEvent.delete(payment: payment))),
                   onTapDown: ((details) {

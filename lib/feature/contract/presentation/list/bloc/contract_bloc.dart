@@ -12,16 +12,17 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class ContractBloc extends SrBloc<ContractEvent, ContractState, ContractSR> {
-  final ContractInteractor contractInteractor;
+  final ContractInteractor interactor;
   final NotifyErrorSnackbar _notifyErrorSnackbar;
 
   ContractBloc(
-      this.contractInteractor,
+      this.interactor,
       this._notifyErrorSnackbar,
       ) : super(const ContractState.empty()) {
     on<ContractEventInit>(_init);
     on<ContractEventFilter>(_filter);
     on<ContractEventResetFilter>(_resetFilter);
+    on<ContractEventDelete>(_delete);
   }
 
   FutureOr<void> _init(ContractEventInit event, Emitter<ContractState> emit) async {
@@ -33,7 +34,7 @@ class ContractBloc extends SrBloc<ContractEvent, ContractState, ContractSR> {
       ),
     ];
 
-    final result = await contractInteractor.list(filters: filters);
+    final result = await interactor.list(filters: filters);
 
     if (result.isLeft) {
       addSr(ContractSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
@@ -50,14 +51,9 @@ class ContractBloc extends SrBloc<ContractEvent, ContractState, ContractSR> {
 
   }
 
-  FutureOr<void> _resetFilter(ContractEventResetFilter event, Emitter<ContractState> emit) async {
+  FutureOr<void> _filter(ContractEventFilter event, Emitter<ContractState> emit) async {
     emit(state.data.copyWith(isLoading: true));
-    for (var item in state.data.filters) {
-      item.clear();
-    }
-
-    final result = await contractInteractor.list(filters: state.data.filters);
-
+    final result = await interactor.list(filters: state.data.filters);
     if (result.isLeft) {
       addSr(ContractSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
@@ -66,16 +62,32 @@ class ContractBloc extends SrBloc<ContractEvent, ContractState, ContractSR> {
     emit(state.data.copyWith(isLoading: false, contracts: result.right));
   }
 
-  FutureOr<void> _filter(ContractEventFilter event, Emitter<ContractState> emit) async {
+  FutureOr<void> _resetFilter(ContractEventResetFilter event, Emitter<ContractState> emit) async {
     emit(state.data.copyWith(isLoading: true));
+    for (var item in state.data.filters) {
+      item.clear();
+    }
 
-    final result = await contractInteractor.list(filters: state.data.filters);
-
+    final result = await interactor.list(filters: state.data.filters);
     if (result.isLeft) {
       addSr(ContractSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
     }
 
     emit(state.data.copyWith(isLoading: false, contracts: result.right));
+  }
+
+  FutureOr<void> _delete(ContractEventDelete event, Emitter<ContractState> emit) async {
+    emit(state.data.copyWith(isLoading: true));
+    final result = await interactor.delete(event.contract.id);
+    if (result.isLeft) {
+      emit(state.data.copyWith(isLoading: false));
+      addSr(ContractSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
+      return;
+    } else {
+      addSr(const ContractSR.successNotify(text: "Shertnama pozuldy"));
+      addSr(ContractSR.delete(contract: event.contract));
+      emit(state.data.copyWith(isLoading: false));
+    }
   }
 }

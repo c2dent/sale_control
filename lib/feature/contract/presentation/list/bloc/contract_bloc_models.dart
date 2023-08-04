@@ -9,10 +9,9 @@ part 'contract_bloc_models.freezed.dart';
 @freezed
 class ContractEvent with _$ContractEvent {
   const factory ContractEvent.init() = ContractEventInit;
-
   const factory ContractEvent.filter() = ContractEventFilter;
-
   const factory ContractEvent.resetFilter() = ContractEventResetFilter;
+  const factory ContractEvent.delete({required Contract contract}) = ContractEventDelete;
 }
 
 @freezed
@@ -21,6 +20,10 @@ class ContractSR with _$ContractSR{
     required CommonResponseError<DefaultApiError> error,
     required NotifyErrorSnackbar notifyErrorSnackbar,
   }) = _ShowDioErrorSnackbar;
+
+  const factory ContractSR.successNotify({required String text}) = _SuccessNotify;
+
+  const factory ContractSR.delete({required Contract contract}) = _ContractDeleted;
 }
 
 @freezed

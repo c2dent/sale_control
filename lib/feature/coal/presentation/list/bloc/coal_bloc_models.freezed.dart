@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'contract_bloc_models.dart';
+part of 'coal_bloc_models.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,13 +15,13 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$ContractEvent {
+mixin _$CoalEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
     required TResult Function() filter,
     required TResult Function() resetFilter,
-    required TResult Function(Contract contract) delete,
+    required TResult Function(Coal coal) delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -29,7 +29,7 @@ mixin _$ContractEvent {
     TResult? Function()? init,
     TResult? Function()? filter,
     TResult? Function()? resetFilter,
-    TResult? Function(Contract contract)? delete,
+    TResult? Function(Coal coal)? delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -37,48 +37,47 @@ mixin _$ContractEvent {
     TResult Function()? init,
     TResult Function()? filter,
     TResult Function()? resetFilter,
-    TResult Function(Contract contract)? delete,
+    TResult Function(Coal coal)? delete,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ContractEventInit value) init,
-    required TResult Function(ContractEventFilter value) filter,
-    required TResult Function(ContractEventResetFilter value) resetFilter,
-    required TResult Function(ContractEventDelete value) delete,
+    required TResult Function(CoalEventInit value) init,
+    required TResult Function(CoalEventFilter value) filter,
+    required TResult Function(CoalEventResetFilter value) resetFilter,
+    required TResult Function(CoalEventDelete value) delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ContractEventInit value)? init,
-    TResult? Function(ContractEventFilter value)? filter,
-    TResult? Function(ContractEventResetFilter value)? resetFilter,
-    TResult? Function(ContractEventDelete value)? delete,
+    TResult? Function(CoalEventInit value)? init,
+    TResult? Function(CoalEventFilter value)? filter,
+    TResult? Function(CoalEventResetFilter value)? resetFilter,
+    TResult? Function(CoalEventDelete value)? delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ContractEventInit value)? init,
-    TResult Function(ContractEventFilter value)? filter,
-    TResult Function(ContractEventResetFilter value)? resetFilter,
-    TResult Function(ContractEventDelete value)? delete,
+    TResult Function(CoalEventInit value)? init,
+    TResult Function(CoalEventFilter value)? filter,
+    TResult Function(CoalEventResetFilter value)? resetFilter,
+    TResult Function(CoalEventDelete value)? delete,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ContractEventCopyWith<$Res> {
-  factory $ContractEventCopyWith(
-          ContractEvent value, $Res Function(ContractEvent) then) =
-      _$ContractEventCopyWithImpl<$Res, ContractEvent>;
+abstract class $CoalEventCopyWith<$Res> {
+  factory $CoalEventCopyWith(CoalEvent value, $Res Function(CoalEvent) then) =
+      _$CoalEventCopyWithImpl<$Res, CoalEvent>;
 }
 
 /// @nodoc
-class _$ContractEventCopyWithImpl<$Res, $Val extends ContractEvent>
-    implements $ContractEventCopyWith<$Res> {
-  _$ContractEventCopyWithImpl(this._value, this._then);
+class _$CoalEventCopyWithImpl<$Res, $Val extends CoalEvent>
+    implements $CoalEventCopyWith<$Res> {
+  _$CoalEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -87,35 +86,35 @@ class _$ContractEventCopyWithImpl<$Res, $Val extends ContractEvent>
 }
 
 /// @nodoc
-abstract class _$$ContractEventInitCopyWith<$Res> {
-  factory _$$ContractEventInitCopyWith(
-          _$ContractEventInit value, $Res Function(_$ContractEventInit) then) =
-      __$$ContractEventInitCopyWithImpl<$Res>;
+abstract class _$$CoalEventInitCopyWith<$Res> {
+  factory _$$CoalEventInitCopyWith(
+          _$CoalEventInit value, $Res Function(_$CoalEventInit) then) =
+      __$$CoalEventInitCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ContractEventInitCopyWithImpl<$Res>
-    extends _$ContractEventCopyWithImpl<$Res, _$ContractEventInit>
-    implements _$$ContractEventInitCopyWith<$Res> {
-  __$$ContractEventInitCopyWithImpl(
-      _$ContractEventInit _value, $Res Function(_$ContractEventInit) _then)
+class __$$CoalEventInitCopyWithImpl<$Res>
+    extends _$CoalEventCopyWithImpl<$Res, _$CoalEventInit>
+    implements _$$CoalEventInitCopyWith<$Res> {
+  __$$CoalEventInitCopyWithImpl(
+      _$CoalEventInit _value, $Res Function(_$CoalEventInit) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$ContractEventInit implements ContractEventInit {
-  const _$ContractEventInit();
+class _$CoalEventInit implements CoalEventInit {
+  const _$CoalEventInit();
 
   @override
   String toString() {
-    return 'ContractEvent.init()';
+    return 'CoalEvent.init()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ContractEventInit);
+        (other.runtimeType == runtimeType && other is _$CoalEventInit);
   }
 
   @override
@@ -127,7 +126,7 @@ class _$ContractEventInit implements ContractEventInit {
     required TResult Function() init,
     required TResult Function() filter,
     required TResult Function() resetFilter,
-    required TResult Function(Contract contract) delete,
+    required TResult Function(Coal coal) delete,
   }) {
     return init();
   }
@@ -138,7 +137,7 @@ class _$ContractEventInit implements ContractEventInit {
     TResult? Function()? init,
     TResult? Function()? filter,
     TResult? Function()? resetFilter,
-    TResult? Function(Contract contract)? delete,
+    TResult? Function(Coal coal)? delete,
   }) {
     return init?.call();
   }
@@ -149,7 +148,7 @@ class _$ContractEventInit implements ContractEventInit {
     TResult Function()? init,
     TResult Function()? filter,
     TResult Function()? resetFilter,
-    TResult Function(Contract contract)? delete,
+    TResult Function(Coal coal)? delete,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -161,10 +160,10 @@ class _$ContractEventInit implements ContractEventInit {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ContractEventInit value) init,
-    required TResult Function(ContractEventFilter value) filter,
-    required TResult Function(ContractEventResetFilter value) resetFilter,
-    required TResult Function(ContractEventDelete value) delete,
+    required TResult Function(CoalEventInit value) init,
+    required TResult Function(CoalEventFilter value) filter,
+    required TResult Function(CoalEventResetFilter value) resetFilter,
+    required TResult Function(CoalEventDelete value) delete,
   }) {
     return init(this);
   }
@@ -172,10 +171,10 @@ class _$ContractEventInit implements ContractEventInit {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ContractEventInit value)? init,
-    TResult? Function(ContractEventFilter value)? filter,
-    TResult? Function(ContractEventResetFilter value)? resetFilter,
-    TResult? Function(ContractEventDelete value)? delete,
+    TResult? Function(CoalEventInit value)? init,
+    TResult? Function(CoalEventFilter value)? filter,
+    TResult? Function(CoalEventResetFilter value)? resetFilter,
+    TResult? Function(CoalEventDelete value)? delete,
   }) {
     return init?.call(this);
   }
@@ -183,10 +182,10 @@ class _$ContractEventInit implements ContractEventInit {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ContractEventInit value)? init,
-    TResult Function(ContractEventFilter value)? filter,
-    TResult Function(ContractEventResetFilter value)? resetFilter,
-    TResult Function(ContractEventDelete value)? delete,
+    TResult Function(CoalEventInit value)? init,
+    TResult Function(CoalEventFilter value)? filter,
+    TResult Function(CoalEventResetFilter value)? resetFilter,
+    TResult Function(CoalEventDelete value)? delete,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -196,40 +195,40 @@ class _$ContractEventInit implements ContractEventInit {
   }
 }
 
-abstract class ContractEventInit implements ContractEvent {
-  const factory ContractEventInit() = _$ContractEventInit;
+abstract class CoalEventInit implements CoalEvent {
+  const factory CoalEventInit() = _$CoalEventInit;
 }
 
 /// @nodoc
-abstract class _$$ContractEventFilterCopyWith<$Res> {
-  factory _$$ContractEventFilterCopyWith(_$ContractEventFilter value,
-          $Res Function(_$ContractEventFilter) then) =
-      __$$ContractEventFilterCopyWithImpl<$Res>;
+abstract class _$$CoalEventFilterCopyWith<$Res> {
+  factory _$$CoalEventFilterCopyWith(
+          _$CoalEventFilter value, $Res Function(_$CoalEventFilter) then) =
+      __$$CoalEventFilterCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ContractEventFilterCopyWithImpl<$Res>
-    extends _$ContractEventCopyWithImpl<$Res, _$ContractEventFilter>
-    implements _$$ContractEventFilterCopyWith<$Res> {
-  __$$ContractEventFilterCopyWithImpl(
-      _$ContractEventFilter _value, $Res Function(_$ContractEventFilter) _then)
+class __$$CoalEventFilterCopyWithImpl<$Res>
+    extends _$CoalEventCopyWithImpl<$Res, _$CoalEventFilter>
+    implements _$$CoalEventFilterCopyWith<$Res> {
+  __$$CoalEventFilterCopyWithImpl(
+      _$CoalEventFilter _value, $Res Function(_$CoalEventFilter) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$ContractEventFilter implements ContractEventFilter {
-  const _$ContractEventFilter();
+class _$CoalEventFilter implements CoalEventFilter {
+  const _$CoalEventFilter();
 
   @override
   String toString() {
-    return 'ContractEvent.filter()';
+    return 'CoalEvent.filter()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ContractEventFilter);
+        (other.runtimeType == runtimeType && other is _$CoalEventFilter);
   }
 
   @override
@@ -241,7 +240,7 @@ class _$ContractEventFilter implements ContractEventFilter {
     required TResult Function() init,
     required TResult Function() filter,
     required TResult Function() resetFilter,
-    required TResult Function(Contract contract) delete,
+    required TResult Function(Coal coal) delete,
   }) {
     return filter();
   }
@@ -252,7 +251,7 @@ class _$ContractEventFilter implements ContractEventFilter {
     TResult? Function()? init,
     TResult? Function()? filter,
     TResult? Function()? resetFilter,
-    TResult? Function(Contract contract)? delete,
+    TResult? Function(Coal coal)? delete,
   }) {
     return filter?.call();
   }
@@ -263,7 +262,7 @@ class _$ContractEventFilter implements ContractEventFilter {
     TResult Function()? init,
     TResult Function()? filter,
     TResult Function()? resetFilter,
-    TResult Function(Contract contract)? delete,
+    TResult Function(Coal coal)? delete,
     required TResult orElse(),
   }) {
     if (filter != null) {
@@ -275,10 +274,10 @@ class _$ContractEventFilter implements ContractEventFilter {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ContractEventInit value) init,
-    required TResult Function(ContractEventFilter value) filter,
-    required TResult Function(ContractEventResetFilter value) resetFilter,
-    required TResult Function(ContractEventDelete value) delete,
+    required TResult Function(CoalEventInit value) init,
+    required TResult Function(CoalEventFilter value) filter,
+    required TResult Function(CoalEventResetFilter value) resetFilter,
+    required TResult Function(CoalEventDelete value) delete,
   }) {
     return filter(this);
   }
@@ -286,10 +285,10 @@ class _$ContractEventFilter implements ContractEventFilter {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ContractEventInit value)? init,
-    TResult? Function(ContractEventFilter value)? filter,
-    TResult? Function(ContractEventResetFilter value)? resetFilter,
-    TResult? Function(ContractEventDelete value)? delete,
+    TResult? Function(CoalEventInit value)? init,
+    TResult? Function(CoalEventFilter value)? filter,
+    TResult? Function(CoalEventResetFilter value)? resetFilter,
+    TResult? Function(CoalEventDelete value)? delete,
   }) {
     return filter?.call(this);
   }
@@ -297,10 +296,10 @@ class _$ContractEventFilter implements ContractEventFilter {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ContractEventInit value)? init,
-    TResult Function(ContractEventFilter value)? filter,
-    TResult Function(ContractEventResetFilter value)? resetFilter,
-    TResult Function(ContractEventDelete value)? delete,
+    TResult Function(CoalEventInit value)? init,
+    TResult Function(CoalEventFilter value)? filter,
+    TResult Function(CoalEventResetFilter value)? resetFilter,
+    TResult Function(CoalEventDelete value)? delete,
     required TResult orElse(),
   }) {
     if (filter != null) {
@@ -310,41 +309,40 @@ class _$ContractEventFilter implements ContractEventFilter {
   }
 }
 
-abstract class ContractEventFilter implements ContractEvent {
-  const factory ContractEventFilter() = _$ContractEventFilter;
+abstract class CoalEventFilter implements CoalEvent {
+  const factory CoalEventFilter() = _$CoalEventFilter;
 }
 
 /// @nodoc
-abstract class _$$ContractEventResetFilterCopyWith<$Res> {
-  factory _$$ContractEventResetFilterCopyWith(_$ContractEventResetFilter value,
-          $Res Function(_$ContractEventResetFilter) then) =
-      __$$ContractEventResetFilterCopyWithImpl<$Res>;
+abstract class _$$CoalEventResetFilterCopyWith<$Res> {
+  factory _$$CoalEventResetFilterCopyWith(_$CoalEventResetFilter value,
+          $Res Function(_$CoalEventResetFilter) then) =
+      __$$CoalEventResetFilterCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ContractEventResetFilterCopyWithImpl<$Res>
-    extends _$ContractEventCopyWithImpl<$Res, _$ContractEventResetFilter>
-    implements _$$ContractEventResetFilterCopyWith<$Res> {
-  __$$ContractEventResetFilterCopyWithImpl(_$ContractEventResetFilter _value,
-      $Res Function(_$ContractEventResetFilter) _then)
+class __$$CoalEventResetFilterCopyWithImpl<$Res>
+    extends _$CoalEventCopyWithImpl<$Res, _$CoalEventResetFilter>
+    implements _$$CoalEventResetFilterCopyWith<$Res> {
+  __$$CoalEventResetFilterCopyWithImpl(_$CoalEventResetFilter _value,
+      $Res Function(_$CoalEventResetFilter) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$ContractEventResetFilter implements ContractEventResetFilter {
-  const _$ContractEventResetFilter();
+class _$CoalEventResetFilter implements CoalEventResetFilter {
+  const _$CoalEventResetFilter();
 
   @override
   String toString() {
-    return 'ContractEvent.resetFilter()';
+    return 'CoalEvent.resetFilter()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ContractEventResetFilter);
+        (other.runtimeType == runtimeType && other is _$CoalEventResetFilter);
   }
 
   @override
@@ -356,7 +354,7 @@ class _$ContractEventResetFilter implements ContractEventResetFilter {
     required TResult Function() init,
     required TResult Function() filter,
     required TResult Function() resetFilter,
-    required TResult Function(Contract contract) delete,
+    required TResult Function(Coal coal) delete,
   }) {
     return resetFilter();
   }
@@ -367,7 +365,7 @@ class _$ContractEventResetFilter implements ContractEventResetFilter {
     TResult? Function()? init,
     TResult? Function()? filter,
     TResult? Function()? resetFilter,
-    TResult? Function(Contract contract)? delete,
+    TResult? Function(Coal coal)? delete,
   }) {
     return resetFilter?.call();
   }
@@ -378,7 +376,7 @@ class _$ContractEventResetFilter implements ContractEventResetFilter {
     TResult Function()? init,
     TResult Function()? filter,
     TResult Function()? resetFilter,
-    TResult Function(Contract contract)? delete,
+    TResult Function(Coal coal)? delete,
     required TResult orElse(),
   }) {
     if (resetFilter != null) {
@@ -390,10 +388,10 @@ class _$ContractEventResetFilter implements ContractEventResetFilter {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ContractEventInit value) init,
-    required TResult Function(ContractEventFilter value) filter,
-    required TResult Function(ContractEventResetFilter value) resetFilter,
-    required TResult Function(ContractEventDelete value) delete,
+    required TResult Function(CoalEventInit value) init,
+    required TResult Function(CoalEventFilter value) filter,
+    required TResult Function(CoalEventResetFilter value) resetFilter,
+    required TResult Function(CoalEventDelete value) delete,
   }) {
     return resetFilter(this);
   }
@@ -401,10 +399,10 @@ class _$ContractEventResetFilter implements ContractEventResetFilter {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ContractEventInit value)? init,
-    TResult? Function(ContractEventFilter value)? filter,
-    TResult? Function(ContractEventResetFilter value)? resetFilter,
-    TResult? Function(ContractEventDelete value)? delete,
+    TResult? Function(CoalEventInit value)? init,
+    TResult? Function(CoalEventFilter value)? filter,
+    TResult? Function(CoalEventResetFilter value)? resetFilter,
+    TResult? Function(CoalEventDelete value)? delete,
   }) {
     return resetFilter?.call(this);
   }
@@ -412,10 +410,10 @@ class _$ContractEventResetFilter implements ContractEventResetFilter {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ContractEventInit value)? init,
-    TResult Function(ContractEventFilter value)? filter,
-    TResult Function(ContractEventResetFilter value)? resetFilter,
-    TResult Function(ContractEventDelete value)? delete,
+    TResult Function(CoalEventInit value)? init,
+    TResult Function(CoalEventFilter value)? filter,
+    TResult Function(CoalEventResetFilter value)? resetFilter,
+    TResult Function(CoalEventDelete value)? delete,
     required TResult orElse(),
   }) {
     if (resetFilter != null) {
@@ -425,82 +423,80 @@ class _$ContractEventResetFilter implements ContractEventResetFilter {
   }
 }
 
-abstract class ContractEventResetFilter implements ContractEvent {
-  const factory ContractEventResetFilter() = _$ContractEventResetFilter;
+abstract class CoalEventResetFilter implements CoalEvent {
+  const factory CoalEventResetFilter() = _$CoalEventResetFilter;
 }
 
 /// @nodoc
-abstract class _$$ContractEventDeleteCopyWith<$Res> {
-  factory _$$ContractEventDeleteCopyWith(_$ContractEventDelete value,
-          $Res Function(_$ContractEventDelete) then) =
-      __$$ContractEventDeleteCopyWithImpl<$Res>;
+abstract class _$$CoalEventDeleteCopyWith<$Res> {
+  factory _$$CoalEventDeleteCopyWith(
+          _$CoalEventDelete value, $Res Function(_$CoalEventDelete) then) =
+      __$$CoalEventDeleteCopyWithImpl<$Res>;
   @useResult
-  $Res call({Contract contract});
+  $Res call({Coal coal});
 
-  $ContractCopyWith<$Res> get contract;
+  $CoalCopyWith<$Res> get coal;
 }
 
 /// @nodoc
-class __$$ContractEventDeleteCopyWithImpl<$Res>
-    extends _$ContractEventCopyWithImpl<$Res, _$ContractEventDelete>
-    implements _$$ContractEventDeleteCopyWith<$Res> {
-  __$$ContractEventDeleteCopyWithImpl(
-      _$ContractEventDelete _value, $Res Function(_$ContractEventDelete) _then)
+class __$$CoalEventDeleteCopyWithImpl<$Res>
+    extends _$CoalEventCopyWithImpl<$Res, _$CoalEventDelete>
+    implements _$$CoalEventDeleteCopyWith<$Res> {
+  __$$CoalEventDeleteCopyWithImpl(
+      _$CoalEventDelete _value, $Res Function(_$CoalEventDelete) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? contract = null,
+    Object? coal = null,
   }) {
-    return _then(_$ContractEventDelete(
-      contract: null == contract
-          ? _value.contract
-          : contract // ignore: cast_nullable_to_non_nullable
-              as Contract,
+    return _then(_$CoalEventDelete(
+      coal: null == coal
+          ? _value.coal
+          : coal // ignore: cast_nullable_to_non_nullable
+              as Coal,
     ));
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $ContractCopyWith<$Res> get contract {
-    return $ContractCopyWith<$Res>(_value.contract, (value) {
-      return _then(_value.copyWith(contract: value));
+  $CoalCopyWith<$Res> get coal {
+    return $CoalCopyWith<$Res>(_value.coal, (value) {
+      return _then(_value.copyWith(coal: value));
     });
   }
 }
 
 /// @nodoc
 
-class _$ContractEventDelete implements ContractEventDelete {
-  const _$ContractEventDelete({required this.contract});
+class _$CoalEventDelete implements CoalEventDelete {
+  const _$CoalEventDelete({required this.coal});
 
   @override
-  final Contract contract;
+  final Coal coal;
 
   @override
   String toString() {
-    return 'ContractEvent.delete(contract: $contract)';
+    return 'CoalEvent.delete(coal: $coal)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ContractEventDelete &&
-            (identical(other.contract, contract) ||
-                other.contract == contract));
+            other is _$CoalEventDelete &&
+            (identical(other.coal, coal) || other.coal == coal));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, contract);
+  int get hashCode => Object.hash(runtimeType, coal);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ContractEventDeleteCopyWith<_$ContractEventDelete> get copyWith =>
-      __$$ContractEventDeleteCopyWithImpl<_$ContractEventDelete>(
-          this, _$identity);
+  _$$CoalEventDeleteCopyWith<_$CoalEventDelete> get copyWith =>
+      __$$CoalEventDeleteCopyWithImpl<_$CoalEventDelete>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -508,9 +504,9 @@ class _$ContractEventDelete implements ContractEventDelete {
     required TResult Function() init,
     required TResult Function() filter,
     required TResult Function() resetFilter,
-    required TResult Function(Contract contract) delete,
+    required TResult Function(Coal coal) delete,
   }) {
-    return delete(contract);
+    return delete(coal);
   }
 
   @override
@@ -519,9 +515,9 @@ class _$ContractEventDelete implements ContractEventDelete {
     TResult? Function()? init,
     TResult? Function()? filter,
     TResult? Function()? resetFilter,
-    TResult? Function(Contract contract)? delete,
+    TResult? Function(Coal coal)? delete,
   }) {
-    return delete?.call(contract);
+    return delete?.call(coal);
   }
 
   @override
@@ -530,11 +526,11 @@ class _$ContractEventDelete implements ContractEventDelete {
     TResult Function()? init,
     TResult Function()? filter,
     TResult Function()? resetFilter,
-    TResult Function(Contract contract)? delete,
+    TResult Function(Coal coal)? delete,
     required TResult orElse(),
   }) {
     if (delete != null) {
-      return delete(contract);
+      return delete(coal);
     }
     return orElse();
   }
@@ -542,10 +538,10 @@ class _$ContractEventDelete implements ContractEventDelete {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ContractEventInit value) init,
-    required TResult Function(ContractEventFilter value) filter,
-    required TResult Function(ContractEventResetFilter value) resetFilter,
-    required TResult Function(ContractEventDelete value) delete,
+    required TResult Function(CoalEventInit value) init,
+    required TResult Function(CoalEventFilter value) filter,
+    required TResult Function(CoalEventResetFilter value) resetFilter,
+    required TResult Function(CoalEventDelete value) delete,
   }) {
     return delete(this);
   }
@@ -553,10 +549,10 @@ class _$ContractEventDelete implements ContractEventDelete {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ContractEventInit value)? init,
-    TResult? Function(ContractEventFilter value)? filter,
-    TResult? Function(ContractEventResetFilter value)? resetFilter,
-    TResult? Function(ContractEventDelete value)? delete,
+    TResult? Function(CoalEventInit value)? init,
+    TResult? Function(CoalEventFilter value)? filter,
+    TResult? Function(CoalEventResetFilter value)? resetFilter,
+    TResult? Function(CoalEventDelete value)? delete,
   }) {
     return delete?.call(this);
   }
@@ -564,10 +560,10 @@ class _$ContractEventDelete implements ContractEventDelete {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ContractEventInit value)? init,
-    TResult Function(ContractEventFilter value)? filter,
-    TResult Function(ContractEventResetFilter value)? resetFilter,
-    TResult Function(ContractEventDelete value)? delete,
+    TResult Function(CoalEventInit value)? init,
+    TResult Function(CoalEventFilter value)? filter,
+    TResult Function(CoalEventResetFilter value)? resetFilter,
+    TResult Function(CoalEventDelete value)? delete,
     required TResult orElse(),
   }) {
     if (delete != null) {
@@ -577,25 +573,24 @@ class _$ContractEventDelete implements ContractEventDelete {
   }
 }
 
-abstract class ContractEventDelete implements ContractEvent {
-  const factory ContractEventDelete({required final Contract contract}) =
-      _$ContractEventDelete;
+abstract class CoalEventDelete implements CoalEvent {
+  const factory CoalEventDelete({required final Coal coal}) = _$CoalEventDelete;
 
-  Contract get contract;
+  Coal get coal;
   @JsonKey(ignore: true)
-  _$$ContractEventDeleteCopyWith<_$ContractEventDelete> get copyWith =>
+  _$$CoalEventDeleteCopyWith<_$CoalEventDelete> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$ContractSR {
+mixin _$CoalSR {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CommonResponseError<DefaultApiError> error,
             NotifyErrorSnackbar notifyErrorSnackbar)
         showDioError,
     required TResult Function(String text) successNotify,
-    required TResult Function(Contract contract) delete,
+    required TResult Function(Coal coal) delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -604,7 +599,7 @@ mixin _$ContractSR {
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
     TResult? Function(String text)? successNotify,
-    TResult? Function(Contract contract)? delete,
+    TResult? Function(Coal coal)? delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -613,7 +608,7 @@ mixin _$ContractSR {
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
     TResult Function(String text)? successNotify,
-    TResult Function(Contract contract)? delete,
+    TResult Function(Coal coal)? delete,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -621,37 +616,36 @@ mixin _$ContractSR {
   TResult map<TResult extends Object?>({
     required TResult Function(_ShowDioErrorSnackbar value) showDioError,
     required TResult Function(_SuccessNotify value) successNotify,
-    required TResult Function(_ContractDeleted value) delete,
+    required TResult Function(_CoalDeleted value) delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ShowDioErrorSnackbar value)? showDioError,
     TResult? Function(_SuccessNotify value)? successNotify,
-    TResult? Function(_ContractDeleted value)? delete,
+    TResult? Function(_CoalDeleted value)? delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ShowDioErrorSnackbar value)? showDioError,
     TResult Function(_SuccessNotify value)? successNotify,
-    TResult Function(_ContractDeleted value)? delete,
+    TResult Function(_CoalDeleted value)? delete,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ContractSRCopyWith<$Res> {
-  factory $ContractSRCopyWith(
-          ContractSR value, $Res Function(ContractSR) then) =
-      _$ContractSRCopyWithImpl<$Res, ContractSR>;
+abstract class $CoalSRCopyWith<$Res> {
+  factory $CoalSRCopyWith(CoalSR value, $Res Function(CoalSR) then) =
+      _$CoalSRCopyWithImpl<$Res, CoalSR>;
 }
 
 /// @nodoc
-class _$ContractSRCopyWithImpl<$Res, $Val extends ContractSR>
-    implements $ContractSRCopyWith<$Res> {
-  _$ContractSRCopyWithImpl(this._value, this._then);
+class _$CoalSRCopyWithImpl<$Res, $Val extends CoalSR>
+    implements $CoalSRCopyWith<$Res> {
+  _$CoalSRCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -674,7 +668,7 @@ abstract class _$$_ShowDioErrorSnackbarCopyWith<$Res> {
 
 /// @nodoc
 class __$$_ShowDioErrorSnackbarCopyWithImpl<$Res>
-    extends _$ContractSRCopyWithImpl<$Res, _$_ShowDioErrorSnackbar>
+    extends _$CoalSRCopyWithImpl<$Res, _$_ShowDioErrorSnackbar>
     implements _$$_ShowDioErrorSnackbarCopyWith<$Res> {
   __$$_ShowDioErrorSnackbarCopyWithImpl(_$_ShowDioErrorSnackbar _value,
       $Res Function(_$_ShowDioErrorSnackbar) _then)
@@ -721,7 +715,7 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
 
   @override
   String toString() {
-    return 'ContractSR.showDioError(error: $error, notifyErrorSnackbar: $notifyErrorSnackbar)';
+    return 'CoalSR.showDioError(error: $error, notifyErrorSnackbar: $notifyErrorSnackbar)';
   }
 
   @override
@@ -751,7 +745,7 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
             NotifyErrorSnackbar notifyErrorSnackbar)
         showDioError,
     required TResult Function(String text) successNotify,
-    required TResult Function(Contract contract) delete,
+    required TResult Function(Coal coal) delete,
   }) {
     return showDioError(error, notifyErrorSnackbar);
   }
@@ -763,7 +757,7 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
     TResult? Function(String text)? successNotify,
-    TResult? Function(Contract contract)? delete,
+    TResult? Function(Coal coal)? delete,
   }) {
     return showDioError?.call(error, notifyErrorSnackbar);
   }
@@ -775,7 +769,7 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
     TResult Function(String text)? successNotify,
-    TResult Function(Contract contract)? delete,
+    TResult Function(Coal coal)? delete,
     required TResult orElse(),
   }) {
     if (showDioError != null) {
@@ -789,7 +783,7 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
   TResult map<TResult extends Object?>({
     required TResult Function(_ShowDioErrorSnackbar value) showDioError,
     required TResult Function(_SuccessNotify value) successNotify,
-    required TResult Function(_ContractDeleted value) delete,
+    required TResult Function(_CoalDeleted value) delete,
   }) {
     return showDioError(this);
   }
@@ -799,7 +793,7 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ShowDioErrorSnackbar value)? showDioError,
     TResult? Function(_SuccessNotify value)? successNotify,
-    TResult? Function(_ContractDeleted value)? delete,
+    TResult? Function(_CoalDeleted value)? delete,
   }) {
     return showDioError?.call(this);
   }
@@ -809,7 +803,7 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ShowDioErrorSnackbar value)? showDioError,
     TResult Function(_SuccessNotify value)? successNotify,
-    TResult Function(_ContractDeleted value)? delete,
+    TResult Function(_CoalDeleted value)? delete,
     required TResult orElse(),
   }) {
     if (showDioError != null) {
@@ -819,7 +813,7 @@ class _$_ShowDioErrorSnackbar implements _ShowDioErrorSnackbar {
   }
 }
 
-abstract class _ShowDioErrorSnackbar implements ContractSR {
+abstract class _ShowDioErrorSnackbar implements CoalSR {
   const factory _ShowDioErrorSnackbar(
           {required final CommonResponseError<DefaultApiError> error,
           required final NotifyErrorSnackbar notifyErrorSnackbar}) =
@@ -843,7 +837,7 @@ abstract class _$$_SuccessNotifyCopyWith<$Res> {
 
 /// @nodoc
 class __$$_SuccessNotifyCopyWithImpl<$Res>
-    extends _$ContractSRCopyWithImpl<$Res, _$_SuccessNotify>
+    extends _$CoalSRCopyWithImpl<$Res, _$_SuccessNotify>
     implements _$$_SuccessNotifyCopyWith<$Res> {
   __$$_SuccessNotifyCopyWithImpl(
       _$_SuccessNotify _value, $Res Function(_$_SuccessNotify) _then)
@@ -873,7 +867,7 @@ class _$_SuccessNotify implements _SuccessNotify {
 
   @override
   String toString() {
-    return 'ContractSR.successNotify(text: $text)';
+    return 'CoalSR.successNotify(text: $text)';
   }
 
   @override
@@ -900,7 +894,7 @@ class _$_SuccessNotify implements _SuccessNotify {
             NotifyErrorSnackbar notifyErrorSnackbar)
         showDioError,
     required TResult Function(String text) successNotify,
-    required TResult Function(Contract contract) delete,
+    required TResult Function(Coal coal) delete,
   }) {
     return successNotify(text);
   }
@@ -912,7 +906,7 @@ class _$_SuccessNotify implements _SuccessNotify {
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
     TResult? Function(String text)? successNotify,
-    TResult? Function(Contract contract)? delete,
+    TResult? Function(Coal coal)? delete,
   }) {
     return successNotify?.call(text);
   }
@@ -924,7 +918,7 @@ class _$_SuccessNotify implements _SuccessNotify {
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
     TResult Function(String text)? successNotify,
-    TResult Function(Contract contract)? delete,
+    TResult Function(Coal coal)? delete,
     required TResult orElse(),
   }) {
     if (successNotify != null) {
@@ -938,7 +932,7 @@ class _$_SuccessNotify implements _SuccessNotify {
   TResult map<TResult extends Object?>({
     required TResult Function(_ShowDioErrorSnackbar value) showDioError,
     required TResult Function(_SuccessNotify value) successNotify,
-    required TResult Function(_ContractDeleted value) delete,
+    required TResult Function(_CoalDeleted value) delete,
   }) {
     return successNotify(this);
   }
@@ -948,7 +942,7 @@ class _$_SuccessNotify implements _SuccessNotify {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ShowDioErrorSnackbar value)? showDioError,
     TResult? Function(_SuccessNotify value)? successNotify,
-    TResult? Function(_ContractDeleted value)? delete,
+    TResult? Function(_CoalDeleted value)? delete,
   }) {
     return successNotify?.call(this);
   }
@@ -958,7 +952,7 @@ class _$_SuccessNotify implements _SuccessNotify {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ShowDioErrorSnackbar value)? showDioError,
     TResult Function(_SuccessNotify value)? successNotify,
-    TResult Function(_ContractDeleted value)? delete,
+    TResult Function(_CoalDeleted value)? delete,
     required TResult orElse(),
   }) {
     if (successNotify != null) {
@@ -968,7 +962,7 @@ class _$_SuccessNotify implements _SuccessNotify {
   }
 }
 
-abstract class _SuccessNotify implements ContractSR {
+abstract class _SuccessNotify implements CoalSR {
   const factory _SuccessNotify({required final String text}) = _$_SuccessNotify;
 
   String get text;
@@ -978,76 +972,75 @@ abstract class _SuccessNotify implements ContractSR {
 }
 
 /// @nodoc
-abstract class _$$_ContractDeletedCopyWith<$Res> {
-  factory _$$_ContractDeletedCopyWith(
-          _$_ContractDeleted value, $Res Function(_$_ContractDeleted) then) =
-      __$$_ContractDeletedCopyWithImpl<$Res>;
+abstract class _$$_CoalDeletedCopyWith<$Res> {
+  factory _$$_CoalDeletedCopyWith(
+          _$_CoalDeleted value, $Res Function(_$_CoalDeleted) then) =
+      __$$_CoalDeletedCopyWithImpl<$Res>;
   @useResult
-  $Res call({Contract contract});
+  $Res call({Coal coal});
 
-  $ContractCopyWith<$Res> get contract;
+  $CoalCopyWith<$Res> get coal;
 }
 
 /// @nodoc
-class __$$_ContractDeletedCopyWithImpl<$Res>
-    extends _$ContractSRCopyWithImpl<$Res, _$_ContractDeleted>
-    implements _$$_ContractDeletedCopyWith<$Res> {
-  __$$_ContractDeletedCopyWithImpl(
-      _$_ContractDeleted _value, $Res Function(_$_ContractDeleted) _then)
+class __$$_CoalDeletedCopyWithImpl<$Res>
+    extends _$CoalSRCopyWithImpl<$Res, _$_CoalDeleted>
+    implements _$$_CoalDeletedCopyWith<$Res> {
+  __$$_CoalDeletedCopyWithImpl(
+      _$_CoalDeleted _value, $Res Function(_$_CoalDeleted) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? contract = null,
+    Object? coal = null,
   }) {
-    return _then(_$_ContractDeleted(
-      contract: null == contract
-          ? _value.contract
-          : contract // ignore: cast_nullable_to_non_nullable
-              as Contract,
+    return _then(_$_CoalDeleted(
+      coal: null == coal
+          ? _value.coal
+          : coal // ignore: cast_nullable_to_non_nullable
+              as Coal,
     ));
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $ContractCopyWith<$Res> get contract {
-    return $ContractCopyWith<$Res>(_value.contract, (value) {
-      return _then(_value.copyWith(contract: value));
+  $CoalCopyWith<$Res> get coal {
+    return $CoalCopyWith<$Res>(_value.coal, (value) {
+      return _then(_value.copyWith(coal: value));
     });
   }
 }
 
 /// @nodoc
 
-class _$_ContractDeleted implements _ContractDeleted {
-  const _$_ContractDeleted({required this.contract});
+class _$_CoalDeleted implements _CoalDeleted {
+  const _$_CoalDeleted({required this.coal});
 
   @override
-  final Contract contract;
+  final Coal coal;
 
   @override
   String toString() {
-    return 'ContractSR.delete(contract: $contract)';
+    return 'CoalSR.delete(coal: $coal)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ContractDeleted &&
-            (identical(other.contract, contract) ||
-                other.contract == contract));
+            other is _$_CoalDeleted &&
+            (identical(other.coal, coal) || other.coal == coal));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, contract);
+  int get hashCode => Object.hash(runtimeType, coal);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ContractDeletedCopyWith<_$_ContractDeleted> get copyWith =>
-      __$$_ContractDeletedCopyWithImpl<_$_ContractDeleted>(this, _$identity);
+  _$$_CoalDeletedCopyWith<_$_CoalDeleted> get copyWith =>
+      __$$_CoalDeletedCopyWithImpl<_$_CoalDeleted>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1056,9 +1049,9 @@ class _$_ContractDeleted implements _ContractDeleted {
             NotifyErrorSnackbar notifyErrorSnackbar)
         showDioError,
     required TResult Function(String text) successNotify,
-    required TResult Function(Contract contract) delete,
+    required TResult Function(Coal coal) delete,
   }) {
-    return delete(contract);
+    return delete(coal);
   }
 
   @override
@@ -1068,9 +1061,9 @@ class _$_ContractDeleted implements _ContractDeleted {
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
     TResult? Function(String text)? successNotify,
-    TResult? Function(Contract contract)? delete,
+    TResult? Function(Coal coal)? delete,
   }) {
-    return delete?.call(contract);
+    return delete?.call(coal);
   }
 
   @override
@@ -1080,11 +1073,11 @@ class _$_ContractDeleted implements _ContractDeleted {
             NotifyErrorSnackbar notifyErrorSnackbar)?
         showDioError,
     TResult Function(String text)? successNotify,
-    TResult Function(Contract contract)? delete,
+    TResult Function(Coal coal)? delete,
     required TResult orElse(),
   }) {
     if (delete != null) {
-      return delete(contract);
+      return delete(coal);
     }
     return orElse();
   }
@@ -1094,7 +1087,7 @@ class _$_ContractDeleted implements _ContractDeleted {
   TResult map<TResult extends Object?>({
     required TResult Function(_ShowDioErrorSnackbar value) showDioError,
     required TResult Function(_SuccessNotify value) successNotify,
-    required TResult Function(_ContractDeleted value) delete,
+    required TResult Function(_CoalDeleted value) delete,
   }) {
     return delete(this);
   }
@@ -1104,7 +1097,7 @@ class _$_ContractDeleted implements _ContractDeleted {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ShowDioErrorSnackbar value)? showDioError,
     TResult? Function(_SuccessNotify value)? successNotify,
-    TResult? Function(_ContractDeleted value)? delete,
+    TResult? Function(_CoalDeleted value)? delete,
   }) {
     return delete?.call(this);
   }
@@ -1114,7 +1107,7 @@ class _$_ContractDeleted implements _ContractDeleted {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ShowDioErrorSnackbar value)? showDioError,
     TResult Function(_SuccessNotify value)? successNotify,
-    TResult Function(_ContractDeleted value)? delete,
+    TResult Function(_CoalDeleted value)? delete,
     required TResult orElse(),
   }) {
     if (delete != null) {
@@ -1124,75 +1117,71 @@ class _$_ContractDeleted implements _ContractDeleted {
   }
 }
 
-abstract class _ContractDeleted implements ContractSR {
-  const factory _ContractDeleted({required final Contract contract}) =
-      _$_ContractDeleted;
+abstract class _CoalDeleted implements CoalSR {
+  const factory _CoalDeleted({required final Coal coal}) = _$_CoalDeleted;
 
-  Contract get contract;
+  Coal get coal;
   @JsonKey(ignore: true)
-  _$$_ContractDeletedCopyWith<_$_ContractDeleted> get copyWith =>
+  _$$_CoalDeletedCopyWith<_$_CoalDeleted> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$ContractState {
+mixin _$CoalState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() empty,
     required TResult Function(
-            bool isLoading, List<Filter> filters, List<Contract> contracts)
+            bool isLoading, List<Filter> filters, List<Coal> coals)
         data,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? empty,
-    TResult? Function(
-            bool isLoading, List<Filter> filters, List<Contract> contracts)?
+    TResult? Function(bool isLoading, List<Filter> filters, List<Coal> coals)?
         data,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? empty,
-    TResult Function(
-            bool isLoading, List<Filter> filters, List<Contract> contracts)?
+    TResult Function(bool isLoading, List<Filter> filters, List<Coal> coals)?
         data,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ContractStateEmpty value) empty,
-    required TResult Function(ContractStateData value) data,
+    required TResult Function(CoalStateEmpty value) empty,
+    required TResult Function(CoalStateData value) data,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ContractStateEmpty value)? empty,
-    TResult? Function(ContractStateData value)? data,
+    TResult? Function(CoalStateEmpty value)? empty,
+    TResult? Function(CoalStateData value)? data,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ContractStateEmpty value)? empty,
-    TResult Function(ContractStateData value)? data,
+    TResult Function(CoalStateEmpty value)? empty,
+    TResult Function(CoalStateData value)? data,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ContractStateCopyWith<$Res> {
-  factory $ContractStateCopyWith(
-          ContractState value, $Res Function(ContractState) then) =
-      _$ContractStateCopyWithImpl<$Res, ContractState>;
+abstract class $CoalStateCopyWith<$Res> {
+  factory $CoalStateCopyWith(CoalState value, $Res Function(CoalState) then) =
+      _$CoalStateCopyWithImpl<$Res, CoalState>;
 }
 
 /// @nodoc
-class _$ContractStateCopyWithImpl<$Res, $Val extends ContractState>
-    implements $ContractStateCopyWith<$Res> {
-  _$ContractStateCopyWithImpl(this._value, this._then);
+class _$CoalStateCopyWithImpl<$Res, $Val extends CoalState>
+    implements $CoalStateCopyWith<$Res> {
+  _$CoalStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -1201,35 +1190,35 @@ class _$ContractStateCopyWithImpl<$Res, $Val extends ContractState>
 }
 
 /// @nodoc
-abstract class _$$ContractStateEmptyCopyWith<$Res> {
-  factory _$$ContractStateEmptyCopyWith(_$ContractStateEmpty value,
-          $Res Function(_$ContractStateEmpty) then) =
-      __$$ContractStateEmptyCopyWithImpl<$Res>;
+abstract class _$$CoalStateEmptyCopyWith<$Res> {
+  factory _$$CoalStateEmptyCopyWith(
+          _$CoalStateEmpty value, $Res Function(_$CoalStateEmpty) then) =
+      __$$CoalStateEmptyCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ContractStateEmptyCopyWithImpl<$Res>
-    extends _$ContractStateCopyWithImpl<$Res, _$ContractStateEmpty>
-    implements _$$ContractStateEmptyCopyWith<$Res> {
-  __$$ContractStateEmptyCopyWithImpl(
-      _$ContractStateEmpty _value, $Res Function(_$ContractStateEmpty) _then)
+class __$$CoalStateEmptyCopyWithImpl<$Res>
+    extends _$CoalStateCopyWithImpl<$Res, _$CoalStateEmpty>
+    implements _$$CoalStateEmptyCopyWith<$Res> {
+  __$$CoalStateEmptyCopyWithImpl(
+      _$CoalStateEmpty _value, $Res Function(_$CoalStateEmpty) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$ContractStateEmpty extends ContractStateEmpty {
-  const _$ContractStateEmpty() : super._();
+class _$CoalStateEmpty extends CoalStateEmpty {
+  const _$CoalStateEmpty() : super._();
 
   @override
   String toString() {
-    return 'ContractState.empty()';
+    return 'CoalState.empty()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ContractStateEmpty);
+        (other.runtimeType == runtimeType && other is _$CoalStateEmpty);
   }
 
   @override
@@ -1240,7 +1229,7 @@ class _$ContractStateEmpty extends ContractStateEmpty {
   TResult when<TResult extends Object?>({
     required TResult Function() empty,
     required TResult Function(
-            bool isLoading, List<Filter> filters, List<Contract> contracts)
+            bool isLoading, List<Filter> filters, List<Coal> coals)
         data,
   }) {
     return empty();
@@ -1250,8 +1239,7 @@ class _$ContractStateEmpty extends ContractStateEmpty {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? empty,
-    TResult? Function(
-            bool isLoading, List<Filter> filters, List<Contract> contracts)?
+    TResult? Function(bool isLoading, List<Filter> filters, List<Coal> coals)?
         data,
   }) {
     return empty?.call();
@@ -1261,8 +1249,7 @@ class _$ContractStateEmpty extends ContractStateEmpty {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? empty,
-    TResult Function(
-            bool isLoading, List<Filter> filters, List<Contract> contracts)?
+    TResult Function(bool isLoading, List<Filter> filters, List<Coal> coals)?
         data,
     required TResult orElse(),
   }) {
@@ -1275,8 +1262,8 @@ class _$ContractStateEmpty extends ContractStateEmpty {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ContractStateEmpty value) empty,
-    required TResult Function(ContractStateData value) data,
+    required TResult Function(CoalStateEmpty value) empty,
+    required TResult Function(CoalStateData value) data,
   }) {
     return empty(this);
   }
@@ -1284,8 +1271,8 @@ class _$ContractStateEmpty extends ContractStateEmpty {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ContractStateEmpty value)? empty,
-    TResult? Function(ContractStateData value)? data,
+    TResult? Function(CoalStateEmpty value)? empty,
+    TResult? Function(CoalStateData value)? data,
   }) {
     return empty?.call(this);
   }
@@ -1293,8 +1280,8 @@ class _$ContractStateEmpty extends ContractStateEmpty {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ContractStateEmpty value)? empty,
-    TResult Function(ContractStateData value)? data,
+    TResult Function(CoalStateEmpty value)? empty,
+    TResult Function(CoalStateData value)? data,
     required TResult orElse(),
   }) {
     if (empty != null) {
@@ -1304,26 +1291,26 @@ class _$ContractStateEmpty extends ContractStateEmpty {
   }
 }
 
-abstract class ContractStateEmpty extends ContractState {
-  const factory ContractStateEmpty() = _$ContractStateEmpty;
-  const ContractStateEmpty._() : super._();
+abstract class CoalStateEmpty extends CoalState {
+  const factory CoalStateEmpty() = _$CoalStateEmpty;
+  const CoalStateEmpty._() : super._();
 }
 
 /// @nodoc
-abstract class _$$ContractStateDataCopyWith<$Res> {
-  factory _$$ContractStateDataCopyWith(
-          _$ContractStateData value, $Res Function(_$ContractStateData) then) =
-      __$$ContractStateDataCopyWithImpl<$Res>;
+abstract class _$$CoalStateDataCopyWith<$Res> {
+  factory _$$CoalStateDataCopyWith(
+          _$CoalStateData value, $Res Function(_$CoalStateData) then) =
+      __$$CoalStateDataCopyWithImpl<$Res>;
   @useResult
-  $Res call({bool isLoading, List<Filter> filters, List<Contract> contracts});
+  $Res call({bool isLoading, List<Filter> filters, List<Coal> coals});
 }
 
 /// @nodoc
-class __$$ContractStateDataCopyWithImpl<$Res>
-    extends _$ContractStateCopyWithImpl<$Res, _$ContractStateData>
-    implements _$$ContractStateDataCopyWith<$Res> {
-  __$$ContractStateDataCopyWithImpl(
-      _$ContractStateData _value, $Res Function(_$ContractStateData) _then)
+class __$$CoalStateDataCopyWithImpl<$Res>
+    extends _$CoalStateCopyWithImpl<$Res, _$CoalStateData>
+    implements _$$CoalStateDataCopyWith<$Res> {
+  __$$CoalStateDataCopyWithImpl(
+      _$CoalStateData _value, $Res Function(_$CoalStateData) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1331,9 +1318,9 @@ class __$$ContractStateDataCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? filters = null,
-    Object? contracts = null,
+    Object? coals = null,
   }) {
-    return _then(_$ContractStateData(
+    return _then(_$CoalStateData(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -1342,23 +1329,23 @@ class __$$ContractStateDataCopyWithImpl<$Res>
           ? _value._filters
           : filters // ignore: cast_nullable_to_non_nullable
               as List<Filter>,
-      contracts: null == contracts
-          ? _value._contracts
-          : contracts // ignore: cast_nullable_to_non_nullable
-              as List<Contract>,
+      coals: null == coals
+          ? _value._coals
+          : coals // ignore: cast_nullable_to_non_nullable
+              as List<Coal>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$ContractStateData extends ContractStateData {
-  const _$ContractStateData(
+class _$CoalStateData extends CoalStateData {
+  const _$CoalStateData(
       {required this.isLoading,
       required final List<Filter> filters,
-      required final List<Contract> contracts})
+      required final List<Coal> coals})
       : _filters = filters,
-        _contracts = contracts,
+        _coals = coals,
         super._();
 
   @override
@@ -1371,29 +1358,28 @@ class _$ContractStateData extends ContractStateData {
     return EqualUnmodifiableListView(_filters);
   }
 
-  final List<Contract> _contracts;
+  final List<Coal> _coals;
   @override
-  List<Contract> get contracts {
-    if (_contracts is EqualUnmodifiableListView) return _contracts;
+  List<Coal> get coals {
+    if (_coals is EqualUnmodifiableListView) return _coals;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_contracts);
+    return EqualUnmodifiableListView(_coals);
   }
 
   @override
   String toString() {
-    return 'ContractState.data(isLoading: $isLoading, filters: $filters, contracts: $contracts)';
+    return 'CoalState.data(isLoading: $isLoading, filters: $filters, coals: $coals)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ContractStateData &&
+            other is _$CoalStateData &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             const DeepCollectionEquality().equals(other._filters, _filters) &&
-            const DeepCollectionEquality()
-                .equals(other._contracts, _contracts));
+            const DeepCollectionEquality().equals(other._coals, _coals));
   }
 
   @override
@@ -1401,47 +1387,45 @@ class _$ContractStateData extends ContractStateData {
       runtimeType,
       isLoading,
       const DeepCollectionEquality().hash(_filters),
-      const DeepCollectionEquality().hash(_contracts));
+      const DeepCollectionEquality().hash(_coals));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ContractStateDataCopyWith<_$ContractStateData> get copyWith =>
-      __$$ContractStateDataCopyWithImpl<_$ContractStateData>(this, _$identity);
+  _$$CoalStateDataCopyWith<_$CoalStateData> get copyWith =>
+      __$$CoalStateDataCopyWithImpl<_$CoalStateData>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() empty,
     required TResult Function(
-            bool isLoading, List<Filter> filters, List<Contract> contracts)
+            bool isLoading, List<Filter> filters, List<Coal> coals)
         data,
   }) {
-    return data(isLoading, filters, contracts);
+    return data(isLoading, filters, coals);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? empty,
-    TResult? Function(
-            bool isLoading, List<Filter> filters, List<Contract> contracts)?
+    TResult? Function(bool isLoading, List<Filter> filters, List<Coal> coals)?
         data,
   }) {
-    return data?.call(isLoading, filters, contracts);
+    return data?.call(isLoading, filters, coals);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? empty,
-    TResult Function(
-            bool isLoading, List<Filter> filters, List<Contract> contracts)?
+    TResult Function(bool isLoading, List<Filter> filters, List<Coal> coals)?
         data,
     required TResult orElse(),
   }) {
     if (data != null) {
-      return data(isLoading, filters, contracts);
+      return data(isLoading, filters, coals);
     }
     return orElse();
   }
@@ -1449,8 +1433,8 @@ class _$ContractStateData extends ContractStateData {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ContractStateEmpty value) empty,
-    required TResult Function(ContractStateData value) data,
+    required TResult Function(CoalStateEmpty value) empty,
+    required TResult Function(CoalStateData value) data,
   }) {
     return data(this);
   }
@@ -1458,8 +1442,8 @@ class _$ContractStateData extends ContractStateData {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ContractStateEmpty value)? empty,
-    TResult? Function(ContractStateData value)? data,
+    TResult? Function(CoalStateEmpty value)? empty,
+    TResult? Function(CoalStateData value)? data,
   }) {
     return data?.call(this);
   }
@@ -1467,8 +1451,8 @@ class _$ContractStateData extends ContractStateData {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ContractStateEmpty value)? empty,
-    TResult Function(ContractStateData value)? data,
+    TResult Function(CoalStateEmpty value)? empty,
+    TResult Function(CoalStateData value)? data,
     required TResult orElse(),
   }) {
     if (data != null) {
@@ -1478,17 +1462,17 @@ class _$ContractStateData extends ContractStateData {
   }
 }
 
-abstract class ContractStateData extends ContractState {
-  const factory ContractStateData(
+abstract class CoalStateData extends CoalState {
+  const factory CoalStateData(
       {required final bool isLoading,
       required final List<Filter> filters,
-      required final List<Contract> contracts}) = _$ContractStateData;
-  const ContractStateData._() : super._();
+      required final List<Coal> coals}) = _$CoalStateData;
+  const CoalStateData._() : super._();
 
   bool get isLoading;
   List<Filter> get filters;
-  List<Contract> get contracts;
+  List<Coal> get coals;
   @JsonKey(ignore: true)
-  _$$ContractStateDataCopyWith<_$ContractStateData> get copyWith =>
+  _$$CoalStateDataCopyWith<_$CoalStateData> get copyWith =>
       throw _privateConstructorUsedError;
 }

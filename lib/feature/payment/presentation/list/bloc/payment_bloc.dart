@@ -6,8 +6,8 @@ import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
 import 'package:hasap_admin/core/models/employee.dart';
 import 'package:hasap_admin/core/models/filter.dart';
 import 'package:hasap_admin/feature/payment/domain/payment_interactor.dart';
-import 'package:hasap_admin/feature/payment/presentation/list/list/bloc/payment_bloc_models.dart';
-import 'package:hasap_admin/feature/payment/presentation/list/list/ui/filters/task_master.dart';
+import 'package:hasap_admin/feature/payment/presentation/list/bloc/payment_bloc_models.dart';
+import 'package:hasap_admin/feature/payment/presentation/list/ui/filters/task_master.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable

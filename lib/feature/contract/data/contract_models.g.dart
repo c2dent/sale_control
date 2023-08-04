@@ -22,7 +22,9 @@ _$_Contract _$$_ContractFromJson(Map<String, dynamic> json) => _$_Contract(
       remainingSum: json['remaining_sum'] as int,
       setupDate: DateTime.parse(json['setup_date'] as String),
       isConfirm: json['is_confirm'] as bool,
-      confirmDate: DateTime.parse(json['confirm_date'] as String),
+      confirmDate: json['confirm_date'] == null
+          ? null
+          : DateTime.parse(json['confirm_date'] as String),
       closed: json['closed'] as bool,
       createdAt: DateTime.parse(json['created_at'] as String),
       modifiedAt: DateTime.parse(json['modified_at'] as String),
@@ -45,7 +47,7 @@ Map<String, dynamic> _$$_ContractToJson(_$_Contract instance) =>
       'remaining_sum': instance.remainingSum,
       'setup_date': instance.setupDate.toIso8601String(),
       'is_confirm': instance.isConfirm,
-      'confirm_date': instance.confirmDate.toIso8601String(),
+      'confirm_date': instance.confirmDate?.toIso8601String(),
       'closed': instance.closed,
       'created_at': instance.createdAt.toIso8601String(),
       'modified_at': instance.modifiedAt.toIso8601String(),

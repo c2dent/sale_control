@@ -28,7 +28,7 @@ class TaskMasterDropdown extends FilterWidget<Employee> {
         onChange(employee);
         bloc.add(const ContractEvent.filter());
       },
-      asyncItems: (String? filter) => bloc.contractInteractor.getEmployees({"post_type": "task_master"}),
+      asyncItems: (String? filter) => bloc.interactor.getEmployees({"post_type": "task_master"}),
       compareFn: (item, sItem) => item.id == sItem.id,
     );
   }

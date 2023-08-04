@@ -5,6 +5,8 @@ import 'package:hasap_admin/core/models/filter.dart';
 import 'package:hasap_admin/core/models/region.dart';
 import 'package:hasap_admin/core/repositories/employee_repository.dart';
 import 'package:hasap_admin/core/repositories/region_repository.dart';
+import 'package:hasap_admin/feature/client/data/client_models.dart';
+import 'package:hasap_admin/feature/client/data/client_repository.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/contract/data/contract_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -18,7 +20,9 @@ abstract class ContractInteractor {
 
   Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(int id);
 
-  Future<List<Region>> getRegions();
+  Future<List<Region>> getRegions(Region? region);
+
+  Future<List<Client>> getClients();
 
   Future<List<Employee>> getEmployees(Map<String, String>? params);
 }
@@ -28,11 +32,12 @@ class ContractInteractorImpl extends ContractInteractor {
   final ContractRepository repository;
   final RegionRepository regionRepository;
   final EmployeeRepository employeeRepository;
+  final ClientRepository clientRepository;
 
-  ContractInteractorImpl(
-    this.repository,
-    this.regionRepository,
-    this.employeeRepository,
+  ContractInteractorImpl(this.repository,
+      this.regionRepository,
+      this.employeeRepository,
+      this.clientRepository
   );
 
   @override
@@ -74,12 +79,21 @@ class ContractInteractorImpl extends ContractInteractor {
   }
 
   @override
-  Future<List<Region>> getRegions() async {
-    final result = await regionRepository.getRegions({});
-
-    if (result.isLeft) {
-      return [];
+  Future<List<Region>> getRegions(Region? region) async {
+    Map<String, String> params = {};
+    if (region != null) {
+      params['id'] = region.id.toString();
     }
+
+    final result = await regionRepository.getRegions(params);
+    if (result.isLeft) return [];
+    return result.right;
+  }
+
+  @override
+  Future<List<Client>> getClients() async {
+    final result = await clientRepository.getClients({});
+    if (result.isLeft) return [];
 
     return result.right;
   }

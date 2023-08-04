@@ -18,10 +18,10 @@ import 'package:logger/logger.dart' as _i9;
 import '../arch/dio_error_handler/dio_error_handler.dart' as _i14;
 import '../arch/dio_error_handler/models/dio_error_models.dart' as _i15;
 import '../core/http/dio_client_creator.dart' as _i13;
-import '../core/http/dio_client_module.dart' as _i42;
+import '../core/http/dio_client_module.dart' as _i48;
 import '../core/http/link_provider.dart' as _i8;
 import '../core/infrastructure/dio_logger_wrapper.dart' as _i6;
-import '../core/infrastructure/infrastructure_module.dart' as _i43;
+import '../core/infrastructure/infrastructure_module.dart' as _i49;
 import '../core/infrastructure/logger_bloc_observer.dart' as _i10;
 import '../core/infrastructure/notify_error_snackbar.dart' as _i11;
 import '../core/repositories/area_repository.dart' as _i25;
@@ -32,29 +32,35 @@ import '../core/services/employee_api_service.dart' as _i17;
 import '../core/services/region_api_service.dart' as _i21;
 import '../core/user/user_repository.dart' as _i23;
 import '../feature/auth/data/auth_repository.dart' as _i26;
-import '../feature/auth/domain/auth_interactor.dart' as _i32;
-import '../feature/auth/presentation/bloc/login_bloc.dart' as _i35;
+import '../feature/auth/domain/auth_interactor.dart' as _i34;
+import '../feature/auth/presentation/bloc/login_bloc.dart' as _i38;
 import '../feature/client/data/client_repository.dart' as _i28;
 import '../feature/client/data/services/client_api_service.dart' as _i27;
-import '../feature/client/domain/client_interactor.dart' as _i33;
+import '../feature/client/domain/client_interactor.dart' as _i35;
 import '../feature/client/presentation/create/bloc/client_create_bloc.dart'
-    as _i39;
-import '../feature/client/presentation/list/bloc/client_bloc.dart' as _i38;
-import '../feature/contract/data/contract_repository.dart' as _i30;
-import '../feature/contract/data/services/contract_api_service.dart' as _i29;
-import '../feature/contract/domain/contract_interactor.dart' as _i34;
-import '../feature/contract/presentation/list/bloc/contract_bloc.dart' as _i40;
+    as _i42;
+import '../feature/client/presentation/list/bloc/client_bloc.dart' as _i41;
+import '../feature/coal/data/coal_repository.dart' as _i30;
+import '../feature/coal/data/services/coal_api_service.dart' as _i29;
+import '../feature/coal/domain/coal_interactor.dart' as _i36;
+import '../feature/coal/presentation/create/bloc/coal_create_bloc.dart' as _i44;
+import '../feature/coal/presentation/list/bloc/coal_bloc.dart' as _i43;
+import '../feature/contract/data/contract_repository.dart' as _i32;
+import '../feature/contract/data/services/contract_api_service.dart' as _i31;
+import '../feature/contract/domain/contract_interactor.dart' as _i37;
+import '../feature/contract/presentation/create/bloc/contract_create_bloc.dart'
+    as _i46;
+import '../feature/contract/presentation/list/bloc/contract_bloc.dart' as _i45;
 import '../feature/payment/data/payment_repository.dart' as _i20;
 import '../feature/payment/data/services/payment_api_service.dart' as _i19;
-import '../feature/payment/domain/payment_interactor.dart' as _i31;
-import '../feature/payment/presentation/list/create/bloc/payment_create_bloc.dart'
-    as _i37;
-import '../feature/payment/presentation/list/list/bloc/payment_bloc.dart'
-    as _i36;
+import '../feature/payment/domain/payment_interactor.dart' as _i33;
+import '../feature/payment/presentation/create/bloc/payment_create_bloc.dart'
+    as _i40;
+import '../feature/payment/presentation/list/bloc/payment_bloc.dart' as _i39;
 import 'app_environment.dart' as _i7;
 import 'router/app_router.dart' as _i3;
 import 'router/router_logging_observer.dart' as _i12;
-import 'router/router_module.dart' as _i41;
+import 'router/router_module.dart' as _i47;
 import 'theme/bloc/app_theme_bloc.dart' as _i4;
 
 // ignore_for_file: unnecessary_lambdas
@@ -139,57 +145,80 @@ Future<_i1.GetIt> $initGetIt(
   ));
   gh.singleton<_i28.ClientRepository>(
       _i28.ClientRepositoryImpl(gh<_i27.ClientApiService>()));
-  gh.singleton<_i29.ContractApiService>(_i29.ContractApiServiceImpl(
+  gh.singleton<_i29.CoalApiService>(_i29.CoalApiServiceImpl(
     gh<_i16.Dio>(instanceName: 'hasapHttpClient'),
     gh<_i14.DioErrorHandler<_i15.DefaultApiError>>(),
   ));
-  gh.singleton<_i30.ContractRepository>(
-      _i30.ContractRepositoryImpl(gh<_i29.ContractApiService>()));
-  gh.singleton<_i31.PaymentInteractor>(_i31.PaymentInteractorImpl(
+  gh.singleton<_i30.CoalRepository>(
+      _i30.CoalRepositoryImpl(gh<_i29.CoalApiService>()));
+  gh.singleton<_i31.ContractApiService>(_i31.ContractApiServiceImpl(
+    gh<_i16.Dio>(instanceName: 'hasapHttpClient'),
+    gh<_i14.DioErrorHandler<_i15.DefaultApiError>>(),
+  ));
+  gh.singleton<_i32.ContractRepository>(
+      _i32.ContractRepositoryImpl(gh<_i31.ContractApiService>()));
+  gh.singleton<_i33.PaymentInteractor>(_i33.PaymentInteractorImpl(
     gh<_i20.PaymentRepository>(),
     gh<_i18.EmployeeRepository>(),
-    gh<_i30.ContractRepository>(),
+    gh<_i32.ContractRepository>(),
   ));
-  gh.singleton<_i32.AuthInteractor>(
-      _i32.AuthInteractorImpl(gh<_i26.AuthRepository>()));
-  gh.singleton<_i33.ClientInteractor>(_i33.ClientInteractorImpl(
+  gh.singleton<_i34.AuthInteractor>(
+      _i34.AuthInteractorImpl(gh<_i26.AuthRepository>()));
+  gh.singleton<_i35.ClientInteractor>(_i35.ClientInteractorImpl(
     gh<_i28.ClientRepository>(),
     gh<_i22.RegionRepository>(),
   ));
-  gh.singleton<_i34.ContractInteractor>(_i34.ContractInteractorImpl(
-    gh<_i30.ContractRepository>(),
+  gh.singleton<_i36.CoalInteractor>(_i36.CoalInteractorImpl(
+    gh<_i30.CoalRepository>(),
+    gh<_i32.ContractRepository>(),
+  ));
+  gh.singleton<_i37.ContractInteractor>(_i37.ContractInteractorImpl(
+    gh<_i32.ContractRepository>(),
     gh<_i22.RegionRepository>(),
     gh<_i18.EmployeeRepository>(),
+    gh<_i28.ClientRepository>(),
   ));
-  gh.factory<_i35.LoginBloc>(() => _i35.LoginBloc(
-        gh<_i32.AuthInteractor>(),
+  gh.factory<_i38.LoginBloc>(() => _i38.LoginBloc(
+        gh<_i34.AuthInteractor>(),
         gh<_i11.NotifyErrorSnackbar>(),
       ));
-  gh.factory<_i36.PaymentBloc>(() => _i36.PaymentBloc(
-        gh<_i31.PaymentInteractor>(),
+  gh.factory<_i39.PaymentBloc>(() => _i39.PaymentBloc(
+        gh<_i33.PaymentInteractor>(),
         gh<_i11.NotifyErrorSnackbar>(),
       ));
-  gh.factory<_i37.PaymentCreateBloc>(() => _i37.PaymentCreateBloc(
-        gh<_i31.PaymentInteractor>(),
+  gh.factory<_i40.PaymentCreateBloc>(() => _i40.PaymentCreateBloc(
+        gh<_i33.PaymentInteractor>(),
         gh<_i11.NotifyErrorSnackbar>(),
       ));
-  gh.factory<_i38.ClientBloc>(() => _i38.ClientBloc(
-        gh<_i33.ClientInteractor>(),
+  gh.factory<_i41.ClientBloc>(() => _i41.ClientBloc(
+        gh<_i35.ClientInteractor>(),
         gh<_i11.NotifyErrorSnackbar>(),
       ));
-  gh.factory<_i39.ClientCreateBloc>(() => _i39.ClientCreateBloc(
-        gh<_i33.ClientInteractor>(),
+  gh.factory<_i42.ClientCreateBloc>(() => _i42.ClientCreateBloc(
+        gh<_i35.ClientInteractor>(),
         gh<_i11.NotifyErrorSnackbar>(),
       ));
-  gh.factory<_i40.ContractBloc>(() => _i40.ContractBloc(
-        gh<_i34.ContractInteractor>(),
+  gh.factory<_i43.CoalBloc>(() => _i43.CoalBloc(
+        gh<_i11.NotifyErrorSnackbar>(),
+        gh<_i36.CoalInteractor>(),
+      ));
+  gh.factory<_i44.CoalCreateBloc>(() => _i44.CoalCreateBloc(
+        gh<_i36.CoalInteractor>(),
+        gh<_i11.NotifyErrorSnackbar>(),
+      ));
+  gh.factory<_i45.ContractBloc>(() => _i45.ContractBloc(
+        gh<_i37.ContractInteractor>(),
+        gh<_i11.NotifyErrorSnackbar>(),
+      ));
+  gh.factory<_i46.ContractCreateBloc>(() => _i46.ContractCreateBloc(
+        gh<_i37.ContractInteractor>(),
         gh<_i11.NotifyErrorSnackbar>(),
       ));
   return getIt;
 }
 
-class _$RouterModule extends _i41.RouterModule {}
+class _$RouterModule extends _i47.RouterModule {}
 
-class _$DioClientModule extends _i42.DioClientModule {}
+class _$DioClientModule extends _i48.DioClientModule {}
 
-class _$InfrastructureModule extends _i43.InfrastructureModule {}
+class _$InfrastructureModule extends _i49.InfrastructureModule {}

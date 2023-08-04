@@ -34,7 +34,7 @@ class Contract with _$Contract {
     @JsonKey(name: "setup_date") required DateTime setupDate,
 
     @JsonKey(name: "is_confirm") required bool isConfirm,
-    @JsonKey(name: "confirm_date") required DateTime confirmDate,
+    @JsonKey(name: "confirm_date") required DateTime? confirmDate,
     required bool closed,
 
     @JsonKey(name: "created_at") required DateTime createdAt,

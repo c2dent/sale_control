@@ -14,28 +14,28 @@ abstract class PaymentRepository {
 @Singleton(as: PaymentRepository)
 class PaymentRepositoryImpl extends PaymentRepository {
 
-  final PaymentApiService paymentApiService;
+  final PaymentApiService service;
 
-  PaymentRepositoryImpl(this.paymentApiService);
+  PaymentRepositoryImpl(this.service);
 
   @override
   Future<Either<CommonResponseError<DefaultApiError>, List<Payment>>> list(Map<String, String> params) {
-    return paymentApiService.list(params);
+    return service.list(params);
   }
 
   @override
   Future<Either<CommonResponseError<DefaultApiError>, Payment>> create(Map<String, dynamic> data) {
-    return paymentApiService.create(data);
+    return service.create(data);
   }
 
   @override
   Future<Either<CommonResponseError<DefaultApiError>, Payment>> update(int id, Map<String, dynamic> data) {
-    return paymentApiService.update(id, data);
+    return service.update(id, data);
   }
 
   @override
   Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(int id) {
-    return paymentApiService.delete(id);
+    return service.delete(id);
   }
 
 }

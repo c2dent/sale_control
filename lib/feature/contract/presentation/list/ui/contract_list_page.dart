@@ -6,9 +6,11 @@ import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/widgets/drawer_menu.dart';
 import 'package:hasap_admin/core/widgets/filter_modal.dart';
+import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/core/widgets/utils.dart';
 import 'package:hasap_admin/feature/client/data/client_models.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
+import 'package:hasap_admin/feature/contract/presentation/create/ui/contract_create_page.dart';
 import 'package:hasap_admin/feature/contract/presentation/list/bloc/contract_bloc.dart';
 import 'package:hasap_admin/feature/contract/presentation/list/bloc/contract_bloc_models.dart';
 
@@ -24,6 +26,7 @@ class ContractListPage extends StatelessWidget {
         onSR: _onSingleResult,
         builder: (context, state) {
           final bloc = context.read<ContractBloc>();
+          AppTheme theme = AppTheme.of(context);
 
           return Scaffold(
               appBar: AppBar(
@@ -40,6 +43,20 @@ class ContractListPage extends StatelessWidget {
                 ],
               ),
               drawer: const DrawerMenu(),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () async {
+                  Contract? contract = await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ContractCreatePage()),
+                  );
+
+                  if (contract != null) {
+                    bloc.add(const ContractEvent.filter());
+                  }
+                },
+                backgroundColor: theme.colorTheme.primary,
+                child: const Icon(Icons.add_circle_outline),
+              ),
               body: state.map(
                 empty: (_) => const Center(child: CircularProgressIndicator()),
                 data: (state) => _ContractPage(state: state),
@@ -50,8 +67,12 @@ class ContractListPage extends StatelessWidget {
   }
 
   void _onSingleResult(BuildContext context, ContractSR sr) {
+    final bloc = context.read<ContractBloc>();
+
     sr.when(
       showDioError: (error, notifier) => notifier.notify(error, context),
+      successNotify: (text) => SuccessSnackbar.show(context: context, text: text),
+      delete: (client) => bloc.add(const ContractEvent.filter()),
     );
   }
 }
@@ -64,6 +85,8 @@ class _ContractPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppTheme theme = AppTheme.of(context);
+    Offset tapPosition = Offset.zero;
+    final bloc = context.read<ContractBloc>();
 
     if (state.data.isLoading) {
       return const Center(child: CircularProgressIndicator());
@@ -72,7 +95,7 @@ class _ContractPage extends StatelessWidget {
     if (state.data.contracts.isEmpty) {
       return Column(
         children: [
-          state.data.filters[3].filterWidget,
+          // state.data.filters[3].filterWidget,
           Expanded(
             child: Center(
               child: Text(
@@ -100,50 +123,68 @@ class _ContractPage extends StatelessWidget {
                 Contract contract = state.data.contracts[index];
                 Client client = contract.client;
 
-                return Card(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "${client.firstName} ${client.lastName}",
-                              style: theme.textTheme.title1.copyWith(color: theme.colorTheme.textPrimary),
-                            ),
-                            if (contract.isConfirm)
-                              Icon(Icons.check_circle, color: theme.colorTheme.success)
-                            else
-                              Icon(Icons.cancel, color: theme.colorTheme.error)
-                          ],
-                        ),
-                        const SizedBox(height: 5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Galan ay: ${contract.remainingMonths}", style: theme.textTheme.title2),
-                            Text("Umumyy ay: ${contract.dueDateOnMonth}", style: theme.textTheme.title2),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Galan toleg: ${contract.remainingSum}", style: theme.textTheme.title2),
-                            Text("Umumyy toleg: ${contract.priceAmount}", style: theme.textTheme.title2)
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("${contract.creator.firstName}", style: theme.textTheme.title2),
-                            Text(
-                              formattingDate(contract.createdAt),
-                              style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
-                            ),
-                          ],
-                        )
-                      ],
+                return GestureDetector(
+                  onLongPress: () => showContextMenu(context, tapPosition,
+                      edit: () async {
+                        Contract? updateContract = await Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ContractCreatePage(contract: contract)),
+                        );
+
+                        if (updateContract != null) {
+                          bloc.add(const ContractEvent.filter());
+                        }
+                      },
+                      delete: () => bloc.add(ContractEvent.delete(contract: contract))),
+                      onTapDown: ((details) {
+                        tapPosition = Offset(details.globalPosition.dx, details.globalPosition.dy);
+                      }),
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${client.firstName} ${client.lastName}",
+                                style: theme.textTheme.title1.copyWith(color: theme.colorTheme.textPrimary),
+                              ),
+                              if (contract.isConfirm)
+                                Icon(Icons.check_circle, color: theme.colorTheme.success)
+                              else
+                                Icon(Icons.cancel, color: theme.colorTheme.error)
+                            ],
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Galan ay: ${contract.remainingMonths}", style: theme.textTheme.title2),
+                              Text("Umumyy ay: ${contract.dueDateOnMonth}", style: theme.textTheme.title2),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Galan toleg: ${contract.remainingSum}", style: theme.textTheme.title2),
+                              Text("Umumyy toleg: ${contract.priceAmount}", style: theme.textTheme.title2)
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("${contract.creator.firstName}."
+                                  "", style: theme.textTheme.title2),
+                              Text(
+                                formattingDate(contract.createdAt),
+                                style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );
