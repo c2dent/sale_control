@@ -17,7 +17,7 @@ abstract class AuthRepository {
 
   User? getUser();
 
-  Future<Either<CommonResponseError<DefaultApiError>, bool>> authorize(String username, String pass);
+  Future<Either<CommonResponseError<DefaultApiError>, User>> authorize(String username, String pass);
 
   Future<Either<CommonResponseError<DefaultApiError>, bool>> register(String username, String email, String pass);
 
@@ -42,7 +42,7 @@ class AuthRepositoryImpl implements AuthRepository {
   bool isAuthorized() => _isAuthorized;
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>, bool>> authorize(String username, String pass) async {
+  Future<Either<CommonResponseError<DefaultApiError>, User>> authorize(String username, String pass) async {
     final result = await _dioErrorHandler.processRequest(
             () => _client.post(
             '/login/',
@@ -56,7 +56,7 @@ class AuthRepositoryImpl implements AuthRepository {
     await _storage.write(key: 'accessToken', value: result.right.data['accessToken']);
 
     _isAuthorized = true;
-    return const Either.right(true);
+    return Either.right(_user!);
   }
 
   @override

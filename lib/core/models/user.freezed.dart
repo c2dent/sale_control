@@ -24,6 +24,10 @@ mixin _$User {
   String get username => throw _privateConstructorUsedError;
   @JsonKey(name: "first_name")
   String? get firstName => throw _privateConstructorUsedError;
+  @JsonKey(name: "last_name")
+  String? get lastName => throw _privateConstructorUsedError;
+  Employee get employee => throw _privateConstructorUsedError;
+  Office get office => throw _privateConstructorUsedError;
   String get permission => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +44,13 @@ abstract class $UserCopyWith<$Res> {
       {int id,
       String username,
       @JsonKey(name: "first_name") String? firstName,
+      @JsonKey(name: "last_name") String? lastName,
+      Employee employee,
+      Office office,
       String permission});
+
+  $EmployeeCopyWith<$Res> get employee;
+  $OfficeCopyWith<$Res> get office;
 }
 
 /// @nodoc
@@ -59,6 +69,9 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? id = null,
     Object? username = null,
     Object? firstName = freezed,
+    Object? lastName = freezed,
+    Object? employee = null,
+    Object? office = null,
     Object? permission = null,
   }) {
     return _then(_value.copyWith(
@@ -74,11 +87,39 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
+      lastName: freezed == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      employee: null == employee
+          ? _value.employee
+          : employee // ignore: cast_nullable_to_non_nullable
+              as Employee,
+      office: null == office
+          ? _value.office
+          : office // ignore: cast_nullable_to_non_nullable
+              as Office,
       permission: null == permission
           ? _value.permission
           : permission // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $EmployeeCopyWith<$Res> get employee {
+    return $EmployeeCopyWith<$Res>(_value.employee, (value) {
+      return _then(_value.copyWith(employee: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $OfficeCopyWith<$Res> get office {
+    return $OfficeCopyWith<$Res>(_value.office, (value) {
+      return _then(_value.copyWith(office: value) as $Val);
+    });
   }
 }
 
@@ -92,7 +133,15 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       {int id,
       String username,
       @JsonKey(name: "first_name") String? firstName,
+      @JsonKey(name: "last_name") String? lastName,
+      Employee employee,
+      Office office,
       String permission});
+
+  @override
+  $EmployeeCopyWith<$Res> get employee;
+  @override
+  $OfficeCopyWith<$Res> get office;
 }
 
 /// @nodoc
@@ -107,6 +156,9 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
     Object? id = null,
     Object? username = null,
     Object? firstName = freezed,
+    Object? lastName = freezed,
+    Object? employee = null,
+    Object? office = null,
     Object? permission = null,
   }) {
     return _then(_$_User(
@@ -122,6 +174,18 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
+      lastName: freezed == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      employee: null == employee
+          ? _value.employee
+          : employee // ignore: cast_nullable_to_non_nullable
+              as Employee,
+      office: null == office
+          ? _value.office
+          : office // ignore: cast_nullable_to_non_nullable
+              as Office,
       permission: null == permission
           ? _value.permission
           : permission // ignore: cast_nullable_to_non_nullable
@@ -137,6 +201,9 @@ class _$_User implements _User {
       {required this.id,
       required this.username,
       @JsonKey(name: "first_name") this.firstName,
+      @JsonKey(name: "last_name") this.lastName,
+      required this.employee,
+      required this.office,
       required this.permission});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
@@ -149,11 +216,18 @@ class _$_User implements _User {
   @JsonKey(name: "first_name")
   final String? firstName;
   @override
+  @JsonKey(name: "last_name")
+  final String? lastName;
+  @override
+  final Employee employee;
+  @override
+  final Office office;
+  @override
   final String permission;
 
   @override
   String toString() {
-    return 'User(id: $id, username: $username, firstName: $firstName, permission: $permission)';
+    return 'User(id: $id, username: $username, firstName: $firstName, lastName: $lastName, employee: $employee, office: $office, permission: $permission)';
   }
 
   @override
@@ -166,14 +240,19 @@ class _$_User implements _User {
                 other.username == username) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.employee, employee) ||
+                other.employee == employee) &&
+            (identical(other.office, office) || other.office == office) &&
             (identical(other.permission, permission) ||
                 other.permission == permission));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, username, firstName, permission);
+  int get hashCode => Object.hash(runtimeType, id, username, firstName,
+      lastName, employee, office, permission);
 
   @JsonKey(ignore: true)
   @override
@@ -194,6 +273,9 @@ abstract class _User implements User {
       {required final int id,
       required final String username,
       @JsonKey(name: "first_name") final String? firstName,
+      @JsonKey(name: "last_name") final String? lastName,
+      required final Employee employee,
+      required final Office office,
       required final String permission}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
@@ -205,6 +287,13 @@ abstract class _User implements User {
   @override
   @JsonKey(name: "first_name")
   String? get firstName;
+  @override
+  @JsonKey(name: "last_name")
+  String? get lastName;
+  @override
+  Employee get employee;
+  @override
+  Office get office;
   @override
   String get permission;
   @override

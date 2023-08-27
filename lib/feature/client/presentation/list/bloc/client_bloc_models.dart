@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hasap_admin/arch/dio_error_handler/models/dio_error_models.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
 import 'package:hasap_admin/core/models/filter.dart';
+import 'package:hasap_admin/core/models/user.dart';
 import 'package:hasap_admin/feature/client/data/client_models.dart';
 
 part 'client_bloc_models.freezed.dart';
@@ -39,6 +40,7 @@ class ClientState with _$ClientState {
 
   const factory ClientState.data({
     required bool isLoading,
+    required User? user,
     required List<Filter> filters,
     required List<Client> clients,
   }) = ClientStateData;

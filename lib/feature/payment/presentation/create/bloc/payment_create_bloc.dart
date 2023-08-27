@@ -30,6 +30,7 @@ class PaymentCreateBloc extends SrBloc<PaymentCreateEvent, PaymentCreateState, P
       date: event.payment?.date ?? DateTime.now(),
       contract: event.payment?.contract,
       payment: event.payment,
+      comment: TextEditingController(text: event.payment?.comment),
     ));
   }
 
@@ -53,6 +54,7 @@ class PaymentCreateBloc extends SrBloc<PaymentCreateEvent, PaymentCreateState, P
       "amount": state.data.amount.text,
       "date": dateFormatterYyyyMmDd.format(state.data.date),
       "contract_id": state.data.contract?.id,
+      "comment": state.data.comment.text,
     };
     return data;
   }

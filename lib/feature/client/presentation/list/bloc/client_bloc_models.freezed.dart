@@ -1134,24 +1134,24 @@ mixin _$ClientState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() empty,
-    required TResult Function(
-            bool isLoading, List<Filter> filters, List<Client> clients)
+    required TResult Function(bool isLoading, User? user, List<Filter> filters,
+            List<Client> clients)
         data,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? empty,
-    TResult? Function(
-            bool isLoading, List<Filter> filters, List<Client> clients)?
+    TResult? Function(bool isLoading, User? user, List<Filter> filters,
+            List<Client> clients)?
         data,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? empty,
-    TResult Function(
-            bool isLoading, List<Filter> filters, List<Client> clients)?
+    TResult Function(bool isLoading, User? user, List<Filter> filters,
+            List<Client> clients)?
         data,
     required TResult orElse(),
   }) =>
@@ -1234,8 +1234,8 @@ class _$ClientStateEmpty extends ClientStateEmpty {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() empty,
-    required TResult Function(
-            bool isLoading, List<Filter> filters, List<Client> clients)
+    required TResult Function(bool isLoading, User? user, List<Filter> filters,
+            List<Client> clients)
         data,
   }) {
     return empty();
@@ -1245,8 +1245,8 @@ class _$ClientStateEmpty extends ClientStateEmpty {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? empty,
-    TResult? Function(
-            bool isLoading, List<Filter> filters, List<Client> clients)?
+    TResult? Function(bool isLoading, User? user, List<Filter> filters,
+            List<Client> clients)?
         data,
   }) {
     return empty?.call();
@@ -1256,8 +1256,8 @@ class _$ClientStateEmpty extends ClientStateEmpty {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? empty,
-    TResult Function(
-            bool isLoading, List<Filter> filters, List<Client> clients)?
+    TResult Function(bool isLoading, User? user, List<Filter> filters,
+            List<Client> clients)?
         data,
     required TResult orElse(),
   }) {
@@ -1310,7 +1310,10 @@ abstract class _$$ClientStateDataCopyWith<$Res> {
           _$ClientStateData value, $Res Function(_$ClientStateData) then) =
       __$$ClientStateDataCopyWithImpl<$Res>;
   @useResult
-  $Res call({bool isLoading, List<Filter> filters, List<Client> clients});
+  $Res call(
+      {bool isLoading, User? user, List<Filter> filters, List<Client> clients});
+
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -1325,6 +1328,7 @@ class __$$ClientStateDataCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? user = freezed,
     Object? filters = null,
     Object? clients = null,
   }) {
@@ -1333,6 +1337,10 @@ class __$$ClientStateDataCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
       filters: null == filters
           ? _value._filters
           : filters // ignore: cast_nullable_to_non_nullable
@@ -1343,6 +1351,18 @@ class __$$ClientStateDataCopyWithImpl<$Res>
               as List<Client>,
     ));
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -1350,6 +1370,7 @@ class __$$ClientStateDataCopyWithImpl<$Res>
 class _$ClientStateData extends ClientStateData {
   const _$ClientStateData(
       {required this.isLoading,
+      required this.user,
       required final List<Filter> filters,
       required final List<Client> clients})
       : _filters = filters,
@@ -1358,6 +1379,8 @@ class _$ClientStateData extends ClientStateData {
 
   @override
   final bool isLoading;
+  @override
+  final User? user;
   final List<Filter> _filters;
   @override
   List<Filter> get filters {
@@ -1376,7 +1399,7 @@ class _$ClientStateData extends ClientStateData {
 
   @override
   String toString() {
-    return 'ClientState.data(isLoading: $isLoading, filters: $filters, clients: $clients)';
+    return 'ClientState.data(isLoading: $isLoading, user: $user, filters: $filters, clients: $clients)';
   }
 
   @override
@@ -1386,6 +1409,7 @@ class _$ClientStateData extends ClientStateData {
             other is _$ClientStateData &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.user, user) || other.user == user) &&
             const DeepCollectionEquality().equals(other._filters, _filters) &&
             const DeepCollectionEquality().equals(other._clients, _clients));
   }
@@ -1394,6 +1418,7 @@ class _$ClientStateData extends ClientStateData {
   int get hashCode => Object.hash(
       runtimeType,
       isLoading,
+      user,
       const DeepCollectionEquality().hash(_filters),
       const DeepCollectionEquality().hash(_clients));
 
@@ -1407,35 +1432,35 @@ class _$ClientStateData extends ClientStateData {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() empty,
-    required TResult Function(
-            bool isLoading, List<Filter> filters, List<Client> clients)
+    required TResult Function(bool isLoading, User? user, List<Filter> filters,
+            List<Client> clients)
         data,
   }) {
-    return data(isLoading, filters, clients);
+    return data(isLoading, user, filters, clients);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? empty,
-    TResult? Function(
-            bool isLoading, List<Filter> filters, List<Client> clients)?
+    TResult? Function(bool isLoading, User? user, List<Filter> filters,
+            List<Client> clients)?
         data,
   }) {
-    return data?.call(isLoading, filters, clients);
+    return data?.call(isLoading, user, filters, clients);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? empty,
-    TResult Function(
-            bool isLoading, List<Filter> filters, List<Client> clients)?
+    TResult Function(bool isLoading, User? user, List<Filter> filters,
+            List<Client> clients)?
         data,
     required TResult orElse(),
   }) {
     if (data != null) {
-      return data(isLoading, filters, clients);
+      return data(isLoading, user, filters, clients);
     }
     return orElse();
   }
@@ -1475,11 +1500,13 @@ class _$ClientStateData extends ClientStateData {
 abstract class ClientStateData extends ClientState {
   const factory ClientStateData(
       {required final bool isLoading,
+      required final User? user,
       required final List<Filter> filters,
       required final List<Client> clients}) = _$ClientStateData;
   const ClientStateData._() : super._();
 
   bool get isLoading;
+  User? get user;
   List<Filter> get filters;
   List<Client> get clients;
   @JsonKey(ignore: true)

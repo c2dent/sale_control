@@ -122,20 +122,6 @@ class _ContractCreatePage extends StatelessWidget {
                   const SizedBox(height: 10),
 
                   TextFormField(
-                    controller: state.startContribution,
-                    decoration: const InputDecoration(
-                      labelText: "Başlangych toleg*",
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Başlangych tolegi gorkezin";
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 10),
-
-                  TextFormField(
                     controller: state.monthCount,
                     decoration: const InputDecoration(
                       labelText: "Garashyk ayyn sany*",
@@ -148,6 +134,19 @@ class _ContractCreatePage extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 20),
+
+                  if (state.contract == null)
+                    Column(
+                      children: [
+                        TextFormField(
+                          controller: state.paidAmount,
+                          decoration: const InputDecoration(
+                            labelText: "Bashlangych toleg*",
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
 
                   TextFormField(
                     controller: state.filterCount,

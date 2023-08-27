@@ -59,8 +59,8 @@ class ContractCreateState with _$ContractCreateState {
     required TextEditingController monthCount,
     required TextEditingController dueDateOnMonth,
     required TextEditingController priceAmount,
-    required TextEditingController startContribution,
     required TextEditingController filterCount,
+    required TextEditingController paidAmount,
     required DateTime setupDate,
     required Contract? contract,
   }) = ContractCreateStateData;

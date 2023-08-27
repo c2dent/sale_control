@@ -21,6 +21,8 @@ Client _$ClientFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Client {
   int get id => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_debt")
+  bool get haveDebt => throw _privateConstructorUsedError;
   @JsonKey(name: "first_name")
   String get firstName => throw _privateConstructorUsedError;
   @JsonKey(name: "last_name")
@@ -49,6 +51,7 @@ abstract class $ClientCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
+      @JsonKey(name: "have_debt") bool haveDebt,
       @JsonKey(name: "first_name") String firstName,
       @JsonKey(name: "last_name") String lastName,
       @JsonKey(name: "sur_name") String? surName,
@@ -78,6 +81,7 @@ class _$ClientCopyWithImpl<$Res, $Val extends Client>
   @override
   $Res call({
     Object? id = null,
+    Object? haveDebt = null,
     Object? firstName = null,
     Object? lastName = null,
     Object? surName = freezed,
@@ -94,6 +98,10 @@ class _$ClientCopyWithImpl<$Res, $Val extends Client>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      haveDebt: null == haveDebt
+          ? _value.haveDebt
+          : haveDebt // ignore: cast_nullable_to_non_nullable
+              as bool,
       firstName: null == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -162,6 +170,7 @@ abstract class _$$_ClientCopyWith<$Res> implements $ClientCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
+      @JsonKey(name: "have_debt") bool haveDebt,
       @JsonKey(name: "first_name") String firstName,
       @JsonKey(name: "last_name") String lastName,
       @JsonKey(name: "sur_name") String? surName,
@@ -190,6 +199,7 @@ class __$$_ClientCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? haveDebt = null,
     Object? firstName = null,
     Object? lastName = null,
     Object? surName = freezed,
@@ -206,6 +216,10 @@ class __$$_ClientCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      haveDebt: null == haveDebt
+          ? _value.haveDebt
+          : haveDebt // ignore: cast_nullable_to_non_nullable
+              as bool,
       firstName: null == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -255,6 +269,7 @@ class __$$_ClientCopyWithImpl<$Res>
 class _$_Client implements _Client {
   const _$_Client(
       {required this.id,
+      @JsonKey(name: "have_debt") required this.haveDebt,
       @JsonKey(name: "first_name") required this.firstName,
       @JsonKey(name: "last_name") required this.lastName,
       @JsonKey(name: "sur_name") required this.surName,
@@ -271,6 +286,9 @@ class _$_Client implements _Client {
 
   @override
   final int id;
+  @override
+  @JsonKey(name: "have_debt")
+  final bool haveDebt;
   @override
   @JsonKey(name: "first_name")
   final String firstName;
@@ -299,7 +317,7 @@ class _$_Client implements _Client {
 
   @override
   String toString() {
-    return 'Client(id: $id, firstName: $firstName, lastName: $lastName, surName: $surName, description: $description, phone: $phone, phone2: $phone2, region: $region, creator: $creator, createdAt: $createdAt, modifiedAt: $modifiedAt)';
+    return 'Client(id: $id, haveDebt: $haveDebt, firstName: $firstName, lastName: $lastName, surName: $surName, description: $description, phone: $phone, phone2: $phone2, region: $region, creator: $creator, createdAt: $createdAt, modifiedAt: $modifiedAt)';
   }
 
   @override
@@ -308,6 +326,8 @@ class _$_Client implements _Client {
         (other.runtimeType == runtimeType &&
             other is _$_Client &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.haveDebt, haveDebt) ||
+                other.haveDebt == haveDebt) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
@@ -327,8 +347,20 @@ class _$_Client implements _Client {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, firstName, lastName, surName,
-      description, phone, phone2, region, creator, createdAt, modifiedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      haveDebt,
+      firstName,
+      lastName,
+      surName,
+      description,
+      phone,
+      phone2,
+      region,
+      creator,
+      createdAt,
+      modifiedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -347,6 +379,7 @@ class _$_Client implements _Client {
 abstract class _Client implements Client {
   const factory _Client(
           {required final int id,
+          @JsonKey(name: "have_debt") required final bool haveDebt,
           @JsonKey(name: "first_name") required final String firstName,
           @JsonKey(name: "last_name") required final String lastName,
           @JsonKey(name: "sur_name") required final String? surName,
@@ -363,6 +396,9 @@ abstract class _Client implements Client {
 
   @override
   int get id;
+  @override
+  @JsonKey(name: "have_debt")
+  bool get haveDebt;
   @override
   @JsonKey(name: "first_name")
   String get firstName;

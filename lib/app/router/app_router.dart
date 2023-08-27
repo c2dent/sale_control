@@ -12,6 +12,8 @@ class AppRouter extends $AppRouter {
     AutoRoute(page: ClientListRoute.page, path: '/client_list'),
     AutoRoute(page: ContractListRoute.page, path: '/contract_list'),
     AutoRoute(page: PaymentListRoute.page, path: '/payment_list'),
-    AutoRoute(page: CoalListRoute.page, path: '/coal_list'),
+    AutoRoute(page: ServiceListRoute.page, path: '/service_list'),
+    AutoRoute(page: ContractReturnListRoute.page, path: '/return_list'),
+    AutoRoute(page: ProfileRoute.page, path: '/profile'),
   ];
 }

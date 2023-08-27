@@ -96,7 +96,7 @@ class _ClientPage extends StatelessWidget {
       return Column(
         children: [
           const SizedBox(height: 5),
-          state.data.filters[1].filterWidget,
+          state.data.filters[3].filterWidget,
           Expanded(
             child: Center(
               child: Text(
@@ -115,7 +115,7 @@ class _ClientPage extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 5),
-          state.data.filters[1].filterWidget,
+          state.data.filters[state.data.user == "ADMIN" ? 3 : 2].filterWidget,
           const SizedBox(height: 5),
           Expanded(
             child: ListView.builder(
@@ -152,6 +152,10 @@ class _ClientPage extends StatelessWidget {
                                   "${client.firstName} ${client.lastName} ${client.surName ?? ''}",
                                   style: theme.textTheme.title1.copyWith(color: theme.colorTheme.textPrimary),
                                 ),
+                                if (client.haveDebt)
+                                  Icon(Icons.check_circle, color: theme.colorTheme.success)
+                                else
+                                  Icon(Icons.cancel, color: theme.colorTheme.error)
                               ],
                             ),
                             Row(children: [Text(region.fullName, style: theme.textTheme.title2)]),
@@ -165,7 +169,7 @@ class _ClientPage extends StatelessWidget {
                               children: [
                                 Flexible(
                                   child: Text(
-                                    "${client.creator.firstName ?? ''}(${client.creator.username})",
+                                    "${client.creator.firstName ?? ''} ${client.creator.lastName ?? ''}",
                                     style: theme.textTheme.title2,
                                   ),
                                 ),

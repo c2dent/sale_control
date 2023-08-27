@@ -5,10 +5,10 @@ import 'package:hasap_admin/core/widgets/filter_widget.dart';
 import 'package:hasap_admin/feature/client/presentation/list/bloc/client_bloc.dart';
 import 'package:hasap_admin/feature/client/presentation/list/bloc/client_bloc_models.dart';
 
-class RegionDropdown extends FilterWidget<Region> {
+class RegionDropdownFilter extends FilterWidget<Region> {
   final ClientBloc bloc;
 
-  RegionDropdown({
+  RegionDropdownFilter({
     super.key,
     super.value,
     required this.bloc,
@@ -69,7 +69,7 @@ class _RegionDropdownState extends State<_RegionDropdown> {
             widget.onChange(region);
             widget.bloc.add(const ClientEvent.filter());
           },
-          asyncItems: (String? filter) => widget.bloc.clientInteractor.getRegions(null),
+          asyncItems: (String? filter) => widget.bloc.interactor.getRegions(null),
           compareFn: (item, sItem) => item.id == sItem.id,
         ),
         if (widget.regionList[0] != null && widget.regionList[0]!.childrenCount > 0) const SizedBox(height: 15),
@@ -83,7 +83,7 @@ class _RegionDropdownState extends State<_RegionDropdown> {
               widget.onChange(region);
               widget.bloc.add(const ClientEvent.filter());
             },
-            asyncItems: (String? filter) => widget.bloc.clientInteractor.getRegions(widget.regionList[0]),
+            asyncItems: (String? filter) => widget.bloc.interactor.getRegions(widget.regionList[0]),
             compareFn: (item, sItem) => item.id == sItem.id,
           ),
         if (widget.regionList[1] != null && widget.regionList[1]!.childrenCount > 0) const SizedBox(height: 15),
@@ -97,7 +97,7 @@ class _RegionDropdownState extends State<_RegionDropdown> {
               widget.onChange(region);
               widget.bloc.add(const ClientEvent.filter());
             },
-            asyncItems: (String? filter) => widget.bloc.clientInteractor.getRegions(widget.regionList[1]),
+            asyncItems: (String? filter) => widget.bloc.interactor.getRegions(widget.regionList[1]),
             compareFn: (item, sItem) => item.id == sItem.id,
           ),
       ],

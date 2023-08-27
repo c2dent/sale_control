@@ -2,8 +2,10 @@ import 'package:hasap_admin/arch/dio_error_handler/models/dio_error_models.dart'
 import 'package:hasap_admin/arch/functional_models/either.dart';
 import 'package:hasap_admin/core/models/employee.dart';
 import 'package:hasap_admin/core/models/filter.dart';
+import 'package:hasap_admin/core/models/office.dart';
 import 'package:hasap_admin/core/models/region.dart';
 import 'package:hasap_admin/core/repositories/employee_repository.dart';
+import 'package:hasap_admin/core/repositories/office_repository.dart';
 import 'package:hasap_admin/core/repositories/region_repository.dart';
 import 'package:hasap_admin/feature/client/data/client_models.dart';
 import 'package:hasap_admin/feature/client/data/client_repository.dart';
@@ -24,6 +26,8 @@ abstract class ContractInteractor {
 
   Future<List<Client>> getClients();
 
+  Future<List<Office>> getOffices(Map<String, String>? params);
+
   Future<List<Employee>> getEmployees(Map<String, String>? params);
 }
 
@@ -33,11 +37,14 @@ class ContractInteractorImpl extends ContractInteractor {
   final RegionRepository regionRepository;
   final EmployeeRepository employeeRepository;
   final ClientRepository clientRepository;
+  final OfficeRepository officeRepository;
 
-  ContractInteractorImpl(this.repository,
+  ContractInteractorImpl(
+      this.repository,
       this.regionRepository,
       this.employeeRepository,
-      this.clientRepository
+      this.clientRepository,
+      this.officeRepository,
   );
 
   @override
@@ -95,6 +102,13 @@ class ContractInteractorImpl extends ContractInteractor {
     final result = await clientRepository.getClients({});
     if (result.isLeft) return [];
 
+    return result.right;
+  }
+
+  @override
+  Future<List<Office>> getOffices(Map<String, String>? params) async {
+    final result = await officeRepository.getList({});
+    if (result.isLeft) return [];
     return result.right;
   }
 }

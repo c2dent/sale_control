@@ -1903,8 +1903,8 @@ mixin _$ContractCreateState {
             TextEditingController monthCount,
             TextEditingController dueDateOnMonth,
             TextEditingController priceAmount,
-            TextEditingController startContribution,
             TextEditingController filterCount,
+            TextEditingController paidAmount,
             DateTime setupDate,
             Contract? contract)
         data,
@@ -1923,8 +1923,8 @@ mixin _$ContractCreateState {
             TextEditingController monthCount,
             TextEditingController dueDateOnMonth,
             TextEditingController priceAmount,
-            TextEditingController startContribution,
             TextEditingController filterCount,
+            TextEditingController paidAmount,
             DateTime setupDate,
             Contract? contract)?
         data,
@@ -1943,8 +1943,8 @@ mixin _$ContractCreateState {
             TextEditingController monthCount,
             TextEditingController dueDateOnMonth,
             TextEditingController priceAmount,
-            TextEditingController startContribution,
             TextEditingController filterCount,
+            TextEditingController paidAmount,
             DateTime setupDate,
             Contract? contract)?
         data,
@@ -2040,8 +2040,8 @@ class _$ContractCreateStateEmpty extends ContractCreateStateEmpty {
             TextEditingController monthCount,
             TextEditingController dueDateOnMonth,
             TextEditingController priceAmount,
-            TextEditingController startContribution,
             TextEditingController filterCount,
+            TextEditingController paidAmount,
             DateTime setupDate,
             Contract? contract)
         data,
@@ -2063,8 +2063,8 @@ class _$ContractCreateStateEmpty extends ContractCreateStateEmpty {
             TextEditingController monthCount,
             TextEditingController dueDateOnMonth,
             TextEditingController priceAmount,
-            TextEditingController startContribution,
             TextEditingController filterCount,
+            TextEditingController paidAmount,
             DateTime setupDate,
             Contract? contract)?
         data,
@@ -2086,8 +2086,8 @@ class _$ContractCreateStateEmpty extends ContractCreateStateEmpty {
             TextEditingController monthCount,
             TextEditingController dueDateOnMonth,
             TextEditingController priceAmount,
-            TextEditingController startContribution,
             TextEditingController filterCount,
+            TextEditingController paidAmount,
             DateTime setupDate,
             Contract? contract)?
         data,
@@ -2152,8 +2152,8 @@ abstract class _$$ContractCreateStateDataCopyWith<$Res> {
       TextEditingController monthCount,
       TextEditingController dueDateOnMonth,
       TextEditingController priceAmount,
-      TextEditingController startContribution,
       TextEditingController filterCount,
+      TextEditingController paidAmount,
       DateTime setupDate,
       Contract? contract});
 
@@ -2183,8 +2183,8 @@ class __$$ContractCreateStateDataCopyWithImpl<$Res>
     Object? monthCount = null,
     Object? dueDateOnMonth = null,
     Object? priceAmount = null,
-    Object? startContribution = null,
     Object? filterCount = null,
+    Object? paidAmount = null,
     Object? setupDate = null,
     Object? contract = freezed,
   }) {
@@ -2225,13 +2225,13 @@ class __$$ContractCreateStateDataCopyWithImpl<$Res>
           ? _value.priceAmount
           : priceAmount // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
-      startContribution: null == startContribution
-          ? _value.startContribution
-          : startContribution // ignore: cast_nullable_to_non_nullable
-              as TextEditingController,
       filterCount: null == filterCount
           ? _value.filterCount
           : filterCount // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      paidAmount: null == paidAmount
+          ? _value.paidAmount
+          : paidAmount // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
       setupDate: null == setupDate
           ? _value.setupDate
@@ -2306,8 +2306,8 @@ class _$ContractCreateStateData extends ContractCreateStateData {
       required this.monthCount,
       required this.dueDateOnMonth,
       required this.priceAmount,
-      required this.startContribution,
       required this.filterCount,
+      required this.paidAmount,
       required this.setupDate,
       required this.contract})
       : _regions = regions,
@@ -2338,9 +2338,9 @@ class _$ContractCreateStateData extends ContractCreateStateData {
   @override
   final TextEditingController priceAmount;
   @override
-  final TextEditingController startContribution;
-  @override
   final TextEditingController filterCount;
+  @override
+  final TextEditingController paidAmount;
   @override
   final DateTime setupDate;
   @override
@@ -2348,7 +2348,7 @@ class _$ContractCreateStateData extends ContractCreateStateData {
 
   @override
   String toString() {
-    return 'ContractCreateState.data(isLoading: $isLoading, formKey: $formKey, region: $region, regions: $regions, client: $client, advertiser: $advertiser, monthCount: $monthCount, dueDateOnMonth: $dueDateOnMonth, priceAmount: $priceAmount, startContribution: $startContribution, filterCount: $filterCount, setupDate: $setupDate, contract: $contract)';
+    return 'ContractCreateState.data(isLoading: $isLoading, formKey: $formKey, region: $region, regions: $regions, client: $client, advertiser: $advertiser, monthCount: $monthCount, dueDateOnMonth: $dueDateOnMonth, priceAmount: $priceAmount, filterCount: $filterCount, paidAmount: $paidAmount, setupDate: $setupDate, contract: $contract)';
   }
 
   @override
@@ -2370,10 +2370,10 @@ class _$ContractCreateStateData extends ContractCreateStateData {
                 other.dueDateOnMonth == dueDateOnMonth) &&
             (identical(other.priceAmount, priceAmount) ||
                 other.priceAmount == priceAmount) &&
-            (identical(other.startContribution, startContribution) ||
-                other.startContribution == startContribution) &&
             (identical(other.filterCount, filterCount) ||
                 other.filterCount == filterCount) &&
+            (identical(other.paidAmount, paidAmount) ||
+                other.paidAmount == paidAmount) &&
             (identical(other.setupDate, setupDate) ||
                 other.setupDate == setupDate) &&
             (identical(other.contract, contract) ||
@@ -2392,8 +2392,8 @@ class _$ContractCreateStateData extends ContractCreateStateData {
       monthCount,
       dueDateOnMonth,
       priceAmount,
-      startContribution,
       filterCount,
+      paidAmount,
       setupDate,
       contract);
 
@@ -2418,8 +2418,8 @@ class _$ContractCreateStateData extends ContractCreateStateData {
             TextEditingController monthCount,
             TextEditingController dueDateOnMonth,
             TextEditingController priceAmount,
-            TextEditingController startContribution,
             TextEditingController filterCount,
+            TextEditingController paidAmount,
             DateTime setupDate,
             Contract? contract)
         data,
@@ -2434,8 +2434,8 @@ class _$ContractCreateStateData extends ContractCreateStateData {
         monthCount,
         dueDateOnMonth,
         priceAmount,
-        startContribution,
         filterCount,
+        paidAmount,
         setupDate,
         contract);
   }
@@ -2454,8 +2454,8 @@ class _$ContractCreateStateData extends ContractCreateStateData {
             TextEditingController monthCount,
             TextEditingController dueDateOnMonth,
             TextEditingController priceAmount,
-            TextEditingController startContribution,
             TextEditingController filterCount,
+            TextEditingController paidAmount,
             DateTime setupDate,
             Contract? contract)?
         data,
@@ -2470,8 +2470,8 @@ class _$ContractCreateStateData extends ContractCreateStateData {
         monthCount,
         dueDateOnMonth,
         priceAmount,
-        startContribution,
         filterCount,
+        paidAmount,
         setupDate,
         contract);
   }
@@ -2490,8 +2490,8 @@ class _$ContractCreateStateData extends ContractCreateStateData {
             TextEditingController monthCount,
             TextEditingController dueDateOnMonth,
             TextEditingController priceAmount,
-            TextEditingController startContribution,
             TextEditingController filterCount,
+            TextEditingController paidAmount,
             DateTime setupDate,
             Contract? contract)?
         data,
@@ -2508,8 +2508,8 @@ class _$ContractCreateStateData extends ContractCreateStateData {
           monthCount,
           dueDateOnMonth,
           priceAmount,
-          startContribution,
           filterCount,
+          paidAmount,
           setupDate,
           contract);
     }
@@ -2559,8 +2559,8 @@ abstract class ContractCreateStateData extends ContractCreateState {
       required final TextEditingController monthCount,
       required final TextEditingController dueDateOnMonth,
       required final TextEditingController priceAmount,
-      required final TextEditingController startContribution,
       required final TextEditingController filterCount,
+      required final TextEditingController paidAmount,
       required final DateTime setupDate,
       required final Contract? contract}) = _$ContractCreateStateData;
   const ContractCreateStateData._() : super._();
@@ -2574,8 +2574,8 @@ abstract class ContractCreateStateData extends ContractCreateState {
   TextEditingController get monthCount;
   TextEditingController get dueDateOnMonth;
   TextEditingController get priceAmount;
-  TextEditingController get startContribution;
   TextEditingController get filterCount;
+  TextEditingController get paidAmount;
   DateTime get setupDate;
   Contract? get contract;
   @JsonKey(ignore: true)

@@ -1,24 +1,32 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
 import 'package:hasap_admin/core/models/employee.dart';
 import 'package:hasap_admin/core/models/filter.dart';
+import 'package:hasap_admin/core/models/office.dart';
+import 'package:hasap_admin/core/models/region.dart';
+import 'package:hasap_admin/core/models/user.dart';
+import 'package:hasap_admin/core/services/settings_service.dart';
 import 'package:hasap_admin/feature/contract/domain/contract_interactor.dart';
 import 'package:hasap_admin/feature/contract/presentation/list/bloc/contract_bloc_models.dart';
-import 'package:hasap_admin/feature/contract/presentation/list/ui/filters/task_master.dart';
+import 'package:hasap_admin/feature/contract/presentation/list/ui/filters/employee.dart';
+import 'package:hasap_admin/feature/contract/presentation/list/ui/filters/office.dart';
+import 'package:hasap_admin/feature/contract/presentation/list/ui/filters/region.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
 class ContractBloc extends SrBloc<ContractEvent, ContractState, ContractSR> {
   final ContractInteractor interactor;
   final NotifyErrorSnackbar _notifyErrorSnackbar;
+  final SettingsService settingsService;
 
   ContractBloc(
       this.interactor,
       this._notifyErrorSnackbar,
-      ) : super(const ContractState.empty()) {
+      ) : settingsService = GetIt.instance.get<SettingsService>(), super(const ContractState.empty()) {
     on<ContractEventInit>(_init);
     on<ContractEventFilter>(_filter);
     on<ContractEventResetFilter>(_resetFilter);
@@ -26,13 +34,34 @@ class ContractBloc extends SrBloc<ContractEvent, ContractState, ContractSR> {
   }
 
   FutureOr<void> _init(ContractEventInit event, Emitter<ContractState> emit) async {
+    User? user = await settingsService.getCurrentUser();
+
     List<Filter> filters = [
+      Filter<Region>(
+          parameterName: 'region',
+          widget: RegionDropdownFilter(
+            bloc: this,
+            onChange: (Region? value) {},
+            values: [null, null, null, null, null],
+          ),
+          parameterValue: (dynamic region) => region.id.toString()
+      ),
       Filter<Employee>(
-        parameterName: 'task_master',
-        widget: TaskMasterDropdown(bloc: this, onChange: (Employee? value) {}, values: const []),
+        parameterName: 'employee',
+        widget: EmployeeDropdownFilter(bloc: this, onChange: (Employee? value) {}, values: const []),
         parameterValue: (dynamic employee) => employee.id.toString(),
       ),
     ];
+
+    if (user?.permission == "ADMIN") {
+      filters.add(
+        Filter<Office>(
+          parameterName: 'office',
+          widget: OfficeFilterDropdown(bloc: this, onChange: (Office? value) {}, values: const []),
+          parameterValue: (dynamic office) => office.id.toString(),
+        ),
+      );
+    }
 
     final result = await interactor.list(filters: filters);
 

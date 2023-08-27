@@ -102,3 +102,7 @@ void showContextMenu(BuildContext context, Offset position,
   }
 }
 
+String formatCurrency(int amount) {
+  return  NumberFormat('#,###').format(amount);
+}
+

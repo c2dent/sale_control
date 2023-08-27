@@ -9,6 +9,7 @@ part 'client_models.g.dart';
 class Client with _$Client {
   const factory Client({
     required int id,
+    @JsonKey(name: "have_debt") required bool haveDebt,
     @JsonKey(name: "first_name") required String firstName,
     @JsonKey(name: "last_name") required String lastName,
     @JsonKey(name: "sur_name") required String? surName,

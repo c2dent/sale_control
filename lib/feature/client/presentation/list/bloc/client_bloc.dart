@@ -1,11 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
+import 'package:hasap_admin/core/models/employee.dart';
 import 'package:hasap_admin/core/models/filter.dart';
+import 'package:hasap_admin/core/models/office.dart';
 import 'package:hasap_admin/core/models/region.dart';
+import 'package:hasap_admin/core/models/user.dart';
+import 'package:hasap_admin/core/services/settings_service.dart';
 import 'package:hasap_admin/feature/client/domain/client_interactor.dart';
+import 'package:hasap_admin/feature/client/presentation/list/ui/filter_widgets/employee.dart';
+import 'package:hasap_admin/feature/client/presentation/list/ui/filter_widgets/office.dart';
 import 'package:hasap_admin/feature/client/presentation/list/ui/filter_widgets/region.dart';
 import 'package:hasap_admin/feature/client/presentation/list/ui/filter_widgets/search_filter.dart';
 import 'package:injectable/injectable.dart';
@@ -14,13 +21,15 @@ import 'client_bloc_models.dart';
 
 @injectable
 class ClientBloc extends SrBloc<ClientEvent, ClientState, ClientSR> {
-  final ClientInteractor clientInteractor;
+  final ClientInteractor interactor;
   final NotifyErrorSnackbar _notifyErrorSnackbar;
+  final SettingsService settingsService;
 
   ClientBloc(
-    this.clientInteractor,
+    this.interactor,
     this._notifyErrorSnackbar,
-  ) : super(const ClientState.empty()) {
+  )   : settingsService = GetIt.instance.get<SettingsService>(),
+        super(const ClientState.empty()) {
     on<ClientEventInit>(_init);
     on<ClientEventFilter>(_filter);
     on<ClientEventResetFilter>(_resetFilter);
@@ -28,38 +37,55 @@ class ClientBloc extends SrBloc<ClientEvent, ClientState, ClientSR> {
   }
 
   FutureOr<void> _init(ClientEventInit event, Emitter<ClientState> emit) async {
+    User? user = await settingsService.getCurrentUser();
+
     List<Filter> filters = [
       Filter<Region>(
-        parameterName: 'region',
-        widget: RegionDropdown(
+          parameterName: 'region',
+          widget: RegionDropdownFilter(
             bloc: this,
             onChange: (Region? value) {},
             values: [null, null, null, null, null],
-        ),
-        parameterValue: (dynamic region) => region.id.toString()
+          ),
+          parameterValue: (dynamic region) => region.id.toString()),
+      Filter<Employee>(
+        parameterName: 'employee',
+        widget: EmployeeFilterDropdown(bloc: this, onChange: (Employee? value) {}, values: const []),
+        parameterValue: (dynamic employee) => employee.id.toString(),
       ),
       Filter<String>(
         parameterName: 'name',
         widget: SearchInput(
-            bloc: this,
-            onChange: (String? locality) {},
-            values: const [],
+          bloc: this,
+          onChange: (String? locality) {},
+          values: const [],
         ),
         parameterValue: (dynamic string) => string,
         visible: false,
       ),
     ];
 
-    final result = await clientInteractor.getClients(filters: filters);
+    if (user?.permission == "ADMIN") {
+      filters.add(
+        Filter<Office>(
+          parameterName: 'office',
+          widget: OfficeFilterDropdown(bloc: this, onChange: (Office? value) {}, values: const []),
+          parameterValue: (dynamic office) => office.id.toString(),
+        ),
+      );
+    }
+
+    final result = await interactor.getClients(filters: filters);
 
     if (result.isLeft) {
       addSr(ClientSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
     } else {
       emit(ClientState.data(
-          isLoading: false,
-          filters: filters,
-          clients: result.right,
+        isLoading: false,
+        user: user,
+        filters: filters,
+        clients: result.right,
       ));
     }
   }
@@ -70,7 +96,7 @@ class ClientBloc extends SrBloc<ClientEvent, ClientState, ClientSR> {
       item.clear();
     }
 
-    final result = await clientInteractor.getClients(filters: state.data.filters);
+    final result = await interactor.getClients(filters: state.data.filters);
 
     if (result.isLeft) {
       addSr(ClientSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
@@ -83,7 +109,7 @@ class ClientBloc extends SrBloc<ClientEvent, ClientState, ClientSR> {
   FutureOr<void> _filter(ClientEventFilter event, Emitter<ClientState> emit) async {
     emit(state.data.copyWith(isLoading: true));
 
-    final result = await clientInteractor.getClients(filters: state.data.filters);
+    final result = await interactor.getClients(filters: state.data.filters);
 
     if (result.isLeft) {
       addSr(ClientSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
@@ -96,7 +122,7 @@ class ClientBloc extends SrBloc<ClientEvent, ClientState, ClientSR> {
   FutureOr<void> _delete(ClientEVentDelete event, Emitter<ClientState> emit) async {
     emit(state.data.copyWith(isLoading: true));
 
-    final result = await clientInteractor.delete(event.client.id);
+    final result = await interactor.delete(event.client.id);
     if (result.isLeft) {
       emit(state.data.copyWith(isLoading: false));
       addSr(ClientSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));

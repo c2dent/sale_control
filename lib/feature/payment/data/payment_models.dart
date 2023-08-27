@@ -10,14 +10,12 @@ class Payment with _$Payment {
   const factory Payment({
     required int id,
     required int amount,
-    @JsonKey(name: "remainder_amount") required int remainderAmount,
+    @JsonKey(name: "paid_amount") required int paidAmount,
     required DateTime date,
 
     required Contract contract,
     required User creator,
-
-    @JsonKey(name: "is_confirm") required bool isConfirm,
-    @JsonKey(name: "confirm_date") DateTime? confirmDate,
+    required String? comment,
 
     @JsonKey(name: "created_at") required DateTime createdAt,
     @JsonKey(name: "modified_at") required DateTime modifiedAt,

@@ -10,18 +10,12 @@ class DrawerMenu extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          ListTile(
-              title: const Text("Musderiler"),
-              onTap: () => context.router.replaceNamed('/client_list')),
-          ListTile(
-              title: const Text("Contractlar"),
-              onTap: () => context.router.replaceNamed('/contract_list')),
-          ListTile(
-              title: const Text("Tolegler"),
-              onTap: () => context.router.replaceNamed('/payment_list')),
-          ListTile(
-              title: const Text("Komur hyzmaty"),
-              onTap: () => context.router.replaceNamed('/coal_list')),
+          ListTile(leading: const Icon(Icons.contact_mail), title: const Text("Profile"), onTap: () => context.router.replaceNamed('/profile')),
+          ListTile(leading: const Icon(Icons.shopping_cart), title: const Text("Musderiler"), onTap: () => context.router.replaceNamed('/client_list')),
+          ListTile(leading: const Icon(Icons.assignment), title: const Text("Kontraktlar"), onTap: () => context.router.replaceNamed('/contract_list')),
+          ListTile(leading: const Icon(Icons.attach_money), title: const Text("Tolegler"), onTap: () => context.router.replaceNamed('/payment_list')),
+          ListTile(leading: const Icon(Icons.room_service), title: const Text("Hyzmatlar"), onTap: () => context.router.replaceNamed('/service_list')),
+          ListTile(leading: const Icon(Icons.read_more_sharp), title: const Text("Возвраты"), onTap: () => context.router.replaceNamed('/return_list'))
         ],
       ),
     );

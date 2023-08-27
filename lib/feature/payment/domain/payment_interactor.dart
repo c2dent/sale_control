@@ -2,7 +2,9 @@ import 'package:hasap_admin/arch/dio_error_handler/models/dio_error_models.dart'
 import 'package:hasap_admin/arch/functional_models/either.dart';
 import 'package:hasap_admin/core/models/employee.dart';
 import 'package:hasap_admin/core/models/filter.dart';
+import 'package:hasap_admin/core/models/office.dart';
 import 'package:hasap_admin/core/repositories/employee_repository.dart';
+import 'package:hasap_admin/core/repositories/office_repository.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/contract/data/contract_repository.dart';
 import 'package:hasap_admin/feature/payment/data/payment_models.dart';
@@ -17,6 +19,7 @@ abstract class PaymentInteractor {
 
   Future<List<Employee>> getEmployees(Map<String, String>? params);
   Future<List<Contract>> getContracts();
+  Future<List<Office>> getOffices(Map<String, String>? params);
 }
 
 @Singleton(as: PaymentInteractor)
@@ -24,8 +27,9 @@ class PaymentInteractorImpl extends PaymentInteractor {
   final EmployeeRepository employeeRepository;
   final ContractRepository contractRepository;
   final PaymentRepository repository;
+  final OfficeRepository officeRepository;
 
-  PaymentInteractorImpl(this.repository, this.employeeRepository, this.contractRepository);
+  PaymentInteractorImpl(this.repository, this.employeeRepository, this.contractRepository, this.officeRepository);
 
   @override
   Future<Either<CommonResponseError<DefaultApiError>, List<Payment>>> list({required List<Filter> filters}) {
@@ -68,6 +72,13 @@ class PaymentInteractorImpl extends PaymentInteractor {
   @override
   Future<List<Contract>> getContracts() async {
     final result = await contractRepository.list({});
+    if (result.isLeft) return [];
+    return result.right;
+  }
+
+  @override
+  Future<List<Office>> getOffices(Map<String, String>? params) async {
+    final result = await officeRepository.getList({});
     if (result.isLeft) return [];
     return result.right;
   }

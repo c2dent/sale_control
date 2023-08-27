@@ -8,6 +8,7 @@ part of 'client_models.dart';
 
 _$_Client _$$_ClientFromJson(Map<String, dynamic> json) => _$_Client(
       id: json['id'] as int,
+      haveDebt: json['have_debt'] as bool,
       firstName: json['first_name'] as String,
       lastName: json['last_name'] as String,
       surName: json['sur_name'] as String?,
@@ -22,6 +23,7 @@ _$_Client _$$_ClientFromJson(Map<String, dynamic> json) => _$_Client(
 
 Map<String, dynamic> _$$_ClientToJson(_$_Client instance) => <String, dynamic>{
       'id': instance.id,
+      'have_debt': instance.haveDebt,
       'first_name': instance.firstName,
       'last_name': instance.lastName,
       'sur_name': instance.surName,

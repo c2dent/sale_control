@@ -1392,6 +1392,7 @@ mixin _$PaymentCreateState {
             bool isLoading,
             GlobalKey<FormState> formKey,
             TextEditingController amount,
+            TextEditingController comment,
             DateTime date,
             Contract? contract,
             Payment? payment)
@@ -1405,6 +1406,7 @@ mixin _$PaymentCreateState {
             bool isLoading,
             GlobalKey<FormState> formKey,
             TextEditingController amount,
+            TextEditingController comment,
             DateTime date,
             Contract? contract,
             Payment? payment)?
@@ -1418,6 +1420,7 @@ mixin _$PaymentCreateState {
             bool isLoading,
             GlobalKey<FormState> formKey,
             TextEditingController amount,
+            TextEditingController comment,
             DateTime date,
             Contract? contract,
             Payment? payment)?
@@ -1508,6 +1511,7 @@ class _$PaymentCreateStateEmpty extends PaymentCreateStateEmpty {
             bool isLoading,
             GlobalKey<FormState> formKey,
             TextEditingController amount,
+            TextEditingController comment,
             DateTime date,
             Contract? contract,
             Payment? payment)
@@ -1524,6 +1528,7 @@ class _$PaymentCreateStateEmpty extends PaymentCreateStateEmpty {
             bool isLoading,
             GlobalKey<FormState> formKey,
             TextEditingController amount,
+            TextEditingController comment,
             DateTime date,
             Contract? contract,
             Payment? payment)?
@@ -1540,6 +1545,7 @@ class _$PaymentCreateStateEmpty extends PaymentCreateStateEmpty {
             bool isLoading,
             GlobalKey<FormState> formKey,
             TextEditingController amount,
+            TextEditingController comment,
             DateTime date,
             Contract? contract,
             Payment? payment)?
@@ -1599,6 +1605,7 @@ abstract class _$$PaymentCreateStateDataCopyWith<$Res> {
       {bool isLoading,
       GlobalKey<FormState> formKey,
       TextEditingController amount,
+      TextEditingController comment,
       DateTime date,
       Contract? contract,
       Payment? payment});
@@ -1621,6 +1628,7 @@ class __$$PaymentCreateStateDataCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? formKey = null,
     Object? amount = null,
+    Object? comment = null,
     Object? date = null,
     Object? contract = freezed,
     Object? payment = freezed,
@@ -1637,6 +1645,10 @@ class __$$PaymentCreateStateDataCopyWithImpl<$Res>
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      comment: null == comment
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
       date: null == date
           ? _value.date
@@ -1685,6 +1697,7 @@ class _$PaymentCreateStateData extends PaymentCreateStateData {
       {required this.isLoading,
       required this.formKey,
       required this.amount,
+      required this.comment,
       required this.date,
       required this.contract,
       required this.payment})
@@ -1697,6 +1710,8 @@ class _$PaymentCreateStateData extends PaymentCreateStateData {
   @override
   final TextEditingController amount;
   @override
+  final TextEditingController comment;
+  @override
   final DateTime date;
   @override
   final Contract? contract;
@@ -1705,7 +1720,7 @@ class _$PaymentCreateStateData extends PaymentCreateStateData {
 
   @override
   String toString() {
-    return 'PaymentCreateState.data(isLoading: $isLoading, formKey: $formKey, amount: $amount, date: $date, contract: $contract, payment: $payment)';
+    return 'PaymentCreateState.data(isLoading: $isLoading, formKey: $formKey, amount: $amount, comment: $comment, date: $date, contract: $contract, payment: $payment)';
   }
 
   @override
@@ -1717,6 +1732,7 @@ class _$PaymentCreateStateData extends PaymentCreateStateData {
                 other.isLoading == isLoading) &&
             (identical(other.formKey, formKey) || other.formKey == formKey) &&
             (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.comment, comment) || other.comment == comment) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.contract, contract) ||
                 other.contract == contract) &&
@@ -1724,8 +1740,8 @@ class _$PaymentCreateStateData extends PaymentCreateStateData {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, isLoading, formKey, amount, date, contract, payment);
+  int get hashCode => Object.hash(runtimeType, isLoading, formKey, amount,
+      comment, date, contract, payment);
 
   @JsonKey(ignore: true)
   @override
@@ -1742,12 +1758,13 @@ class _$PaymentCreateStateData extends PaymentCreateStateData {
             bool isLoading,
             GlobalKey<FormState> formKey,
             TextEditingController amount,
+            TextEditingController comment,
             DateTime date,
             Contract? contract,
             Payment? payment)
         data,
   }) {
-    return data(isLoading, formKey, amount, date, contract, payment);
+    return data(isLoading, formKey, amount, comment, date, contract, payment);
   }
 
   @override
@@ -1758,12 +1775,14 @@ class _$PaymentCreateStateData extends PaymentCreateStateData {
             bool isLoading,
             GlobalKey<FormState> formKey,
             TextEditingController amount,
+            TextEditingController comment,
             DateTime date,
             Contract? contract,
             Payment? payment)?
         data,
   }) {
-    return data?.call(isLoading, formKey, amount, date, contract, payment);
+    return data?.call(
+        isLoading, formKey, amount, comment, date, contract, payment);
   }
 
   @override
@@ -1774,6 +1793,7 @@ class _$PaymentCreateStateData extends PaymentCreateStateData {
             bool isLoading,
             GlobalKey<FormState> formKey,
             TextEditingController amount,
+            TextEditingController comment,
             DateTime date,
             Contract? contract,
             Payment? payment)?
@@ -1781,7 +1801,7 @@ class _$PaymentCreateStateData extends PaymentCreateStateData {
     required TResult orElse(),
   }) {
     if (data != null) {
-      return data(isLoading, formKey, amount, date, contract, payment);
+      return data(isLoading, formKey, amount, comment, date, contract, payment);
     }
     return orElse();
   }
@@ -1823,6 +1843,7 @@ abstract class PaymentCreateStateData extends PaymentCreateState {
       {required final bool isLoading,
       required final GlobalKey<FormState> formKey,
       required final TextEditingController amount,
+      required final TextEditingController comment,
       required final DateTime date,
       required final Contract? contract,
       required final Payment? payment}) = _$PaymentCreateStateData;
@@ -1831,6 +1852,7 @@ abstract class PaymentCreateStateData extends PaymentCreateState {
   bool get isLoading;
   GlobalKey<FormState> get formKey;
   TextEditingController get amount;
+  TextEditingController get comment;
   DateTime get date;
   Contract? get contract;
   Payment? get payment;

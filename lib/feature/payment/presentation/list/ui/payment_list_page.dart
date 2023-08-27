@@ -29,20 +29,20 @@ class PaymentListPage extends StatelessWidget {
           AppTheme theme = AppTheme.of(context);
 
           return Scaffold(
-            appBar: AppBar(
-              title: const Text("Tolegler"),
-              actions: [
-                IconButton(
-                    onPressed: () => showDialog(
-                        context: context,
-                        builder: (BuildContext newContext) => FilterModal(
-                          reset: () => bloc.add(const PaymentEvent.resetFilter()),
-                          filters: bloc.state.data.filters,
-                        )),
-                    icon: const Icon(Icons.filter_alt_rounded))
-              ],
-            ),
-            drawer: const DrawerMenu(),
+              appBar: AppBar(
+                title: const Text("Tolegler"),
+                actions: [
+                  IconButton(
+                      onPressed: () => showDialog(
+                          context: context,
+                          builder: (BuildContext newContext) => FilterModal(
+                                reset: () => bloc.add(const PaymentEvent.resetFilter()),
+                                filters: bloc.state.data.filters,
+                              )),
+                      icon: const Icon(Icons.filter_alt_rounded))
+                ],
+              ),
+              drawer: const DrawerMenu(),
               floatingActionButton: FloatingActionButton(
                 onPressed: () async {
                   Payment? payment = await Navigator.push(
@@ -58,10 +58,9 @@ class PaymentListPage extends StatelessWidget {
                 child: const Icon(Icons.add_circle_outline),
               ),
               body: state.map(
-              empty: (_) => const Center(child: CircularProgressIndicator()),
-              data: (state) => _PaymentPage(state: state),
-            )
-          );
+                empty: (_) => const Center(child: CircularProgressIndicator()),
+                data: (state) => _PaymentPage(state: state),
+              ));
         },
       ),
     );
@@ -105,14 +104,13 @@ class _PaymentPage extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 3),
       padding: const EdgeInsets.symmetric(horizontal: 6.0),
-
       child: Column(
         children: [
           const SizedBox(height: 5),
           Expanded(
             child: ListView.builder(
               itemCount: state.data.payments.length,
-              itemBuilder: (BuildContext context, int index){
+              itemBuilder: (BuildContext context, int index) {
                 Payment payment = state.data.payments[index];
                 Client client = payment.contract.client;
 
@@ -144,7 +142,29 @@ class _PaymentPage extends StatelessWidget {
                                 "${client.firstName} ${client.lastName}",
                                 style: theme.textTheme.title1.copyWith(color: theme.colorTheme.textPrimary),
                               ),
-                              Text("${payment.amount} TMT")
+                              Card(
+                                color: theme.colorTheme.error.withOpacity(0.7),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                    child: Text("${formatCurrency(payment.amount)} тмт",
+                                        style: TextStyle(color: theme.colorTheme.onSuccess, fontWeight: FontWeight.bold))),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  "${payment.creator.firstName ?? ''} ${client.creator.lastName ?? ''}",
+                                  style: theme.textTheme.title2,
+                                ),
+                              ),
+                              Text(
+                                formattingDate(payment.createdAt),
+                                style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
+                              ),
                             ],
                           )
                         ],
@@ -152,7 +172,6 @@ class _PaymentPage extends StatelessWidget {
                     ),
                   ),
                 );
-
               },
             ),
           )

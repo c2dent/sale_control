@@ -44,6 +44,7 @@ class PaymentCreateState with _$PaymentCreateState {
     required bool isLoading,
     required GlobalKey<FormState> formKey,
     required TextEditingController amount,
+    required TextEditingController comment,
     required DateTime date,
     required Contract? contract,
     required Payment? payment,

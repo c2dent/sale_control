@@ -33,10 +33,10 @@ class ContractCreateBloc extends SrBloc<ContractCreateEvent, ContractCreateState
         client: event.contract?.client,
         advertiser: event.contract?.advertiser,
         monthCount: TextEditingController(text: event.contract?.monthCount.toString() ?? ""),
-        dueDateOnMonth: TextEditingController(text: event.contract?.dueDateOnMonth.toString() ?? ""),
+        dueDateOnMonth: TextEditingController(text: event.contract?.debtOnMonth.toString() ?? ""),
         priceAmount: TextEditingController(text: event.contract?.priceAmount.toString() ?? ""),
-        startContribution: TextEditingController(text: event.contract?.startContribution.toString() ?? ""),
         filterCount: TextEditingController(text: event.contract?.countFilter.toString() ?? "1"),
+        paidAmount: TextEditingController(text: "0"),
         setupDate: event.contract?.setupDate ?? DateTime.now(),
         contract: event.contract));
   }
@@ -92,11 +92,11 @@ class ContractCreateBloc extends SrBloc<ContractCreateEvent, ContractCreateState
       "region_id": state.data.region?.id,
       "advertiser_id": state.data.advertiser?.id,
       "month_count": state.data.monthCount.text,
-      "due_date_on_month": state.data.dueDateOnMonth.text,
+      "debt_on_month": state.data.dueDateOnMonth.text,
       "price_amount": state.data.priceAmount.text,
-      "start_contribution": state.data.startContribution.text,
       "setup_date": dateFormatterYyyyMmDd.format(state.data.setupDate),
       "count_filter": state.data.filterCount.text,
+      "paid_amount": state.data.paidAmount.text,
     };
     return data;
   }
