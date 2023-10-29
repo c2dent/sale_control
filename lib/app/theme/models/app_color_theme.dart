@@ -22,6 +22,8 @@ abstract class AppColorTheme {
 
   Color get background;
 
+  Color get secondaryBackground;
+
   Color get onBackground;
 
   Color get surface;
@@ -94,6 +96,9 @@ class LightColorTheme implements AppColorTheme {
   @override
   Color get textSecondary => Colors.grey.shade800;
 
+  @override
+  Color get secondaryBackground => Colors.black26;
+
   const LightColorTheme() : super();
 }
 
@@ -122,6 +127,9 @@ class DarkRedColorTheme extends LightColorTheme {
 
   @override
   Color get background => Colors.grey.shade700;
+
+  @override
+  Color get secondaryBackground => Colors.white;
 
   @override
   Color get onBackground => Colors.grey.shade100;

@@ -30,16 +30,18 @@ class _FilterModalState extends State<FilterModal> {
             child: const Text("Сброс"),
           ),
         ],
-        content: SingleChildScrollView(
-          child: SizedBox(
-              width: 400,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  for (var item in widget.filters)
-                    if (item.visible) Container(margin: const EdgeInsets.only(top: 10), child: item.filterWidget),
-                ],
-              )),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+        content: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                for (var item in widget.filters)
+                  if (item.visible) Container(margin: const EdgeInsets.only(top: 10), child: item.filterWidget),
+              ],
+            ),
+          ),
         ));
   }
 }

@@ -2,9 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/models/region.dart';
 import 'package:hasap_admin/core/widgets/form/select_region_dropdown.dart';
+import 'package:hasap_admin/core/widgets/form/text_field.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/feature/client/data/client_models.dart';
 import 'package:hasap_admin/feature/client/presentation/create/bloc/client_create_bloc.dart';
@@ -27,8 +29,7 @@ class ClientCreatePage extends StatelessWidget {
             appBar: AppBar(
               title: const Text("Mushderi goshmak"),
             ),
-            body:
-                state.map(empty: (_) => const Center(child: CircularProgressIndicator()), data: (state) => _ClientCreatePage(state: state)),
+            body: state.map(empty: (_) => const Center(child: CircularProgressIndicator()), data: (state) => _ClientCreatePage(state: state)),
           );
         },
       ),
@@ -52,6 +53,7 @@ class _ClientCreatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<ClientCreateBloc>();
+    AppTheme theme = AppTheme.of(context);
 
     if (state.data.isLoading) {
       return const Center(child: CircularProgressIndicator());
@@ -64,41 +66,27 @@ class _ClientCreatePage extends StatelessWidget {
             child: Form(
               key: state.formKey,
               child: Padding(
-                padding: const EdgeInsets.only(top: 30),
+                padding: const EdgeInsets.only(top: 20, left: 3, right: 3),
                 child: Column(
                   children: [
-                    TextFormField(
+                    AppTextField(
                       controller: state.firstName,
-                      decoration: const InputDecoration(
-                        labelText: "Ady*",
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Adynyy yazyn";
-                        }
-                        return null;
-                      },
+                      label: "Ady",
+                      required: true,
                     ),
                     const SizedBox(height: 10),
-                    TextFormField(
+                    AppTextField(
                       controller: state.lastName,
-                      decoration: const InputDecoration(
-                        labelText: "Familiyasy*",
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Familiyasyny yazyn";
-                        }
-                        return null;
-                      },
+                      label: "Familiyasy",
+                      required: true,
                     ),
                     const SizedBox(height: 10),
-                    TextFormField(
+                    AppTextField(
                       controller: state.surName,
-                      decoration: const InputDecoration(
-                        labelText: "Ochestvasy",
-                      ),
+                      label: "Ochestvasy",
+                      required: false,
                     ),
+                    const SizedBox(height: 10),
                     SelectRegionDropdown(
                       onChange: (Region? region, List<Region?> regions) {
                         bloc.add(ClientCreateEvent.selectRegion(region: region, regions: regions));
@@ -107,32 +95,23 @@ class _ClientCreatePage extends StatelessWidget {
                       getRegions: bloc.clientInteractor.getRegions,
                     ),
                     const SizedBox(height: 10),
-                    TextFormField(
+                    AppTextField(
                       controller: state.phone,
-                      decoration: const InputDecoration(
-                        labelText: "Nomer belgisi*",
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Nomer belgisini gorkezin";
-                        }
-                        return null;
-                      },
+                      label: "Nomer belgisi",
+                      required: true,
                     ),
                     const SizedBox(height: 10),
-                    TextFormField(
+                    AppTextField(
                       controller: state.phone2,
-                      decoration: const InputDecoration(
-                        labelText: "Goshmacha nomer belgisi",
-                      ),
+                      label: "Nomer belgisi 2",
+                      required: false,
                     ),
                     const SizedBox(height: 10),
-                    TextFormField(
+                    AppTextField(
                       controller: state.description,
+                      label: "Beldik",
+                      required: false,
                       maxLines: 4,
-                      decoration: const InputDecoration(
-                        labelText: "Beldik",
-                      ),
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(

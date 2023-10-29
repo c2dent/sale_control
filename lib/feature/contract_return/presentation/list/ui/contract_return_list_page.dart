@@ -6,6 +6,7 @@ import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/widgets/drawer_menu.dart';
 import 'package:hasap_admin/core/widgets/filter_modal.dart';
+import 'package:hasap_admin/core/widgets/filter_screen.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/core/widgets/utils.dart';
 import 'package:hasap_admin/feature/client/data/client_models.dart';
@@ -31,15 +32,17 @@ class ContractReturnListPage extends StatelessWidget {
 
           return Scaffold(
               appBar: AppBar(
-                title: const Text("Возврать"),
+                title: const Text("Gaÿtarmalar"),
                 actions: [
                   IconButton(
-                      onPressed: () => showDialog(
-                          context: context,
-                          builder: (BuildContext newContext) => FilterModal(
-                                reset: () => bloc.add(const ContractReturnEvent.resetFilter()),
-                                filters: bloc.state.data.filters,
-                              )),
+                      onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FilterScreen(
+                                      filters: bloc.state.data.filters,
+                                      reset: () => bloc.add(const ContractReturnEvent.resetFilter()),
+                                    )),
+                          ),
                       icon: const Icon(Icons.filter_alt_rounded))
                 ],
               ),
@@ -142,7 +145,7 @@ class _ContractReturnPage extends StatelessWidget {
                             children: [
                               Text(
                                 "${client.firstName} ${client.lastName}",
-                                style: theme.textTheme.title1.copyWith(color: theme.colorTheme.textPrimary),
+                                style: theme.textTheme.title1.copyWith(color: theme.colorTheme.textPrimary, fontSize: 20),
                               ),
                             ],
                           ),

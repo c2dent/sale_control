@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-
 Future<Map<String, dynamic>?> awaitReturnValueFromAddScreen(BuildContext context, Widget screen) async {
   var result = await Navigator.push(
     context,
@@ -44,14 +43,13 @@ String formattingDate(DateTime d) {
 final DateFormat dateFormatter = DateFormat('dd-MM-yyyy');
 final DateFormat dateFormatterYyyyMmDd = DateFormat('yyyy-MM-dd');
 
-void showEditDeletePopup(BuildContext context, Offset position,
-    {required void Function() edit, required void Function() delete}) async {
+void showEditDeletePopup(BuildContext context, Offset position, {required void Function() edit, required void Function() delete}) async {
   final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
 
   final result = await showMenu(
       context: context,
-      position: RelativeRect.fromRect(Rect.fromLTWH(position.dx, position.dy, 30, 30),
-          Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width, overlay.paintBounds.size.height)),
+      position: RelativeRect.fromRect(
+          Rect.fromLTWH(position.dx, position.dy, 30, 30), Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width, overlay.paintBounds.size.height)),
       items: [
         const PopupMenuItem(
           value: 'edit',
@@ -73,14 +71,13 @@ void showEditDeletePopup(BuildContext context, Offset position,
   }
 }
 
-void showContextMenu(BuildContext context, Offset position,
-    {required void Function() edit, required void Function() delete}) async {
+void showContextMenu(BuildContext context, Offset position, {required void Function() edit, required void Function() delete}) async {
   final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
 
   final result = await showMenu(
       context: context,
-      position: RelativeRect.fromRect(Rect.fromLTWH(position.dx, position.dy, 30, 30),
-          Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width, overlay.paintBounds.size.height)),
+      position: RelativeRect.fromRect(
+          Rect.fromLTWH(position.dx, position.dy, 30, 30), Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width, overlay.paintBounds.size.height)),
       items: [
         const PopupMenuItem(
           value: 'edit',
@@ -103,6 +100,12 @@ void showContextMenu(BuildContext context, Offset position,
 }
 
 String formatCurrency(int amount) {
-  return  NumberFormat('#,###').format(amount);
+  return NumberFormat('#,###').format(amount);
 }
 
+String? textFieldRequired(value) {
+  if (value == null || value.isEmpty) {
+    return "Hokman doldurmaly";
+  }
+  return null;
+}

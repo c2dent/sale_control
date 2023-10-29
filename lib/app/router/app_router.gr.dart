@@ -17,29 +17,29 @@ import 'package:hasap_admin/feature/client/presentation/create/ui/client_create_
     as _i2;
 import 'package:hasap_admin/feature/client/presentation/list/ui/client_list_page.dart'
     as _i3;
-import 'package:hasap_admin/feature/contract/data/contract_models.dart' as _i17;
+import 'package:hasap_admin/feature/contract/data/contract_models.dart' as _i16;
 import 'package:hasap_admin/feature/contract/presentation/create/ui/contract_create_page.dart'
-    as _i7;
-import 'package:hasap_admin/feature/contract/presentation/list/ui/contract_list_page.dart'
     as _i4;
-import 'package:hasap_admin/feature/contract_return/data/contract_return_models.dart'
-    as _i19;
-import 'package:hasap_admin/feature/contract_return/presentation/create/ui/contract_return_create_page.dart'
-    as _i10;
-import 'package:hasap_admin/feature/contract_return/presentation/list/ui/contract_return_list_page.dart'
-    as _i11;
-import 'package:hasap_admin/feature/payment/data/payment_models.dart' as _i16;
-import 'package:hasap_admin/feature/payment/presentation/create/ui/payment_create_page.dart'
+import 'package:hasap_admin/feature/contract/presentation/list/ui/contract_list_page.dart'
     as _i5;
-import 'package:hasap_admin/feature/payment/presentation/list/ui/payment_list_page.dart'
+import 'package:hasap_admin/feature/contract_return/data/contract_return_models.dart'
+    as _i17;
+import 'package:hasap_admin/feature/contract_return/presentation/create/ui/contract_return_create_page.dart'
     as _i6;
-import 'package:hasap_admin/feature/profile/presentation/ui/profile_page.dart'
-    as _i12;
-import 'package:hasap_admin/feature/service/data/service_models.dart' as _i18;
-import 'package:hasap_admin/feature/service/presentation/create/ui/service_create_page.dart'
-    as _i9;
-import 'package:hasap_admin/feature/service/presentation/list/ui/service_list_page.dart'
+import 'package:hasap_admin/feature/contract_return/presentation/list/ui/contract_return_list_page.dart'
+    as _i7;
+import 'package:hasap_admin/feature/payment/data/payment_models.dart' as _i18;
+import 'package:hasap_admin/feature/payment/presentation/create/ui/payment_create_page.dart'
     as _i8;
+import 'package:hasap_admin/feature/payment/presentation/list/ui/payment_list_page.dart'
+    as _i9;
+import 'package:hasap_admin/feature/profile/presentation/ui/profile_page.dart'
+    as _i10;
+import 'package:hasap_admin/feature/service/data/service_models.dart' as _i19;
+import 'package:hasap_admin/feature/service/presentation/create/ui/service_create_page.dart'
+    as _i11;
+import 'package:hasap_admin/feature/service/presentation/list/ui/service_list_page.dart'
+    as _i12;
 
 abstract class $AppRouter extends _i13.RootStackRouter {
   $AppRouter({super.navigatorKey});
@@ -69,55 +69,21 @@ abstract class $AppRouter extends _i13.RootStackRouter {
         child: const _i3.ClientListPage(),
       );
     },
-    ContractListRoute.name: (routeData) {
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i4.ContractListPage(),
-      );
-    },
-    PaymentCreateRoute.name: (routeData) {
-      final args = routeData.argsAs<PaymentCreateRouteArgs>(
-          orElse: () => const PaymentCreateRouteArgs());
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i5.PaymentCreatePage(
-          key: args.key,
-          payment: args.payment,
-        ),
-      );
-    },
-    PaymentListRoute.name: (routeData) {
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i6.PaymentListPage(),
-      );
-    },
     ContractCreateRoute.name: (routeData) {
       final args = routeData.argsAs<ContractCreateRouteArgs>(
           orElse: () => const ContractCreateRouteArgs());
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i7.ContractCreatePage(
+        child: _i4.ContractCreatePage(
           key: args.key,
           contract: args.contract,
         ),
       );
     },
-    ServiceListRoute.name: (routeData) {
+    ContractListRoute.name: (routeData) {
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i8.ServiceListPage(),
-      );
-    },
-    ServiceCreateRoute.name: (routeData) {
-      final args = routeData.argsAs<ServiceCreateRouteArgs>(
-          orElse: () => const ServiceCreateRouteArgs());
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i9.ServiceCreatePage(
-          key: args.key,
-          service: args.service,
-        ),
+        child: const _i5.ContractListPage(),
       );
     },
     ContractReturnCreateRoute.name: (routeData) {
@@ -125,7 +91,7 @@ abstract class $AppRouter extends _i13.RootStackRouter {
           orElse: () => const ContractReturnCreateRouteArgs());
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i10.ContractReturnCreatePage(
+        child: _i6.ContractReturnCreatePage(
           key: args.key,
           contractReturn: args.contractReturn,
         ),
@@ -134,13 +100,47 @@ abstract class $AppRouter extends _i13.RootStackRouter {
     ContractReturnListRoute.name: (routeData) {
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i11.ContractReturnListPage(),
+        child: const _i7.ContractReturnListPage(),
+      );
+    },
+    PaymentCreateRoute.name: (routeData) {
+      final args = routeData.argsAs<PaymentCreateRouteArgs>(
+          orElse: () => const PaymentCreateRouteArgs());
+      return _i13.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i8.PaymentCreatePage(
+          key: args.key,
+          payment: args.payment,
+        ),
+      );
+    },
+    PaymentListRoute.name: (routeData) {
+      return _i13.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i9.PaymentListPage(),
       );
     },
     ProfileRoute.name: (routeData) {
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i12.ProfilePage(),
+        child: const _i10.ProfilePage(),
+      );
+    },
+    ServiceCreateRoute.name: (routeData) {
+      final args = routeData.argsAs<ServiceCreateRouteArgs>(
+          orElse: () => const ServiceCreateRouteArgs());
+      return _i13.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i11.ServiceCreatePage(
+          key: args.key,
+          service: args.service,
+        ),
+      );
+    },
+    ServiceListRoute.name: (routeData) {
+      return _i13.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i12.ServiceListPage(),
       );
     },
   };
@@ -213,77 +213,11 @@ class ClientListRoute extends _i13.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.ContractListPage]
-class ContractListRoute extends _i13.PageRouteInfo<void> {
-  const ContractListRoute({List<_i13.PageRouteInfo>? children})
-      : super(
-          ContractListRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'ContractListRoute';
-
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i5.PaymentCreatePage]
-class PaymentCreateRoute extends _i13.PageRouteInfo<PaymentCreateRouteArgs> {
-  PaymentCreateRoute({
-    _i14.Key? key,
-    _i16.Payment? payment,
-    List<_i13.PageRouteInfo>? children,
-  }) : super(
-          PaymentCreateRoute.name,
-          args: PaymentCreateRouteArgs(
-            key: key,
-            payment: payment,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'PaymentCreateRoute';
-
-  static const _i13.PageInfo<PaymentCreateRouteArgs> page =
-      _i13.PageInfo<PaymentCreateRouteArgs>(name);
-}
-
-class PaymentCreateRouteArgs {
-  const PaymentCreateRouteArgs({
-    this.key,
-    this.payment,
-  });
-
-  final _i14.Key? key;
-
-  final _i16.Payment? payment;
-
-  @override
-  String toString() {
-    return 'PaymentCreateRouteArgs{key: $key, payment: $payment}';
-  }
-}
-
-/// generated route for
-/// [_i6.PaymentListPage]
-class PaymentListRoute extends _i13.PageRouteInfo<void> {
-  const PaymentListRoute({List<_i13.PageRouteInfo>? children})
-      : super(
-          PaymentListRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'PaymentListRoute';
-
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i7.ContractCreatePage]
+/// [_i4.ContractCreatePage]
 class ContractCreateRoute extends _i13.PageRouteInfo<ContractCreateRouteArgs> {
   ContractCreateRoute({
     _i14.Key? key,
-    _i17.Contract? contract,
+    _i16.Contract? contract,
     List<_i13.PageRouteInfo>? children,
   }) : super(
           ContractCreateRoute.name,
@@ -308,7 +242,7 @@ class ContractCreateRouteArgs {
 
   final _i14.Key? key;
 
-  final _i17.Contract? contract;
+  final _i16.Contract? contract;
 
   @override
   String toString() {
@@ -317,64 +251,26 @@ class ContractCreateRouteArgs {
 }
 
 /// generated route for
-/// [_i8.ServiceListPage]
-class ServiceListRoute extends _i13.PageRouteInfo<void> {
-  const ServiceListRoute({List<_i13.PageRouteInfo>? children})
+/// [_i5.ContractListPage]
+class ContractListRoute extends _i13.PageRouteInfo<void> {
+  const ContractListRoute({List<_i13.PageRouteInfo>? children})
       : super(
-          ServiceListRoute.name,
+          ContractListRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'ServiceListRoute';
+  static const String name = 'ContractListRoute';
 
   static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i9.ServiceCreatePage]
-class ServiceCreateRoute extends _i13.PageRouteInfo<ServiceCreateRouteArgs> {
-  ServiceCreateRoute({
-    _i14.Key? key,
-    _i18.Service? service,
-    List<_i13.PageRouteInfo>? children,
-  }) : super(
-          ServiceCreateRoute.name,
-          args: ServiceCreateRouteArgs(
-            key: key,
-            service: service,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'ServiceCreateRoute';
-
-  static const _i13.PageInfo<ServiceCreateRouteArgs> page =
-      _i13.PageInfo<ServiceCreateRouteArgs>(name);
-}
-
-class ServiceCreateRouteArgs {
-  const ServiceCreateRouteArgs({
-    this.key,
-    this.service,
-  });
-
-  final _i14.Key? key;
-
-  final _i18.Service? service;
-
-  @override
-  String toString() {
-    return 'ServiceCreateRouteArgs{key: $key, service: $service}';
-  }
-}
-
-/// generated route for
-/// [_i10.ContractReturnCreatePage]
+/// [_i6.ContractReturnCreatePage]
 class ContractReturnCreateRoute
     extends _i13.PageRouteInfo<ContractReturnCreateRouteArgs> {
   ContractReturnCreateRoute({
     _i14.Key? key,
-    _i19.ContractReturn? contractReturn,
+    _i17.ContractReturn? contractReturn,
     List<_i13.PageRouteInfo>? children,
   }) : super(
           ContractReturnCreateRoute.name,
@@ -399,7 +295,7 @@ class ContractReturnCreateRouteArgs {
 
   final _i14.Key? key;
 
-  final _i19.ContractReturn? contractReturn;
+  final _i17.ContractReturn? contractReturn;
 
   @override
   String toString() {
@@ -408,7 +304,7 @@ class ContractReturnCreateRouteArgs {
 }
 
 /// generated route for
-/// [_i11.ContractReturnListPage]
+/// [_i7.ContractReturnListPage]
 class ContractReturnListRoute extends _i13.PageRouteInfo<void> {
   const ContractReturnListRoute({List<_i13.PageRouteInfo>? children})
       : super(
@@ -422,7 +318,59 @@ class ContractReturnListRoute extends _i13.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i12.ProfilePage]
+/// [_i8.PaymentCreatePage]
+class PaymentCreateRoute extends _i13.PageRouteInfo<PaymentCreateRouteArgs> {
+  PaymentCreateRoute({
+    _i14.Key? key,
+    _i18.Payment? payment,
+    List<_i13.PageRouteInfo>? children,
+  }) : super(
+          PaymentCreateRoute.name,
+          args: PaymentCreateRouteArgs(
+            key: key,
+            payment: payment,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'PaymentCreateRoute';
+
+  static const _i13.PageInfo<PaymentCreateRouteArgs> page =
+      _i13.PageInfo<PaymentCreateRouteArgs>(name);
+}
+
+class PaymentCreateRouteArgs {
+  const PaymentCreateRouteArgs({
+    this.key,
+    this.payment,
+  });
+
+  final _i14.Key? key;
+
+  final _i18.Payment? payment;
+
+  @override
+  String toString() {
+    return 'PaymentCreateRouteArgs{key: $key, payment: $payment}';
+  }
+}
+
+/// generated route for
+/// [_i9.PaymentListPage]
+class PaymentListRoute extends _i13.PageRouteInfo<void> {
+  const PaymentListRoute({List<_i13.PageRouteInfo>? children})
+      : super(
+          PaymentListRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PaymentListRoute';
+
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i10.ProfilePage]
 class ProfileRoute extends _i13.PageRouteInfo<void> {
   const ProfileRoute({List<_i13.PageRouteInfo>? children})
       : super(
@@ -431,6 +379,58 @@ class ProfileRoute extends _i13.PageRouteInfo<void> {
         );
 
   static const String name = 'ProfileRoute';
+
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i11.ServiceCreatePage]
+class ServiceCreateRoute extends _i13.PageRouteInfo<ServiceCreateRouteArgs> {
+  ServiceCreateRoute({
+    _i14.Key? key,
+    _i19.Service? service,
+    List<_i13.PageRouteInfo>? children,
+  }) : super(
+          ServiceCreateRoute.name,
+          args: ServiceCreateRouteArgs(
+            key: key,
+            service: service,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ServiceCreateRoute';
+
+  static const _i13.PageInfo<ServiceCreateRouteArgs> page =
+      _i13.PageInfo<ServiceCreateRouteArgs>(name);
+}
+
+class ServiceCreateRouteArgs {
+  const ServiceCreateRouteArgs({
+    this.key,
+    this.service,
+  });
+
+  final _i14.Key? key;
+
+  final _i19.Service? service;
+
+  @override
+  String toString() {
+    return 'ServiceCreateRouteArgs{key: $key, service: $service}';
+  }
+}
+
+/// generated route for
+/// [_i12.ServiceListPage]
+class ServiceListRoute extends _i13.PageRouteInfo<void> {
+  const ServiceListRoute({List<_i13.PageRouteInfo>? children})
+      : super(
+          ServiceListRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ServiceListRoute';
 
   static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }

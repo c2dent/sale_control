@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/widgets/form/date.dart';
 import 'package:hasap_admin/core/widgets/form/select_contract_dropdown.dart';
+import 'package:hasap_admin/core/widgets/form/text_field.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/feature/contract_return/data/contract_return_models.dart';
 import 'package:hasap_admin/feature/contract_return/presentation/create/bloc/contract_return_bloc.dart';
@@ -66,7 +67,7 @@ class _ContractReturnCreatePage extends StatelessWidget {
           child: Form(
             key: state.data.formKey,
             child: Padding(
-              padding: const EdgeInsets.only(top: 30),
+              padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
               child: Column(
                 children: [
                   FormDate(
@@ -84,11 +85,13 @@ class _ContractReturnCreatePage extends StatelessWidget {
                       return await bloc.interactor.getContracts();
                     },
                   ),
-                  TextFormField(
-                    controller: state.data.reason,
-                    decoration: const InputDecoration(labelText: "Sebabi"),
+                  const SizedBox(height: 10),
+                  AppTextField(
+                    controller: state.reason,
+                    label: "Sebabi",
+                    required: false,
+                    maxLines: 4,
                   ),
-                  const SizedBox(height: 16),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {

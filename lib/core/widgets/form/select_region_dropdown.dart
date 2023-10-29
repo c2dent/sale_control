@@ -18,7 +18,7 @@ class SelectRegionDropdown extends StatelessWidget {
     tmp.addAll(regions);
     tmp[index] = region;
 
-    for(int i = index + 1; i < tmp.length; i++) {
+    for (int i = index + 1; i < tmp.length; i++) {
       tmp[i] = null;
     }
     (region != null && region.childrenCount == 0) ? onChange(region, tmp) : onChange(null, tmp);
@@ -27,9 +27,12 @@ class SelectRegionDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Text("Welayat:", style: TextStyle(fontSize: 19), textAlign: TextAlign.start),
+        const SizedBox(height: 3),
         CDropDownSearch<Region>(
-          label: "Yashalyan yer",
+          label: "",
           selectedItem: regions[0],
           itemAsString: (Region region) => region.name,
           onChanged: (Region? region) {
@@ -44,36 +47,50 @@ class SelectRegionDropdown extends StatelessWidget {
         ),
         if (regions[0] != null && regions[0]!.childrenCount > 0) const SizedBox(height: 15),
         if (regions[0] != null && regions[0]!.childrenCount > 0)
-          CDropDownSearch<Region>(
-            label: "Yashalyan yer",
-            selectedItem: regions[1],
-            itemAsString: (Region region) => region.name,
-            onChanged: (Region? region) {
-              change(1, region);
-            },
-            validation: (Region? region) {
-              if (regions[1] == null && region == null) return "Hokman saylamaly";
-              return null;
-            },
-            asyncItems: (String? filter) => getRegions(regions[0]),
-            compareFn: (item, sItem) => item.id == sItem.id,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text("Etrap:", style: TextStyle(fontSize: 19), textAlign: TextAlign.start),
+              const SizedBox(height: 3),
+              CDropDownSearch<Region>(
+                label: "",
+                selectedItem: regions[1],
+                itemAsString: (Region region) => region.name,
+                onChanged: (Region? region) {
+                  change(1, region);
+                },
+                validation: (Region? region) {
+                  if (regions[1] == null && region == null) return "Hokman saylamaly";
+                  return null;
+                },
+                asyncItems: (String? filter) => getRegions(regions[0]),
+                compareFn: (item, sItem) => item.id == sItem.id,
+              ),
+            ],
           ),
         if (regions[1] != null && regions[1]!.childrenCount > 0) const SizedBox(height: 15),
         if (regions[1] != null && regions[1]!.childrenCount > 0)
-          CDropDownSearch<Region>(
-            label: "Yashalyan yer",
-            selectedItem: regions[2],
-            itemAsString: (Region region) => region.name,
-            onChanged: (Region? region) {
-              change(2, region);
-            },
-            validation: (Region? region) {
-              if (regions[2] == null && region == null) return "Hokman saylamaly";
-              return null;
-            },
-            asyncItems: (String? filter) => getRegions(regions[1]),
-            compareFn: (item, sItem) => item.id == sItem.id,
-          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text("Yashayysh yer:", style: TextStyle(fontSize: 19), textAlign: TextAlign.start),
+              const SizedBox(height: 3),
+              CDropDownSearch<Region>(
+                label: "",
+                selectedItem: regions[2],
+                itemAsString: (Region region) => region.name,
+                onChanged: (Region? region) {
+                  change(2, region);
+                },
+                validation: (Region? region) {
+                  if (regions[2] == null && region == null) return "Hokman saylamaly";
+                  return null;
+                },
+                asyncItems: (String? filter) => getRegions(regions[1]),
+                compareFn: (item, sItem) => item.id == sItem.id,
+              ),
+            ],
+          )
       ],
     );
   }

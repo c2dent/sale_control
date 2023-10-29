@@ -8,6 +8,7 @@ import 'package:hasap_admin/core/models/region.dart';
 import 'package:hasap_admin/core/widgets/form/select_client_dropdown.dart';
 import 'package:hasap_admin/core/widgets/form/select_employee_dropdown.dart';
 import 'package:hasap_admin/core/widgets/form/select_region_dropdown.dart';
+import 'package:hasap_admin/core/widgets/form/text_field.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/feature/client/data/client_models.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
@@ -67,7 +68,7 @@ class _ContractCreatePage extends StatelessWidget {
           child: Form(
             key: state.formKey,
             child: Padding(
-              padding: const EdgeInsets.only(top: 30),
+              padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
               child: Column(
                 children: [
                   SelectRegionDropdown(
@@ -92,73 +93,41 @@ class _ContractCreatePage extends StatelessWidget {
                     getEmployees: () async => bloc.interactor.getEmployees({}),
                   ),
                   const SizedBox(height: 10),
-
-                  TextFormField(
+                  AppTextField(
                     controller: state.priceAmount,
-                    decoration: const InputDecoration(
-                      labelText: "Bahasy*",
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Baha gorkezin";
-                      }
-                      return null;
-                    },
+                    label: "Bahasy",
+                    required: true,
                   ),
                   const SizedBox(height: 10),
-
-                  TextFormField(
+                  AppTextField(
                     controller: state.dueDateOnMonth,
-                    decoration: const InputDecoration(
-                      labelText: "ayky tolegi*",
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "ayky tolegini gorkezin";
-                      }
-                      return null;
-                    },
+                    label: "Her ayky toleg",
+                    required: true,
                   ),
                   const SizedBox(height: 10),
-
-                  TextFormField(
+                  AppTextField(
                     controller: state.monthCount,
-                    decoration: const InputDecoration(
-                      labelText: "Garashyk ayyn sany*",
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Garashyk ayyn sanyny gorkezin";
-                      }
-                      return null;
-                    },
+                    label: "Garashyk ayyn sany",
+                    required: true,
                   ),
                   const SizedBox(height: 20),
 
                   if (state.contract == null)
                     Column(
                       children: [
-                        TextFormField(
+                        AppTextField(
                           controller: state.paidAmount,
-                          decoration: const InputDecoration(
-                            labelText: "Bashlangych toleg*",
-                          ),
+                          label: "Bashlangych toleg",
+                          required: true,
                         ),
                         const SizedBox(height: 20),
                       ],
                     ),
 
-                  TextFormField(
+                  AppTextField(
                     controller: state.filterCount,
-                    decoration: const InputDecoration(
-                      labelText: "Filterin sany*",
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Hokman gorkezmeli";
-                      }
-                      return null;
-                    },
+                    label: "Filterin sany",
+                    required: true,
                   ),
                   const SizedBox(height: 20),
 
@@ -174,6 +143,7 @@ class _ContractCreatePage extends StatelessWidget {
                     },
                     child: Text(state.contract != null ? "Uytget" : "Gosh"),
                   ),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),

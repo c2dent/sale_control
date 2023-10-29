@@ -32,10 +32,6 @@ class CDropDownSearch<T> extends StatelessWidget {
         items: items ?? [],
         selectedItem: selectedItem,
         itemAsString: itemAsString,
-        clearButtonProps: ClearButtonProps(
-          isVisible: true,
-          color: Theme.of(context).primaryColor,
-        ),
         popupProps: const PopupPropsMultiSelection.modalBottomSheet(
             showSelectedItems: true,
             showSearchBox: true
@@ -44,15 +40,14 @@ class CDropDownSearch<T> extends StatelessWidget {
         compareFn: compareFn,
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(
-            floatingLabelStyle: appTheme.textTheme.subtitle,
-            border: InputBorder.none,
-            isDense: true,
-            contentPadding: const EdgeInsets.only(left: 5, right: 0, top: 5, bottom: 5),
-            labelText: label,
             filled: true,
-            fillColor: Theme.of(context).inputDecorationTheme.fillColor,
-            constraints: const BoxConstraints(maxHeight: 42),
+            labelText: label,
+            floatingLabelBehavior: FloatingLabelBehavior.never,
+            border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(7)),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 7, vertical: 0),
+            suffixIcon: Icon(Icons.search),
           ),
+          baseStyle: const TextStyle(fontSize: 19),
         ),
         onChanged: onChanged);
   }

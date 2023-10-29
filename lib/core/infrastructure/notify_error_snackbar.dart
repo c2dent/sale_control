@@ -16,7 +16,7 @@ class NotifyErrorSnackbar {
     } else if (error.isCustomError) {
       ErrorSnackbar.show(context: context, text: error.safeCustom != null ? error.safeCustom!.name : "Неизвестная ошибка");
     } else {
-      ErrorSnackbar.show(context: context, text: "Неисвестноя ошибка");
+      ErrorSnackbar.show(context: context, text: error.toString());
     }
   }
 }

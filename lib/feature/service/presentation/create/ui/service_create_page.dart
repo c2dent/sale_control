@@ -6,6 +6,7 @@ import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/widgets/c_dropdown_search.dart';
 import 'package:hasap_admin/core/widgets/form/date.dart';
 import 'package:hasap_admin/core/widgets/form/select_contract_dropdown.dart';
+import 'package:hasap_admin/core/widgets/form/text_field.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/service/data/service_models.dart';
@@ -27,7 +28,7 @@ class ServiceCreatePage extends StatelessWidget {
           builder: (_, state) {
             return Scaffold(
               appBar: AppBar(
-                title: const Text("Kormur hyzmaty goshmak"),
+                title: const Text("Hyzmaty goshmak"),
               ),
               body: state.map(empty: (_) => const Center(child: CircularProgressIndicator()), data: (state) => _CoalCreatePage(state: state)),
             );
@@ -64,7 +65,7 @@ class _CoalCreatePage extends StatelessWidget {
           child: Form(
             key: state.formKey,
             child: Padding(
-              padding: const EdgeInsets.only(top: 30),
+              padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
               child: Column(
                 children: [
                   FormDate(
@@ -93,26 +94,17 @@ class _CoalCreatePage extends StatelessWidget {
                     compareFn: (item, sItem) => item.value == sItem.value,
                   ),
                   const SizedBox(height: 10),
-
-                  TextFormField(
+                  AppTextField(
                     controller: state.amount,
-                    decoration: const InputDecoration(
-                      labelText: "Toleg*",
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Hokman gorkezmeli";
-                      }
-                      return null;
-                    },
+                    label: "Toleg",
+                    required: true,
                   ),
                   const SizedBox(height: 10),
-
-                  TextFormField(
+                  AppTextField(
                     controller: state.comment,
-                    decoration: const InputDecoration(
-                      labelText: "Beldik*",
-                    ),
+                    label: "Beldik",
+                    required: false,
+                    maxLines: 4,
                   ),
                   const SizedBox(height: 10),
 

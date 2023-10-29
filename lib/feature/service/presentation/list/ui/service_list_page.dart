@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/widgets/drawer_menu.dart';
-import 'package:hasap_admin/core/widgets/filter_modal.dart';
+import 'package:hasap_admin/core/widgets/filter_screen.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/core/widgets/utils.dart';
 import 'package:hasap_admin/feature/service/data/service_models.dart';
@@ -20,9 +20,7 @@ class ServiceListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ServiceBloc>(
-      create: (context) =>
-      GetIt.I.get()
-        ..add(const ServiceEvent.init()),
+      create: (context) => GetIt.I.get()..add(const ServiceEvent.init()),
       child: SrBlocBuilder<ServiceBloc, ServiceState, ServiceSR>(
         onSR: _onSingleResult,
         builder: (context, state) {
@@ -31,17 +29,17 @@ class ServiceListPage extends StatelessWidget {
 
           return Scaffold(
               appBar: AppBar(
-                title: const Text("Kömür hyzmaty"),
+                title: const Text("Hyzmatlar"),
                 actions: [
                   IconButton(
-                      onPressed: () =>
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext newContext) =>
-                                  FilterModal(
-                                    reset: () => bloc.add(const ServiceEvent.resetFilter()),
-                                    filters: bloc.state.data.filters,
-                                  )),
+                      onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FilterScreen(
+                                      filters: bloc.state.data.filters,
+                                      reset: () => bloc.add(const ServiceEvent.resetFilter()),
+                                    )),
+                          ),
                       icon: const Icon(Icons.filter_alt_rounded))
                 ],
               ),
@@ -119,94 +117,95 @@ class _ServicePage extends StatelessWidget {
           children: [
             Expanded(
                 child: ListView.builder(
-                  itemCount: state.data.services.length,
-                  itemBuilder: (context, index) {
-                    Service service = state.data.services[index];
-                    return GestureDetector(
-                      onTapDown: (details) => tapPosition = details.globalPosition,
-                      onLongPress: () =>
-                          showContextMenu(context, tapPosition,
-                            edit: () async {
-                              Service? updateService = await Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => ServiceCreatePage(service: service)),
-                              );
+              itemCount: state.data.services.length,
+              itemBuilder: (context, index) {
+                Service service = state.data.services[index];
+                return GestureDetector(
+                  onTapDown: (details) => tapPosition = details.globalPosition,
+                  onLongPress: () => showContextMenu(
+                    context,
+                    tapPosition,
+                    edit: () async {
+                      Service? updateService = await Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ServiceCreatePage(service: service)),
+                      );
 
-                              if (updateService != null) {
-                                bloc.add(const ServiceEvent.filter());
-                              }
-                            },
-                            delete: () => bloc.add(ServiceEvent.delete(service: service)),
-                          ),
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(vertical: 3),
-                        padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                        decoration: BoxDecoration(
-                          color: theme.colorTheme.surface,
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
-                            BoxShadow(
-                              color: theme.colorTheme.onSecondary,
-                              blurRadius: 2,
-                              offset: const Offset(0, 1),
-                            ),
-                          ],
+                      if (updateService != null) {
+                        bloc.add(const ServiceEvent.filter());
+                      }
+                    },
+                    delete: () => bloc.add(ServiceEvent.delete(service: service)),
+                  ),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 3),
+                    padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                    decoration: BoxDecoration(
+                      color: theme.colorTheme.surface,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: theme.colorTheme.onSecondary,
+                          blurRadius: 2,
+                          offset: const Offset(0, 1),
                         ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "${service.contract.client.firstName} ${service.contract.client.lastName}",
-                                        style: theme.textTheme.title1,
-                                      ),
-                                      if (service.amount > 0)
-                                        Card(
-                                          color: theme.colorTheme.error.withOpacity(0.7),
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                          child: Padding(
-                                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                              child: Text("${formatCurrency(service.amount)} тмт",
-                                                  style: TextStyle(color: theme.colorTheme.onSuccess, fontWeight: FontWeight.bold))),
-                                        ),
-                                    ],
+                                  Text(
+                                    "${service.contract.client.firstName} ${service.contract.client.lastName}",
+                                    style: theme.textTheme.title1.copyWith(fontSize: 20),
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(service.type.name, style: theme.textTheme.title1),
-                                      Text(formattingDate(service.createdAt), style: theme.textTheme.title2)
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Flexible(
-                                        child: Text(
-                                          "${service.creator.firstName ?? ''} ${service.creator.lastName ?? ''}",
-                                          style: theme.textTheme.title2,
-                                        ),
-                                      ),
-                                      Text(
-                                        formattingDate(service.createdAt),
-                                        style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
-                                      ),
-                                    ],
-                                  )
+                                  if (service.amount > 0)
+                                    Card(
+                                      color: theme.colorTheme.error.withOpacity(0.7),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                      child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                          child: Text("${formatCurrency(service.amount)} тмт",
+                                              style: TextStyle(color: theme.colorTheme.onSuccess, fontWeight: FontWeight.bold))),
+                                    ),
                                 ],
                               ),
-                            ),
-                          ],
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(service.type.name, style: theme.textTheme.title1),
+                                  Text(formattingDate(service.createdAt), style: theme.textTheme.title2)
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      "${service.creator.firstName ?? ''} ${service.creator.lastName ?? ''}",
+                                      style: theme.textTheme.title2,
+                                    ),
+                                  ),
+                                  Text(
+                                    formattingDate(service.createdAt),
+                                    style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                ))
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ))
           ],
         ));
   }

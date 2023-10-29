@@ -11,19 +11,26 @@ class SelectEmployeeDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CDropDownSearch(
-      label: "Ishchiler",
-      selectedItem: employee,
-      itemAsString: (Employee employee) => "${employee.firstName} ${employee.lastName}",
-      onChanged: (Employee? employee) {
-        onChange(employee);
-      },
-      validation: (Employee? employee) {
-        if (employee == null) return "Hokman saylamaly";
-        return null;
-      },
-      asyncItems: (String? filter) => getEmployees(),
-      compareFn: (item, sItem) => item.id == sItem.id,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text("Ishchiler:", style: TextStyle(fontSize: 19), textAlign: TextAlign.start),
+        const SizedBox(height: 3),
+        CDropDownSearch(
+          label: "",
+          selectedItem: employee,
+          itemAsString: (Employee employee) => "${employee.firstName} ${employee.lastName}",
+          onChanged: (Employee? employee) {
+            onChange(employee);
+          },
+          validation: (Employee? employee) {
+            if (employee == null) return "Hokman saylamaly";
+            return null;
+          },
+          asyncItems: (String? filter) => getEmployees(),
+          compareFn: (item, sItem) => item.id == sItem.id,
+        ),
+      ],
     );
   }
 

@@ -11,20 +11,27 @@ class SelectClientDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CDropDownSearch(
-      label: "Mushderi",
-      selectedItem: client,
-      itemAsString: (Client client) => "${client.firstName} ${client.lastName}",
-      onChanged: (Client? client) {
-        onChange(client);
-      },
-      validation: (Client? client) {
-        if (client == null) return "Hokman saylamaly";
-        return null;
-      },
-      asyncItems: (String? filter) => getClients(),
-      compareFn: (item, sItem) => item.id == sItem.id,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text("Mushderi:", style: TextStyle(fontSize: 19), textAlign: TextAlign.start),
+        const SizedBox(height: 3),
+
+        CDropDownSearch(
+          label: "",
+          selectedItem: client,
+          itemAsString: (Client client) => "${client.firstName} ${client.lastName}",
+          onChanged: (Client? client) {
+            onChange(client);
+          },
+          validation: (Client? client) {
+            if (client == null) return "Hokman saylamaly";
+            return null;
+          },
+          asyncItems: (String? filter) => getClients(),
+          compareFn: (item, sItem) => item.id == sItem.id,
+        ),
+      ],
     );
   }
-
 }

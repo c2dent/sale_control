@@ -40,6 +40,16 @@ class ClientBloc extends SrBloc<ClientEvent, ClientState, ClientSR> {
     User? user = await settingsService.getCurrentUser();
 
     List<Filter> filters = [
+      Filter<String>(
+        parameterName: 'name',
+        widget: SearchInput(
+          bloc: this,
+          onChange: (String? locality) {},
+          values: const [],
+        ),
+        parameterValue: (dynamic string) => string,
+        visible: false,
+      ),
       Filter<Region>(
           parameterName: 'region',
           widget: RegionDropdownFilter(
@@ -53,18 +63,7 @@ class ClientBloc extends SrBloc<ClientEvent, ClientState, ClientSR> {
         widget: EmployeeFilterDropdown(bloc: this, onChange: (Employee? value) {}, values: const []),
         parameterValue: (dynamic employee) => employee.id.toString(),
       ),
-      Filter<String>(
-        parameterName: 'name',
-        widget: SearchInput(
-          bloc: this,
-          onChange: (String? locality) {},
-          values: const [],
-        ),
-        parameterValue: (dynamic string) => string,
-        visible: false,
-      ),
     ];
-
     if (user?.permission == "ADMIN") {
       filters.add(
         Filter<Office>(

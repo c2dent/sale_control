@@ -7,6 +7,7 @@ import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/models/region.dart';
 import 'package:hasap_admin/core/widgets/drawer_menu.dart';
 import 'package:hasap_admin/core/widgets/filter_modal.dart';
+import 'package:hasap_admin/core/widgets/filter_screen.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/core/widgets/utils.dart';
 import 'package:hasap_admin/feature/client/data/client_models.dart';
@@ -30,15 +31,18 @@ class ClientListPage extends StatelessWidget {
 
           return Scaffold(
               appBar: AppBar(
-                title: const Text("Musderiler"),
+                title: const Text("Müşderiler"),
                 actions: [
                   IconButton(
-                      onPressed: () => showDialog(
-                          context: context,
-                          builder: (BuildContext newContext) => FilterModal(
-                                reset: () => bloc.add(const ClientEvent.resetFilter()),
-                                filters: bloc.state.data.filters,
-                              )),
+                      onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              fullscreenDialog: true,
+                                builder: (context) => FilterScreen(
+                                      filters: bloc.state.data.filters,
+                                      reset: () => bloc.add(const ClientEvent.resetFilter()),
+                                    )),
+                          ),
                       icon: const Icon(Icons.filter_alt_rounded))
                 ],
               ),
@@ -96,7 +100,7 @@ class _ClientPage extends StatelessWidget {
       return Column(
         children: [
           const SizedBox(height: 5),
-          state.data.filters[3].filterWidget,
+          state.data.filters[0].filterWidget,
           Expanded(
             child: Center(
               child: Text(
@@ -115,7 +119,7 @@ class _ClientPage extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 5),
-          state.data.filters[state.data.user == "ADMIN" ? 3 : 2].filterWidget,
+          state.data.filters[0].filterWidget,
           const SizedBox(height: 5),
           Expanded(
             child: ListView.builder(
@@ -150,7 +154,7 @@ class _ClientPage extends StatelessWidget {
                               children: [
                                 Text(
                                   "${client.firstName} ${client.lastName} ${client.surName ?? ''}",
-                                  style: theme.textTheme.title1.copyWith(color: theme.colorTheme.textPrimary),
+                                  style: theme.textTheme.title1.copyWith(color: theme.colorTheme.textPrimary, fontSize: 20),
                                 ),
                                 if (client.haveDebt)
                                   Icon(Icons.check_circle, color: theme.colorTheme.success)

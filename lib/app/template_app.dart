@@ -92,6 +92,7 @@ class _ThemedApp extends StatelessWidget {
           onSurface: appTheme.colorTheme.onSurface,
 
           background: appTheme.colorTheme.background,
+          secondaryContainer: appTheme.colorTheme.secondaryBackground,
           onBackground: appTheme.colorTheme.onBackground,
 
           error: appTheme.colorTheme.error,

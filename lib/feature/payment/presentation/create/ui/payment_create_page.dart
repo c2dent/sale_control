@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/widgets/form/date.dart';
 import 'package:hasap_admin/core/widgets/form/select_contract_dropdown.dart';
+import 'package:hasap_admin/core/widgets/form/text_field.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/feature/payment/data/payment_models.dart';
 import 'package:hasap_admin/feature/payment/presentation/create/bloc/payment_create_bloc.dart';
@@ -66,7 +67,7 @@ class _PaymentCratePage extends StatelessWidget {
           child: Form(
             key: state.data.formKey,
             child: Padding(
-              padding: const EdgeInsets.only(top: 30),
+              padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
               child: Column(
                 children: [
                   FormDate(
@@ -75,15 +76,10 @@ class _PaymentCratePage extends StatelessWidget {
                         bloc.add(PaymentCreateEvent.selectDate(date: date));
                       }),
                   const SizedBox(height: 16),
-                  TextFormField(
-                    controller: state.data.amount,
-                    decoration: const InputDecoration(labelText: "Umumy bahasy"),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Umumy bahasy girizmeli";
-                      }
-                      return null;
-                    },
+                  AppTextField(
+                    controller: state.amount,
+                    label: "Toleg",
+                    required: true,
                   ),
                   const SizedBox(height: 16),
                   SelectContractDropdown(

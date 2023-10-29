@@ -137,7 +137,7 @@ class _ProfilePage extends StatelessWidget {
             children: [
               ElevatedButton(
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color?>(theme.colorTheme.error)),
-                  onPressed: () => bloc.add(const ProfileEvent.recalculateBalance()),
+                  onPressed: () => bloc.add(ProfileEvent.logout(context)),
                   child: const Text("Chykmak"))
             ],
           )
