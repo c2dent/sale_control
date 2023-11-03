@@ -33,6 +33,7 @@ dependencies:
   injectable: ^2.1.1
   flutter_bloc: ^8.1.2
   auto_route: ^7.7.1
+  shared_preferences: ^2.2.2
   drift: ^2.13.0
   sqlite3_flutter_libs: ^0.5.0
   path_provider: ^2.0.0
