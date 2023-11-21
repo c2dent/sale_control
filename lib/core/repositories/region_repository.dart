@@ -1,21 +1,28 @@
-import 'package:hasap_admin/arch/dio_error_handler/models/dio_error_models.dart';
+import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.dart';
 import 'package:hasap_admin/arch/functional_models/either.dart';
 import 'package:hasap_admin/core/models/region.dart';
-import 'package:hasap_admin/core/services/region_api_service.dart';
+import 'package:hasap_admin/core/storage/datebase/daos/region_dao.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class RegionRepository {
-  Future<Either<CommonResponseError<DefaultApiError>, List<Region>>> getRegions(Map<String, String> params);
+  Future<Either<DriftRequestError<DefaultDriftError>, List<Region>>> getRegions(Map<String, String> params);
+
+  Future<Either<DriftRequestError<DefaultDriftError>, List<Region>>> getAllRegionsDb();
 }
 
 @Singleton(as: RegionRepository)
 class RegionRepositoryImpl extends RegionRepository {
-  final RegionApiService regionApiService;
+  final RegionDao regionDao;
 
-  RegionRepositoryImpl(this.regionApiService);
+  RegionRepositoryImpl(this.regionDao);
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>, List<Region>>> getRegions(Map<String, String> params) {
-    return regionApiService.getRegions(params);
+  Future<Either<DriftRequestError<DefaultDriftError>, List<Region>>> getRegions(Map<String, String> params) async {
+    return regionDao.getRegionsByParams(params);
+  }
+
+  @override
+  Future<Either<DriftRequestError<DefaultDriftError>, List<Region>>> getAllRegionsDb() {
+    return regionDao.getAllRegions();
   }
 }

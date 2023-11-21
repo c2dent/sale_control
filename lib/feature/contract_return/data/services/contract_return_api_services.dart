@@ -3,14 +3,22 @@ import 'package:hasap_admin/arch/dio_error_handler/dio_error_handler.dart';
 import 'package:hasap_admin/arch/dio_error_handler/models/dio_error_models.dart';
 import 'package:hasap_admin/arch/functional_models/either.dart';
 import 'package:hasap_admin/consts/injectable_names.dart';
+import 'package:hasap_admin/core/models/sync/contract_return_sync.dart';
 import 'package:hasap_admin/feature/contract_return/data/contract_return_models.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class ContractReturnApiService {
   Future<Either<CommonResponseError<DefaultApiError>, List<ContractReturn>>> list(Map<String, String> params);
+
   Future<Either<CommonResponseError<DefaultApiError>, ContractReturn>> create(Map<String, dynamic> data);
-  Future<Either<CommonResponseError<DefaultApiError>, ContractReturn>> update(int id, Map<String, dynamic> data);
-  Future<Either<CommonResponseError<DefaultApiError>,  Map<String, String>>> delete(int id);
+
+  Future<Either<CommonResponseError<DefaultApiError>, ContractReturn>> update(String id, Map<String, dynamic> data);
+
+  Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(String id);
+
+  Future<Either<CommonResponseError<DefaultApiError>, List<ContractReturnSync>>> listSync(Map<String, String> params);
+
+  Future<Either<CommonResponseError<DefaultApiError>, bool>> setSyncData(List<Map<String, dynamic>> data);
 }
 
 @Singleton(as: ContractReturnApiService)
@@ -43,7 +51,7 @@ class ContractReturnApiServiceImpl extends ContractReturnApiService {
   }
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>, ContractReturn>> update(int id, Map<String, dynamic> data) async {
+  Future<Either<CommonResponseError<DefaultApiError>, ContractReturn>> update(String id, Map<String, dynamic> data) async {
     final result = await _dioErrorHandler.processRequest(() => _client.put("/contract-return/$id/", data: data));
     if (result.isLeft) return Either.left(result.left);
 
@@ -52,10 +60,29 @@ class ContractReturnApiServiceImpl extends ContractReturnApiService {
   }
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>,  Map<String, String>>> delete(int id) async {
+  Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(String id) async {
     final result = await _dioErrorHandler.processRequest(() => _client.delete("/contract-return/$id/"));
     if (result.isLeft) return Either.left(result.left);
     return const Either.right({});
   }
 
+  @override
+  Future<Either<CommonResponseError<DefaultApiError>, List<ContractReturnSync>>> listSync(Map<String, String> params) async {
+    List<ContractReturnSync> returns = [];
+
+    final result = await _dioErrorHandler.processRequest(() => _client.get("/sync/contract-return/", queryParameters: params));
+    if (result.isLeft) return Either.left(result.left);
+
+    for (var item in result.right.data['results']) {
+      returns.add(ContractReturnSync.fromJson(item));
+    }
+    return Either.right(returns);
+  }
+
+  @override
+  Future<Either<CommonResponseError<DefaultApiError>, bool>> setSyncData(List<Map<String, dynamic>> data) async {
+    final result = await _dioErrorHandler.processRequest(() => _client.post("/sync/contract-return/", data: data));
+    if (result.isLeft) return Either.left(result.left);
+    return const Either.right(true);
+  }
 }

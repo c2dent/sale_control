@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
-import 'package:hasap_admin/core/widgets/utils.dart';
+import 'package:hasap_admin/core/mappers/service_mapper.dart';
+import 'package:hasap_admin/feature/contract/data/contract_models.dart';
+import 'package:hasap_admin/feature/service/data/service_models.dart';
 import 'package:hasap_admin/feature/service/domain/service_interactor.dart';
 import 'package:hasap_admin/feature/service/presentation/create/bloc/service_create_bloc_models.dart';
 import 'package:injectable/injectable.dart';
@@ -11,8 +13,9 @@ import 'package:injectable/injectable.dart';
 class ServiceCreateBloc extends SrBloc<ServiceCreateEvent, ServiceCreateState, ServiceCreateSR> {
   final ServiceInteractor interactor;
   final NotifyErrorSnackbar _notifyErrorSnackbar;
+  final ServiceMapper _mapper;
 
-  ServiceCreateBloc(this.interactor, this._notifyErrorSnackbar): super(const ServiceCreateState.empty()) {
+  ServiceCreateBloc(this.interactor, this._notifyErrorSnackbar, this._mapper) : super(const ServiceCreateState.empty()) {
     on<ServiceCreateEventInit>(_init);
     on<ServiceCreateEventCreate>(_create);
     on<ServiceCreateEventUpdate>(_update);
@@ -22,44 +25,49 @@ class ServiceCreateBloc extends SrBloc<ServiceCreateEvent, ServiceCreateState, S
   }
 
   Future<void> _init(ServiceCreateEventInit event, Emitter<ServiceCreateState> emit) async {
+    final contracts = await interactor.getContracts();
+    ContractData? contractData;
+    for (var contract in contracts) {
+      if (contract.contract.id == event.service?.service.contractId) contractData = contract;
+    }
+
     emit(ServiceCreateState.data(
         isLoading: false,
         formKey: GlobalKey<FormState>(),
-        date: event.service?.date ?? DateTime.now(),
-        contract: event.service?.contract,
-        comment: TextEditingController(text: event.service?.comment),
-        amount: TextEditingController(text: event.service?.amount.toString() ?? ""),
-        type: event.service?.type,
-        service: event.service)
-    );
+        date: event.service?.service.date ?? DateTime.now(),
+        contract: contractData,
+        comment: TextEditingController(text: event.service?.service.comment),
+        amount: TextEditingController(text: event.service?.service.amount.toString() ?? ""),
+        type: ServiceType.getServiceTypeFromString(event.service?.service.type),
+        service: event.service));
   }
 
   Future<void> _create(ServiceCreateEventCreate event, Emitter<ServiceCreateState> emit) async {
     emit(state.data.copyWith(isLoading: true));
-    final result = await interactor.create(_formattingData(state));
+    final result = await interactor.createDb(await _mapper.fromServiceCreateStateData(data: state.data, forCreate: true));
 
     if (result.isLeft) {
       addSr(ServiceCreateSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       emit(state.data.copyWith(isLoading: false));
     } else {
       emit(state.data.copyWith(isLoading: false));
-      addSr(const ServiceCreateSR.successNotify(text: "Komur hyzmaty goshuldyy"));
-      addSr(ServiceCreateSR.created(service: result.right));
+      addSr(const ServiceCreateSR.successNotify(text: "Hyzmat goshuldyy"));
+      addSr(const ServiceCreateSR.created());
     }
   }
 
   Future<void> _update(ServiceCreateEventUpdate event, Emitter<ServiceCreateState> emit) async {
     emit(state.data.copyWith(isLoading: true));
 
-    final result = await interactor.update(state.data.service!.id, _formattingData(state));
+    final result = await interactor.updateDb(await _mapper.fromServiceCreateStateData(data: state.data, forCreate: false));
 
     if (result.isLeft) {
       addSr(ServiceCreateSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       emit(state.data.copyWith(isLoading: false));
     } else {
       emit(state.data.copyWith(isLoading: false));
-      addSr(const ServiceCreateSR.successNotify(text: "Komur hyzmaty uytgedildi"));
-      addSr(ServiceCreateSR.created(service: result.right));
+      addSr(const ServiceCreateSR.successNotify(text: "Hyzmat uytgedildi"));
+      addSr(const ServiceCreateSR.created());
     }
   }
 
@@ -73,16 +81,5 @@ class ServiceCreateBloc extends SrBloc<ServiceCreateEvent, ServiceCreateState, S
 
   Future<void> _selectType(ServiceCreateEventSelectType event, Emitter<ServiceCreateState> emit) async {
     emit(state.data.copyWith(type: event.type));
-  }
-
-  Map<String, dynamic> _formattingData(ServiceCreateState state) {
-    Map<String, dynamic> data = {
-      "contract_id": state.data.contract?.id,
-      "amount": state.data.amount.text,
-      "comment": state.data.comment.text,
-      "type": state.data.type?.value,
-      "date": dateFormatterYyyyMmDd.format(state.data.date),
-    };
-    return data;
   }
 }

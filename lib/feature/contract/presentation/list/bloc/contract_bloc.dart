@@ -24,9 +24,10 @@ class ContractBloc extends SrBloc<ContractEvent, ContractState, ContractSR> {
   final SettingsService settingsService;
 
   ContractBloc(
-      this.interactor,
-      this._notifyErrorSnackbar,
-      ) : settingsService = GetIt.instance.get<SettingsService>(), super(const ContractState.empty()) {
+    this.interactor,
+    this._notifyErrorSnackbar,
+  )   : settingsService = GetIt.instance.get<SettingsService>(),
+        super(const ContractState.empty()) {
     on<ContractEventInit>(_init);
     on<ContractEventFilter>(_filter);
     on<ContractEventResetFilter>(_resetFilter);
@@ -44,8 +45,7 @@ class ContractBloc extends SrBloc<ContractEvent, ContractState, ContractSR> {
             onChange: (Region? value) {},
             values: [null, null, null, null, null],
           ),
-          parameterValue: (dynamic region) => region.id.toString()
-      ),
+          parameterValue: (dynamic region) => region.id.toString()),
       Filter<Employee>(
         parameterName: 'employee',
         widget: EmployeeDropdownFilter(bloc: this, onChange: (Employee? value) {}, values: const []),
@@ -69,15 +69,12 @@ class ContractBloc extends SrBloc<ContractEvent, ContractState, ContractSR> {
       addSr(ContractSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
     } else {
-      emit(
-        ContractState.data(
-            isLoading: false,
-            filters: filters,
-            contracts: result.right,
-        )
-      );
+      emit(ContractState.data(
+        isLoading: false,
+        filters: filters,
+        contracts: result.right,
+      ));
     }
-
   }
 
   FutureOr<void> _filter(ContractEventFilter event, Emitter<ContractState> emit) async {
@@ -111,7 +108,7 @@ class ContractBloc extends SrBloc<ContractEvent, ContractState, ContractSR> {
     final result = await interactor.delete(event.contract.id);
     if (result.isLeft) {
       emit(state.data.copyWith(isLoading: false));
-      addSr(ContractSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
+      // addSr(ContractSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
     } else {
       addSr(const ContractSR.successNotify(text: "Shertnama pozuldy"));

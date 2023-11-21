@@ -5,12 +5,10 @@ import 'package:get_it/get_it.dart';
 import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/widgets/drawer_menu.dart';
-import 'package:hasap_admin/core/widgets/filter_modal.dart';
 import 'package:hasap_admin/core/widgets/filter_screen.dart';
+import 'package:hasap_admin/core/widgets/snackbar/error_snackbar.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/core/widgets/utils.dart';
-import 'package:hasap_admin/feature/client/data/client_models.dart';
-import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/contract_return/data/contract_return_models.dart';
 import 'package:hasap_admin/feature/contract_return/presentation/create/ui/contract_return_create_page.dart';
 import 'package:hasap_admin/feature/contract_return/presentation/list/bloc/contract_return_bloc.dart';
@@ -49,7 +47,7 @@ class ContractReturnListPage extends StatelessWidget {
               drawer: const DrawerMenu(),
               floatingActionButton: FloatingActionButton(
                 onPressed: () async {
-                  ContractReturn? contractReturn = await Navigator.push(
+                  bool? contractReturn = await Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const ContractReturnCreatePage()),
                   );
@@ -74,7 +72,7 @@ class ContractReturnListPage extends StatelessWidget {
     final bloc = context.read<ContractReturnBloc>();
 
     sr.when(
-      showDioError: (error, notifier) => notifier.notify(error, context),
+      showDioError: (error, notifier) => ErrorSnackbar.show(context: context, text: error.safeCustom!.error),
       successNotify: (text) => SuccessSnackbar.show(context: context, text: text),
       delete: (client) => bloc.add(const ContractReturnEvent.filter()),
     );
@@ -115,14 +113,12 @@ class _ContractReturnPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: state.data.contractReturns.length,
               itemBuilder: (BuildContext context, int index) {
-                ContractReturn contractReturn = state.data.contractReturns[index];
-                Contract contract = contractReturn.contract;
-                Client client = contractReturn.contract.client;
+                ContractReturnData contractReturn = state.data.contractReturns[index];
 
                 return GestureDetector(
                   onLongPress: () => showContextMenu(context, tapPosition,
                       edit: () async {
-                        ContractReturn? updateContractReturn = await Navigator.push(
+                        bool? updateContractReturn = await Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => ContractReturnCreatePage(contractReturn: contractReturn)),
                         );
@@ -144,32 +140,36 @@ class _ContractReturnPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "${client.firstName} ${client.lastName}",
+                                contractReturn.clientName,
                                 style: theme.textTheme.title1.copyWith(color: theme.colorTheme.textPrimary, fontSize: 20),
                               ),
+                              if (!contractReturn.contractReturn.isSynced) const Icon(Icons.sync, color: Colors.blueAccent)
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Toleg: ", style: theme.textTheme.title2),
-                              Text("${formatCurrency(contract.priceAmount)} тмт/ ${formatCurrency(contract.paidAmount)} тмт", style: theme.textTheme.title2)
+                              Text("${formatCurrency(contractReturn.contract.priceAmount)} тмт/ ${formatCurrency(contractReturn.contract.paidAmount)} тмт",
+                                  style: theme.textTheme.title2)
                             ],
                           ),
                           Row(
-                            children: [Text(contractReturn.reason ?? "", style: theme.textTheme.title2.copyWith(color: theme.colorTheme.textPrimary))],
+                            children: [
+                              Text(contractReturn.contractReturn.reason ?? "", style: theme.textTheme.title2.copyWith(color: theme.colorTheme.textPrimary))
+                            ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Flexible(
                                 child: Text(
-                                  "${contractReturn.creator.firstName ?? ''} ${client.creator.lastName ?? ''}",
+                                  "${contractReturn.creator.firstName} ${contractReturn.creator.lastName}",
                                   style: theme.textTheme.title2,
                                 ),
                               ),
                               Text(
-                                formattingDate(contractReturn.date),
+                                formattingDate(contractReturn.contractReturn.date),
                                 style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
                               ),
                             ],

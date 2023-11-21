@@ -6,6 +6,7 @@ import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/widgets/drawer_menu.dart';
 import 'package:hasap_admin/core/widgets/filter_screen.dart';
+import 'package:hasap_admin/core/widgets/snackbar/error_snackbar.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/core/widgets/utils.dart';
 import 'package:hasap_admin/feature/service/data/service_models.dart';
@@ -46,7 +47,7 @@ class ServiceListPage extends StatelessWidget {
               drawer: const DrawerMenu(),
               floatingActionButton: FloatingActionButton(
                 onPressed: () async {
-                  Service? service = await Navigator.push(
+                  bool? service = await Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const ServiceCreatePage()),
                   );
@@ -71,7 +72,7 @@ class ServiceListPage extends StatelessWidget {
     final bloc = context.read<ServiceBloc>();
 
     sr.when(
-      showDioError: (error, notifier) => notifier.notify(error, context),
+      showDioError: (error, notifier) => ErrorSnackbar.show(context: context, text: error.safeCustom!.error),
       successNotify: (text) => SuccessSnackbar.show(context: context, text: text),
       delete: (service) => bloc.add(const ServiceEvent.filter()),
     );
@@ -119,14 +120,14 @@ class _ServicePage extends StatelessWidget {
                 child: ListView.builder(
               itemCount: state.data.services.length,
               itemBuilder: (context, index) {
-                Service service = state.data.services[index];
+                ServiceData service = state.data.services[index];
                 return GestureDetector(
                   onTapDown: (details) => tapPosition = details.globalPosition,
                   onLongPress: () => showContextMenu(
                     context,
                     tapPosition,
                     edit: () async {
-                      Service? updateService = await Navigator.push(
+                      bool? updateService = await Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => ServiceCreatePage(service: service)),
                       );
@@ -161,16 +162,23 @@ class _ServicePage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "${service.contract.client.firstName} ${service.contract.client.lastName}",
+                                    service.clientName,
                                     style: theme.textTheme.title1.copyWith(fontSize: 20),
                                   ),
-                                  if (service.amount > 0)
+                                  if (!service.service.isSynced) const Icon(Icons.sync, color: Colors.blueAccent)
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(service.getType.name, style: theme.textTheme.title1),
+                                  if (service.service.amount > 0)
                                     Card(
-                                      color: theme.colorTheme.error.withOpacity(0.7),
+                                      color: getBgColorAmount(service.getType, theme),
                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                       child: Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                          child: Text("${formatCurrency(service.amount)} тмт",
+                                          child: Text("${formatCurrency(service.service.amount)} тмт",
                                               style: TextStyle(color: theme.colorTheme.onSuccess, fontWeight: FontWeight.bold))),
                                     ),
                                 ],
@@ -178,21 +186,14 @@ class _ServicePage extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(service.type.name, style: theme.textTheme.title1),
-                                  Text(formattingDate(service.createdAt), style: theme.textTheme.title2)
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
                                   Flexible(
                                     child: Text(
-                                      "${service.creator.firstName ?? ''} ${service.creator.lastName ?? ''}",
+                                      service.creatorName,
                                       style: theme.textTheme.title2,
                                     ),
                                   ),
                                   Text(
-                                    formattingDate(service.createdAt),
+                                    formattingDate(service.service.createdAt),
                                     style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
                                   ),
                                 ],
@@ -208,5 +209,16 @@ class _ServicePage extends StatelessWidget {
             ))
           ],
         ));
+  }
+}
+
+Color getBgColorAmount(ServiceType type, AppTheme theme) {
+  switch (type.operationType) {
+    case 'OUTCOME':
+      return theme.colorTheme.error.withOpacity(0.7);
+    case 'INCOME':
+      return theme.colorTheme.success.withOpacity(0.7);
+    default:
+      return Colors.blueAccent.withOpacity(0.7);
   }
 }

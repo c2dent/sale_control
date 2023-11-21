@@ -1,7 +1,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hasap_admin/core/services/data_sync_service.dart';
+import 'package:hasap_admin/core/data_sync_services/data_sync_service.dart';
 
 class AppLifecycleObserver with WidgetsBindingObserver {
   final Connectivity _connectivity = Connectivity();
@@ -24,7 +24,7 @@ class AppLifecycleObserver with WidgetsBindingObserver {
     }
   }
 
-  void synchronizeData() async{
+  void synchronizeData() async {
     await _dataSyncService.incomingSync();
     await _dataSyncService.outgoingSync();
   }

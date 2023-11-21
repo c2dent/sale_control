@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hasap_admin/arch/dio_error_handler/models/dio_error_models.dart';
+import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
 import 'package:hasap_admin/core/models/employee.dart';
 import 'package:hasap_admin/core/models/region.dart';
@@ -11,13 +11,11 @@ part 'contract_create_bloc_models.freezed.dart';
 
 @freezed
 class ContractCreateEvent with _$ContractCreateEvent {
-  const factory ContractCreateEvent.init({Contract? contract}) = ContractCreateEventInit;
+  const factory ContractCreateEvent.init({ContractData? contract}) = ContractCreateEventInit;
 
   const factory ContractCreateEvent.create() = ContractCreateEventCreate;
 
   const factory ContractCreateEvent.update() = ContractCreateEventUpdate;
-
-  const factory ContractCreateEvent.selectClient({required Client? client}) = ContractCreateEventSelectClient;
 
   const factory ContractCreateEvent.selectRegion({
     required Region? region,
@@ -32,13 +30,13 @@ class ContractCreateEvent with _$ContractCreateEvent {
 @freezed
 class ContractCreateSR with _$ContractCreateSR {
   const factory ContractCreateSR.showDioError({
-    required CommonResponseError<DefaultApiError> error,
+    required DriftRequestError<DefaultDriftError> error,
     required NotifyErrorSnackbar notifyErrorSnackbar,
   }) = _ShowDioErrorSnackbar;
 
   const factory ContractCreateSR.successNotify({required String text}) = _SuccessNotify;
 
-  const factory ContractCreateSR.created({required Contract contract}) = _ClientCreated;
+  const factory ContractCreateSR.created() = _ClientCreated;
 }
 
 @freezed
@@ -52,9 +50,13 @@ class ContractCreateState with _$ContractCreateState {
   const factory ContractCreateState.data({
     required bool isLoading,
     required GlobalKey<FormState> formKey,
+    required TextEditingController firstName,
+    required TextEditingController lastName,
+    required TextEditingController phone,
+    required TextEditingController phone2,
+    required TextEditingController description,
     required Region? region,
     required List<Region?> regions,
-    required Client? client,
     required Employee? advertiser,
     required TextEditingController monthCount,
     required TextEditingController dueDateOnMonth,
@@ -62,6 +64,6 @@ class ContractCreateState with _$ContractCreateState {
     required TextEditingController filterCount,
     required TextEditingController paidAmount,
     required DateTime setupDate,
-    required Contract? contract,
+    required ContractData? contract,
   }) = ContractCreateStateData;
 }

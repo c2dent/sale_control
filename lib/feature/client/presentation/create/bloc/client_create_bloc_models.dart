@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hasap_admin/arch/dio_error_handler/models/dio_error_models.dart';
+import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
 import 'package:hasap_admin/core/models/region.dart';
 import 'package:hasap_admin/feature/client/data/client_models.dart';
@@ -24,13 +24,13 @@ class ClientCreateEvent with _$ClientCreateEvent {
 @freezed
 class ClientCreateSR with _$ClientCreateSR {
   const factory ClientCreateSR.showDioError({
-    required CommonResponseError<DefaultApiError> error,
+    required DriftRequestError<DefaultDriftError> error,
     required NotifyErrorSnackbar notifyErrorSnackbar,
   }) = _ShowDioErrorSnackbar;
 
   const factory ClientCreateSR.successNotify({required String text}) = _SuccessNotify;
 
-  const factory ClientCreateSR.created({required Client client}) = _ClientCreated;
+  const factory ClientCreateSR.created() = _ClientCreated;
 }
 
 @freezed

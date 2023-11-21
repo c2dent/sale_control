@@ -5,11 +5,11 @@ import 'package:get_it/get_it.dart';
 import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/widgets/drawer_menu.dart';
-import 'package:hasap_admin/core/widgets/filter_modal.dart';
 import 'package:hasap_admin/core/widgets/filter_screen.dart';
+import 'package:hasap_admin/core/widgets/line_progress.dart';
+import 'package:hasap_admin/core/widgets/snackbar/error_snackbar.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/core/widgets/utils.dart';
-import 'package:hasap_admin/feature/client/data/client_models.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/contract/presentation/create/ui/contract_create_page.dart';
 import 'package:hasap_admin/feature/contract/presentation/list/bloc/contract_bloc.dart';
@@ -48,7 +48,7 @@ class ContractListPage extends StatelessWidget {
               drawer: const DrawerMenu(),
               floatingActionButton: FloatingActionButton(
                 onPressed: () async {
-                  Contract? contract = await Navigator.push(
+                  bool? contract = await Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const ContractCreatePage()),
                   );
@@ -73,7 +73,7 @@ class ContractListPage extends StatelessWidget {
     final bloc = context.read<ContractBloc>();
 
     sr.when(
-      showDioError: (error, notifier) => notifier.notify(error, context),
+      showDioError: (error, notifier) => ErrorSnackbar.show(context: context, text: error.safeCustom!.error),
       successNotify: (text) => SuccessSnackbar.show(context: context, text: text),
       delete: (client) => bloc.add(const ContractEvent.filter()),
     );
@@ -121,27 +121,32 @@ class _ContractPage extends StatelessWidget {
             child: ListView.builder(
                 itemCount: state.data.contracts.length,
                 itemBuilder: (BuildContext context, int index) {
-                  Contract contract = state.data.contracts[index];
-                  Client client = contract.client;
+                  ContractData contract = state.data.contracts[index];
 
                   return GestureDetector(
-                    onLongPress: () => showContextMenu(context, tapPosition,
-                        edit: () async {
-                          Contract? updateContract = await Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => ContractCreatePage(contract: contract)),
-                          );
+                    onLongPress: () => showContextMenu(context, tapPosition, edit: () async {
+                      bool? updateContract = await Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ContractCreatePage(contract: contract)),
+                      );
 
-                          if (updateContract != null) {
-                            bloc.add(const ContractEvent.filter());
-                          }
-                        },
-                        delete: () => bloc.add(ContractEvent.delete(contract: contract))),
+                      if (updateContract != null) {
+                        bloc.add(const ContractEvent.filter());
+                      }
+                    }), // bloc.add(ContractEvent.delete(contract: ))
                     onTapDown: ((details) {
                       tapPosition = Offset(details.globalPosition.dx, details.globalPosition.dy);
                     }),
                     child: Card(
-                      child: Padding(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [contract.contract.closed ? Colors.green.shade100 : Colors.red.shade100, Colors.white], // Цвета градиента
+                            begin: Alignment.topCenter, // Начальная точка градиента
+                            end: Alignment.bottomCenter, // Конечная точка градиента
+                            stops: const [0.0, 0.2], // Остановки для цветов градиента (можно настроить по желанию)
+                          ),
+                        ),
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                         child: Column(
                           children: [
@@ -149,36 +154,39 @@ class _ContractPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "${client.firstName} ${client.lastName}",
+                                  contract.clientName,
                                   style: theme.textTheme.title1.copyWith(color: theme.colorTheme.textPrimary, fontSize: 20),
                                 ),
-                                if (contract.isConfirm)
-                                  Icon(Icons.check_circle, color: theme.colorTheme.success)
-                                else
-                                  Icon(Icons.cancel, color: theme.colorTheme.error)
+                                if (!contract.contract.isSynced) const Icon(Icons.sync, color: Colors.blueAccent)
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              children: [
+                                const Icon(Icons.phone, size: 17),
+                                const SizedBox(width: 10),
+                                Text( "+993 ${contract.client.phone}", style: theme.textTheme.title2),
+                                const SizedBox(width: 10),
+                                Text(contract.client.phone2 ?? ""),
                               ],
                             ),
                             const SizedBox(height: 5),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Ay ", style: theme.textTheme.title2),
-                                Text("${contract.monthCount}/${contract.paidMonths}", style: theme.textTheme.title2),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
                                 Text("Toleg: ", style: theme.textTheme.title2),
-                                Text("${formatCurrency(contract.priceAmount)} тмт/ ${formatCurrency(contract.paidAmount)} тмт", style: theme.textTheme.title2)
+                                Text("${formatCurrency(contract.contract.priceAmount)} тмт/ ${formatCurrency(contract.contract.paidAmount)} тмт",
+                                    style: theme.textTheme.title2)
                               ],
                             ),
+                            const SizedBox(height: 5),
+                            CustomProgressBar(progress: contract.contract.paidAmount / contract.contract.priceAmount),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("${contract.creator.firstName} ${contract.creator.lastName}", style: theme.textTheme.title2),
+                                Text(contract.creatorName, style: theme.textTheme.title2),
                                 Text(
-                                  formattingDate(contract.createdAt),
+                                  formattingDate(contract.contract.setupDate),
                                   style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
                                 ),
                               ],

@@ -11,6 +11,7 @@ class ProfileEvent with _$ProfileEvent {
   const factory ProfileEvent.init() = ProfileEventInit;
   const factory ProfileEvent.logout(BuildContext context) = ProfileEventLogout;
   const factory ProfileEvent.recalculateBalance() = ProfileEventRecalculateBalance;
+  const factory ProfileEvent.synchronize() = ProfileEventSynchronize;
 }
 
 @freezed
@@ -35,5 +36,7 @@ class ProfileState with _$ProfileState {
     required bool isLoading,
     required bool recalculateBalanceLoading,
     required User? user,
+    required String syncStatus,
+    required bool syncLoading,
   }) = ProfileStateData;
 }

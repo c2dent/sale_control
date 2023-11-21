@@ -18,9 +18,10 @@ class ServiceBloc extends SrBloc<ServiceEvent, ServiceState, ServiceSR> {
   final SettingsService settingsService;
 
   ServiceBloc(
-      this._notifyErrorSnackbar,
-      this.interactor,
-      ) : settingsService = GetIt.instance.get<SettingsService>(), super(const ServiceState.empty()) {
+    this._notifyErrorSnackbar,
+    this.interactor,
+  )   : settingsService = GetIt.instance.get<SettingsService>(),
+        super(const ServiceState.empty()) {
     on<ServiceEventInit>(_init);
     on<ServiceEventFilter>(_filter);
     on<ServiceEventResetFilter>(_resetFilter);
@@ -42,25 +43,23 @@ class ServiceBloc extends SrBloc<ServiceEvent, ServiceState, ServiceSR> {
       );
     }
 
-    final result = await interactor.list(filters: filters);
+    final result = await interactor.getAllDb();
 
     if (result.isLeft) {
       addSr(ServiceSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
     } else {
-      emit(
-        ServiceState.data(
-            isLoading: false,
-            filters: filters,
-            services: result.right,
-        )
-      );
+      emit(ServiceState.data(
+        isLoading: false,
+        filters: filters,
+        services: result.right,
+      ));
     }
   }
 
   Future<void> _filter(ServiceEventFilter event, Emitter<ServiceState> emit) async {
     emit(state.data.copyWith(isLoading: true));
-    final result = await interactor.list(filters: state.data.filters);
+    final result = await interactor.getAllDb();
     if (result.isLeft) {
       addSr(ServiceSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
@@ -70,7 +69,7 @@ class ServiceBloc extends SrBloc<ServiceEvent, ServiceState, ServiceSR> {
 
   Future<void> _resetFilter(ServiceEventResetFilter event, Emitter<ServiceState> emit) async {
     emit(state.data.copyWith(isLoading: true));
-    final result = await interactor.list(filters: []);
+    final result = await interactor.getAllDb();
     if (result.isLeft) {
       addSr(ServiceSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
@@ -80,12 +79,12 @@ class ServiceBloc extends SrBloc<ServiceEvent, ServiceState, ServiceSR> {
 
   Future<void> _delete(ServiceEventDelete event, Emitter<ServiceState> emit) async {
     emit(state.data.copyWith(isLoading: true));
-    final result = await interactor.delete(event.service.id);
+    final result = await interactor.deleteDb(event.service.service);
     if (result.isLeft) {
       addSr(ServiceSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
     } else {
-      addSr(const ServiceSR.successNotify(text: 'Komur hyzmaty pozuldyy'));
+      addSr(const ServiceSR.successNotify(text: 'Hyzmat pozuldyy'));
       addSr(ServiceSR.delete(service: event.service));
       emit(state.data.copyWith(isLoading: false));
     }

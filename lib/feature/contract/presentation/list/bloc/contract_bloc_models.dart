@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hasap_admin/arch/dio_error_handler/models/dio_error_models.dart';
+import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
 import 'package:hasap_admin/core/models/filter.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
@@ -17,7 +17,7 @@ class ContractEvent with _$ContractEvent {
 @freezed
 class ContractSR with _$ContractSR{
   const factory ContractSR.showDioError({
-    required CommonResponseError<DefaultApiError> error,
+    required DriftRequestError<DefaultDriftError> error,
     required NotifyErrorSnackbar notifyErrorSnackbar,
   }) = _ShowDioErrorSnackbar;
 
@@ -37,6 +37,6 @@ class ContractState with _$ContractState {
   const factory ContractState.data({
     required bool isLoading,
     required List<Filter> filters,
-    required List<Contract> contracts,
+    required List<ContractData> contracts,
   }) = ContractStateData;
 }

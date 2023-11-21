@@ -45,7 +45,7 @@ class ContractReturnBloc extends SrBloc<ContractReturnEvent, ContractReturnState
       );
     }
 
-    final result = await interactor.list(filters: filters);
+    final result = await interactor.getAll();
     if (result.isLeft) {
       addSr(ContractReturnSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
@@ -62,7 +62,7 @@ class ContractReturnBloc extends SrBloc<ContractReturnEvent, ContractReturnState
 
   FutureOr<void> _filter(ContractReturnEventFilter event, Emitter<ContractReturnState> emit) async {
     emit(state.data.copyWith(isLoading: true));
-    final result = await interactor.list(filters: state.data.filters);
+    final result = await interactor.getAll();
     if (result.isLeft) {
       addSr(ContractReturnSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
@@ -77,7 +77,7 @@ class ContractReturnBloc extends SrBloc<ContractReturnEvent, ContractReturnState
       item.clear();
     }
 
-    final result = await interactor.list(filters: state.data.filters);
+    final result = await interactor.getAll();
     if (result.isLeft) {
       addSr(ContractReturnSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
@@ -88,7 +88,7 @@ class ContractReturnBloc extends SrBloc<ContractReturnEvent, ContractReturnState
 
   FutureOr<void> _delete(ContractReturnEventDelete event, Emitter<ContractReturnState> emit) async {
     emit(state.data.copyWith(isLoading: true));
-    final result = await interactor.delete(event.contractReturn.id);
+    final result = await interactor.deleteDb(event.contractReturn.contractReturn.id);
     if (result.isLeft) {
       emit(state.data.copyWith(isLoading: false));
       addSr(ContractReturnSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));

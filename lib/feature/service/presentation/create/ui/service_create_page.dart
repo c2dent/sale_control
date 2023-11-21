@@ -7,6 +7,7 @@ import 'package:hasap_admin/core/widgets/c_dropdown_search.dart';
 import 'package:hasap_admin/core/widgets/form/date.dart';
 import 'package:hasap_admin/core/widgets/form/select_contract_dropdown.dart';
 import 'package:hasap_admin/core/widgets/form/text_field.dart';
+import 'package:hasap_admin/core/widgets/snackbar/error_snackbar.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/service/data/service_models.dart';
@@ -15,7 +16,7 @@ import 'package:hasap_admin/feature/service/presentation/create/bloc/service_cre
 
 @RoutePage()
 class ServiceCreatePage extends StatelessWidget {
-  final Service? service;
+  final ServiceData? service;
 
   const ServiceCreatePage({super.key, this.service});
 
@@ -38,9 +39,9 @@ class ServiceCreatePage extends StatelessWidget {
 
   void _onSingleResult(BuildContext context, ServiceCreateSR sr) {
     sr.when(
-      showDioError: (error, notifier) => notifier.notify(error, context),
+      showDioError: (error, notifier) => ErrorSnackbar.show(context: context, text: error.safeCustom!.error),
       successNotify: (text) => SuccessSnackbar.show(context: context, text: text),
-      created: (contract) => Navigator.pop(context, contract),
+      created: () => Navigator.pop(context, true),
     );
   }
 }
@@ -76,7 +77,7 @@ class _CoalCreatePage extends StatelessWidget {
                   const SizedBox(height: 10),
                   SelectContractDropdown(
                     contract: state.contract,
-                    onChange: (Contract? contract) => bloc.add(ServiceCreateEvent.selectContractor(contract: contract)),
+                    onChange: (ContractData? contract) => bloc.add(ServiceCreateEvent.selectContractor(contract: contract)),
                     getContracts: () async => bloc.interactor.getContracts(),
                   ),
                   const SizedBox(height: 10),

@@ -53,7 +53,7 @@ class PaymentBloc extends SrBloc<PaymentEvent, PaymentState, PaymentSR> {
       );
     }
 
-    final result = await paymentInteractor.list(filters: filters);
+    final result = await paymentInteractor.getAllDb();
 
     if (result.isLeft) {
       addSr(PaymentSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
@@ -69,7 +69,7 @@ class PaymentBloc extends SrBloc<PaymentEvent, PaymentState, PaymentSR> {
 
   FutureOr<void> _filter(PaymentEventFilter event, Emitter<PaymentState> emit) async {
     emit(state.data.copyWith(isLoading: true));
-    final result = await paymentInteractor.list(filters: state.data.filters);
+    final result = await paymentInteractor.getAllDb();
     if (result.isLeft) {
       addSr(PaymentSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
@@ -84,7 +84,7 @@ class PaymentBloc extends SrBloc<PaymentEvent, PaymentState, PaymentSR> {
       item.clear();
     }
 
-    final result = await paymentInteractor.list(filters: state.data.filters);
+    final result = await paymentInteractor.getAllDb();
     if (result.isLeft) {
       addSr(PaymentSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
@@ -95,13 +95,13 @@ class PaymentBloc extends SrBloc<PaymentEvent, PaymentState, PaymentSR> {
 
   FutureOr<void> _delete(PaymentEventDelete event, Emitter<PaymentState> emit) async {
     emit(state.data.copyWith(isLoading: true));
-    final result = await paymentInteractor.delete(event.payment.id);
+    final result = await paymentInteractor.deleteDb(event.payment);
     if (result.isLeft) {
       emit(state.data.copyWith(isLoading: false));
       addSr(PaymentSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
     } else {
-      addSr(const PaymentSR.successNotify(text: "Mushderi pozuldy"));
+      addSr(const PaymentSR.successNotify(text: "Toleg pozuldy"));
       addSr(PaymentSR.delete(payment: event.payment));
       emit(state.data.copyWith(isLoading: false));
     }

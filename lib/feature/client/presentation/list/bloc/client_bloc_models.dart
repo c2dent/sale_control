@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hasap_admin/arch/dio_error_handler/models/dio_error_models.dart';
+import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
 import 'package:hasap_admin/core/models/filter.dart';
 import 'package:hasap_admin/core/models/user.dart';
@@ -21,11 +22,11 @@ class ClientEvent with _$ClientEvent {
 @freezed
 class ClientSR with _$ClientSR {
   const factory ClientSR.showDioError({
-    required CommonResponseError<DefaultApiError> error,
+    required DriftRequestError<DefaultDriftError> error,
     required NotifyErrorSnackbar notifyErrorSnackbar,
   }) = _ShowDioErrorSnackbar;
 
-  const factory ClientSR.deleted({required Client client}) = _ClientDeleted;
+  const factory ClientSR.deleted() = _ClientDeleted;
 
   const factory ClientSR.successNotify({required String text}) = _SuccessNotify;
 }

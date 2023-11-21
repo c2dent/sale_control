@@ -7,6 +7,7 @@ import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/models/region.dart';
 import 'package:hasap_admin/core/widgets/form/select_region_dropdown.dart';
 import 'package:hasap_admin/core/widgets/form/text_field.dart';
+import 'package:hasap_admin/core/widgets/snackbar/error_snackbar.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/feature/client/data/client_models.dart';
 import 'package:hasap_admin/feature/client/presentation/create/bloc/client_create_bloc.dart';
@@ -38,9 +39,9 @@ class ClientCreatePage extends StatelessWidget {
 
   void _onSingleResult(BuildContext context, ClientCreateSR sr) {
     sr.when(
-      showDioError: (error, notifier) => notifier.notify(error, context),
+      showDioError: (error, notifier) => ErrorSnackbar.show(context: context, text: error.safeCustom!.error),
       successNotify: (text) => SuccessSnackbar.show(context: context, text: text),
-      created: (client) => Navigator.pop(context, client),
+      created: () => Navigator.pop(context, true),
     );
   }
 }

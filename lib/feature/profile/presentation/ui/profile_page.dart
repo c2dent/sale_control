@@ -131,6 +131,21 @@ class _ProfilePage extends StatelessWidget {
                   child: const Text("Balansy hasapla"))
             ],
           ),
+
+          const SizedBox(height: 20),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ElevatedButton(
+                onPressed: () => state.data.syncLoading ? null : bloc.add(const ProfileEvent.synchronize()),
+                child: const Text("Synhronizle"),
+              ),
+              if (state.data.syncLoading) const CircularProgressIndicator()
+              else Text(state.data.syncStatus, style: theme.textTheme.title2),
+            ],
+          ),
+
           const SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hasap_admin/core/models/employee.dart';
 import 'package:hasap_admin/core/models/office.dart';
 import 'package:hasap_admin/core/models/user.dart';
 
@@ -15,7 +16,7 @@ class Operation with _$Operation {
     required DateTime date,
     required int amount,
 
-    required User creator,
+    required Employee creator,
 
     @JsonKey(name: "created_at") required DateTime createdAt,
     @JsonKey(name: "modified_at") required DateTime modifiedAt,

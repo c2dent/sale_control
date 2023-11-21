@@ -29,7 +29,7 @@ void main() async {
     ),
   );
 
-  await Future.delayed(const Duration(seconds: 5));
-  final observer = AppLifecycleObserver();
-  WidgetsBinding.instance.addObserver(observer);
+  // await Future.delayed(const Duration(seconds: 5));
+  // final observer = AppLifecycleObserver();
+  // WidgetsBinding.instance.addObserver(observer);
 }

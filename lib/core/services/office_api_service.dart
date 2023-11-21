@@ -4,10 +4,11 @@ import 'package:hasap_admin/arch/dio_error_handler/models/dio_error_models.dart'
 import 'package:hasap_admin/arch/functional_models/either.dart';
 import 'package:hasap_admin/consts/injectable_names.dart';
 import 'package:hasap_admin/core/models/office.dart';
+import 'package:hasap_admin/core/models/sync/office_sync.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class OfficeApiService {
-  Future<Either<CommonResponseError<DefaultApiError>, List<Office>>> getList(Map<String, String>? params);
+  Future<Either<CommonResponseError<DefaultApiError>, List<OfficeSync>>> getList(Map<String, String>? params);
   Future<Either<CommonResponseError<DefaultApiError>, Office>> recalculateBalance(Office office);
 }
 
@@ -19,15 +20,15 @@ class OfficeApiServiceImpl extends OfficeApiService {
   OfficeApiServiceImpl(@Named(InjectableNames.hasapHttpClient) this._client, this._dioErrorHandler);
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>, List<Office>>> getList(Map<String, String>? params) async {
-    List<Office> offices = [];
+  Future<Either<CommonResponseError<DefaultApiError>, List<OfficeSync>>> getList(Map<String, String>? params) async {
+    List<OfficeSync> offices = [];
 
-    final result = await _dioErrorHandler.processRequest(() => _client.get('/offices/', queryParameters: params));
+    final result = await _dioErrorHandler.processRequest(() => _client.get('/sync/offices/', queryParameters: params));
 
     if (result.isLeft) return Either.left(result.left);
 
     for (var item in result.right.data['results']) {
-      offices.add(Office.fromJson(item));
+      offices.add(OfficeSync.fromJson(item));
     }
 
     return Either.right(offices);

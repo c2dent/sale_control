@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hasap_admin/core/models/user.dart';
+import 'package:hasap_admin/core/models/employee.dart';
+import 'package:hasap_admin/core/storage/datebase/app_database.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 
 part 'payment_models.freezed.dart';
@@ -8,13 +9,13 @@ part 'payment_models.g.dart';
 @freezed
 class Payment with _$Payment {
   const factory Payment({
-    required int id,
+    required String id,
     required int amount,
     @JsonKey(name: "paid_amount") required int paidAmount,
     required DateTime date,
-
+    required String operationId,
     required Contract contract,
-    required User creator,
+    required Employee creator,
     required String? comment,
 
     @JsonKey(name: "created_at") required DateTime createdAt,
@@ -22,4 +23,20 @@ class Payment with _$Payment {
   }) = _Payment;
 
   factory Payment.fromJson(Map<String, dynamic> json) => _$PaymentFromJson(json);
+}
+
+class PaymentData {
+  final PaymentTableData payment;
+  final EmployeeTableData creator;
+  final ClientTableData client;
+
+  const PaymentData({
+    required this.payment,
+    required this.creator,
+    required this.client,
+  });
+
+  String get clientName => "${client.firstName} ${client.lastName}";
+
+  String get creatorName => "${creator.firstName} ${creator.lastName}";
 }

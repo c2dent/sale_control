@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hasap_admin/arch/dio_error_handler/models/dio_error_models.dart';
+import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
 import 'package:hasap_admin/core/models/filter.dart';
 import 'package:hasap_admin/feature/service/data/service_models.dart';
@@ -11,19 +12,19 @@ class ServiceEvent with _$ServiceEvent {
   const factory ServiceEvent.init() = ServiceEventInit;
   const factory ServiceEvent.filter() = ServiceEventFilter;
   const factory ServiceEvent.resetFilter() = ServiceEventResetFilter;
-  const factory ServiceEvent.delete({required Service service}) = ServiceEventDelete;
+  const factory ServiceEvent.delete({required ServiceData service}) = ServiceEventDelete;
 }
 
 @freezed
 class ServiceSR with _$ServiceSR {
   const factory ServiceSR.showDioError({
-    required CommonResponseError<DefaultApiError> error,
+    required DriftRequestError<DefaultDriftError> error,
     required NotifyErrorSnackbar notifyErrorSnackbar,
   }) = _ShowDioErrorSnackbar;
 
   const factory ServiceSR.successNotify({required String text}) = _SuccessNotify;
 
-  const factory ServiceSR.delete({required Service service}) = _ServiceDeleted;
+  const factory ServiceSR.delete({required ServiceData service}) = _ServiceDeleted;
 }
 
 @freezed
@@ -37,6 +38,6 @@ class ServiceState with _$ServiceState {
   const factory ServiceState.data({
     required bool isLoading,
     required List<Filter> filters,
-    required List<Service> services,
+    required List<ServiceData> services,
   }) = ServiceStateData;
 }

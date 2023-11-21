@@ -41,6 +41,7 @@ String formattingDate(DateTime d) {
 }
 
 final DateFormat dateFormatter = DateFormat('dd-MM-yyyy');
+final DateFormat dateTimeFormatter = DateFormat('yyyy-MM-ddTHH:mm:ss');
 final DateFormat dateFormatterYyyyMmDd = DateFormat('yyyy-MM-dd');
 
 void showEditDeletePopup(BuildContext context, Offset position, {required void Function() edit, required void Function() delete}) async {
@@ -71,7 +72,7 @@ void showEditDeletePopup(BuildContext context, Offset position, {required void F
   }
 }
 
-void showContextMenu(BuildContext context, Offset position, {required void Function() edit, required void Function() delete}) async {
+void showContextMenu(BuildContext context, Offset position, {required void Function() edit, void Function()? delete}) async {
   final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
 
   final result = await showMenu(
@@ -83,10 +84,11 @@ void showContextMenu(BuildContext context, Offset position, {required void Funct
           value: 'edit',
           child: Text('Uytgetmek'),
         ),
-        const PopupMenuItem(
-          value: 'delete',
-          child: Text('Pozmak'),
-        ),
+        if (delete != null)
+          const PopupMenuItem(
+            value: 'delete',
+            child: Text('Pozmak'),
+          ),
       ]);
 
   switch (result) {
@@ -94,7 +96,7 @@ void showContextMenu(BuildContext context, Offset position, {required void Funct
       edit();
       break;
     case 'delete':
-      delete();
+      if (delete != null) delete();
       break;
   }
 }
@@ -108,4 +110,20 @@ String? textFieldRequired(value) {
     return "Hokman doldurmaly";
   }
   return null;
+}
+
+DateTime addMonths(DateTime date, int months) {
+  var year = date.year + ((date.month + months) ~/ 12);
+  var month = (date.month + months) % 12;
+  var day = date.day;
+
+  if (day > 28) {
+    day = 28;
+  }
+
+  var newDate = DateTime(year, month + 1, day, date.hour, date.minute, date.second, date.millisecond, date.microsecond);
+  while (newDate.month != month + 1) {
+    newDate = newDate.subtract(const Duration(days: 1));
+  }
+  return newDate;
 }

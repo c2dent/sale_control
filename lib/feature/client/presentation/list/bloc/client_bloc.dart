@@ -74,7 +74,7 @@ class ClientBloc extends SrBloc<ClientEvent, ClientState, ClientSR> {
       );
     }
 
-    final result = await interactor.getClients(filters: filters);
+    final result = await interactor.getClientsDb(filters: filters);
 
     if (result.isLeft) {
       addSr(ClientSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
@@ -95,7 +95,7 @@ class ClientBloc extends SrBloc<ClientEvent, ClientState, ClientSR> {
       item.clear();
     }
 
-    final result = await interactor.getClients(filters: state.data.filters);
+    final result = await interactor.getClientsDb(filters: state.data.filters);
 
     if (result.isLeft) {
       addSr(ClientSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
@@ -108,7 +108,7 @@ class ClientBloc extends SrBloc<ClientEvent, ClientState, ClientSR> {
   FutureOr<void> _filter(ClientEventFilter event, Emitter<ClientState> emit) async {
     emit(state.data.copyWith(isLoading: true));
 
-    final result = await interactor.getClients(filters: state.data.filters);
+    final result = await interactor.getClientsDb(filters: state.data.filters);
 
     if (result.isLeft) {
       addSr(ClientSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
@@ -121,14 +121,14 @@ class ClientBloc extends SrBloc<ClientEvent, ClientState, ClientSR> {
   FutureOr<void> _delete(ClientEVentDelete event, Emitter<ClientState> emit) async {
     emit(state.data.copyWith(isLoading: true));
 
-    final result = await interactor.delete(event.client.id);
+    final result = await interactor.deleteClientDb(event.client.id);
     if (result.isLeft) {
       emit(state.data.copyWith(isLoading: false));
       addSr(ClientSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       return;
     } else {
       addSr(const ClientSR.successNotify(text: "Mushderi pozuldy"));
-      addSr(ClientSR.deleted(client: event.client));
+      addSr(const ClientSR.deleted());
       emit(state.data.copyWith(isLoading: false));
     }
   }

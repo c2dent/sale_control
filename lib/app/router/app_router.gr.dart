@@ -217,7 +217,7 @@ class ClientListRoute extends _i13.PageRouteInfo<void> {
 class ContractCreateRoute extends _i13.PageRouteInfo<ContractCreateRouteArgs> {
   ContractCreateRoute({
     _i14.Key? key,
-    _i16.Contract? contract,
+    _i16.ContractData? contract,
     List<_i13.PageRouteInfo>? children,
   }) : super(
           ContractCreateRoute.name,
@@ -242,7 +242,7 @@ class ContractCreateRouteArgs {
 
   final _i14.Key? key;
 
-  final _i16.Contract? contract;
+  final _i16.ContractData? contract;
 
   @override
   String toString() {
@@ -270,7 +270,7 @@ class ContractReturnCreateRoute
     extends _i13.PageRouteInfo<ContractReturnCreateRouteArgs> {
   ContractReturnCreateRoute({
     _i14.Key? key,
-    _i17.ContractReturn? contractReturn,
+    _i17.ContractReturnData? contractReturn,
     List<_i13.PageRouteInfo>? children,
   }) : super(
           ContractReturnCreateRoute.name,
@@ -295,7 +295,7 @@ class ContractReturnCreateRouteArgs {
 
   final _i14.Key? key;
 
-  final _i17.ContractReturn? contractReturn;
+  final _i17.ContractReturnData? contractReturn;
 
   @override
   String toString() {
@@ -322,7 +322,7 @@ class ContractReturnListRoute extends _i13.PageRouteInfo<void> {
 class PaymentCreateRoute extends _i13.PageRouteInfo<PaymentCreateRouteArgs> {
   PaymentCreateRoute({
     _i14.Key? key,
-    _i18.Payment? payment,
+    _i18.PaymentData? payment,
     List<_i13.PageRouteInfo>? children,
   }) : super(
           PaymentCreateRoute.name,
@@ -347,7 +347,7 @@ class PaymentCreateRouteArgs {
 
   final _i14.Key? key;
 
-  final _i18.Payment? payment;
+  final _i18.PaymentData? payment;
 
   @override
   String toString() {
@@ -388,7 +388,7 @@ class ProfileRoute extends _i13.PageRouteInfo<void> {
 class ServiceCreateRoute extends _i13.PageRouteInfo<ServiceCreateRouteArgs> {
   ServiceCreateRoute({
     _i14.Key? key,
-    _i19.Service? service,
+    _i19.ServiceData? service,
     List<_i13.PageRouteInfo>? children,
   }) : super(
           ServiceCreateRoute.name,
@@ -413,7 +413,7 @@ class ServiceCreateRouteArgs {
 
   final _i14.Key? key;
 
-  final _i19.Service? service;
+  final _i19.ServiceData? service;
 
   @override
   String toString() {

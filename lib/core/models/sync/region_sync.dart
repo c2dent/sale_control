@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'region_sync.freezed.dart';
+
 part 'region_sync.g.dart';
 
 @freezed
@@ -13,7 +14,9 @@ class RegionSync with _$RegionSync {
     required int lft,
     required int rght,
     @JsonKey(name: "created_at") required DateTime createdAt,
-    @JsonKey(name: "modified_at") required DateTime updatedAt,
+    @JsonKey(name: "modified_at") required DateTime modifiedAt,
+    @JsonKey(name: "is_deleted") required bool isDeleted,
+    @Default(true) isSynced,
   }) = _RegionSync;
 
   factory RegionSync.fromJson(Map<String, dynamic> json) => _$RegionSyncFromJson(json);

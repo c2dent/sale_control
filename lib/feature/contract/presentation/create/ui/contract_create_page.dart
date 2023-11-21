@@ -5,45 +5,44 @@ import 'package:get_it/get_it.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/models/employee.dart';
 import 'package:hasap_admin/core/models/region.dart';
-import 'package:hasap_admin/core/widgets/form/select_client_dropdown.dart';
+import 'package:hasap_admin/core/widgets/form/number_field.dart';
 import 'package:hasap_admin/core/widgets/form/select_employee_dropdown.dart';
 import 'package:hasap_admin/core/widgets/form/select_region_dropdown.dart';
 import 'package:hasap_admin/core/widgets/form/text_field.dart';
+import 'package:hasap_admin/core/widgets/snackbar/error_snackbar.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
-import 'package:hasap_admin/feature/client/data/client_models.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/contract/presentation/create/bloc/contract_create_bloc.dart';
 import 'package:hasap_admin/feature/contract/presentation/create/bloc/contract_create_bloc_models.dart';
 
 @RoutePage()
 class ContractCreatePage extends StatelessWidget {
-  final Contract? contract;
+  final ContractData? contract;
 
   const ContractCreatePage({super.key, this.contract});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ContractCreateBloc>(
-      create: (context) => GetIt.I.get()..add(ContractCreateEvent.init(contract: contract)),
-      child: SrBlocBuilder<ContractCreateBloc, ContractCreateState, ContractCreateSR>(
-        onSR: _onSingleResult,
-        builder: (_, state) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text("Shertnama goshmak"),
-            ),
-            body: state.map(empty: (_) => const Center(child: CircularProgressIndicator()), data: (state) => _ContractCreatePage(state: state)),
-          );
-        },
-      )
-    );
+        create: (context) => GetIt.I.get()..add(ContractCreateEvent.init(contract: contract)),
+        child: SrBlocBuilder<ContractCreateBloc, ContractCreateState, ContractCreateSR>(
+          onSR: _onSingleResult,
+          builder: (_, state) {
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text("Shertnama goshmak"),
+              ),
+              body: state.map(empty: (_) => const Center(child: CircularProgressIndicator()), data: (state) => _ContractCreatePage(state: state)),
+            );
+          },
+        ));
   }
 
   void _onSingleResult(BuildContext context, ContractCreateSR sr) {
     sr.when(
-      showDioError: (error, notifier) => notifier.notify(error, context),
+      showDioError: (error, notifier) => ErrorSnackbar.show(context: context, text: error.safeCustom!.error),
       successNotify: (text) => SuccessSnackbar.show(context: context, text: text),
-      created: (contract) => Navigator.pop(context, contract),
+      created: () => Navigator.pop(context, true),
     );
   }
 }
@@ -71,51 +70,73 @@ class _ContractCreatePage extends StatelessWidget {
               padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
               child: Column(
                 children: [
+                  AppTextField(
+                    controller: state.firstName,
+                    label: "Ady",
+                    required: true,
+                  ),
+                  const SizedBox(height: 10),
+                  AppTextField(
+                    controller: state.lastName,
+                    label: "Familiyasy",
+                    required: true,
+                  ),
+                  const SizedBox(height: 10),
                   SelectRegionDropdown(
                     onChange: (Region? region, List<Region?> regions) {
                       bloc.add(ContractCreateEvent.selectRegion(region: region, regions: regions));
                     },
                     regions: state.data.regions,
-                    getRegions: (Region? region) => bloc.interactor.getRegions(region),
+                    getRegions: bloc.interactor.getRegions,
                   ),
                   const SizedBox(height: 10),
-
-                  SelectClientDropdown(
-                    client: state.client,
-                    onChange: (Client? client) => bloc.add(ContractCreateEvent.selectClient(client: client)),
-                    getClients: () async => bloc.interactor.getClients(),
+                  AppTextField(
+                    controller: state.description,
+                    label: "Beldik goshmacha",
+                    required: false,
+                    maxLines: 4,
                   ),
                   const SizedBox(height: 10),
-
+                  AppTextField(
+                    controller: state.phone,
+                    label: "Nomer belgisi",
+                    required: true,
+                  ),
+                  const SizedBox(height: 10),
+                  AppTextField(
+                    controller: state.phone2,
+                    label: "Nomer belgisi 2",
+                    required: false,
+                  ),
+                  const SizedBox(height: 10),
                   SelectEmployeeDropdown(
                     onChange: (Employee? employee) => bloc.add(ContractCreateEvent.selectAdvertiser(employee: employee)),
                     employee: state.advertiser,
                     getEmployees: () async => bloc.interactor.getEmployees({}),
                   ),
                   const SizedBox(height: 10),
-                  AppTextField(
+                  AppNumberField(
                     controller: state.priceAmount,
                     label: "Bahasy",
                     required: true,
                   ),
                   const SizedBox(height: 10),
-                  AppTextField(
+                  AppNumberField(
                     controller: state.dueDateOnMonth,
                     label: "Her ayky toleg",
                     required: true,
                   ),
                   const SizedBox(height: 10),
-                  AppTextField(
+                  AppNumberField(
                     controller: state.monthCount,
                     label: "Garashyk ayyn sany",
                     required: true,
                   ),
                   const SizedBox(height: 20),
-
                   if (state.contract == null)
                     Column(
                       children: [
-                        AppTextField(
+                        AppNumberField(
                           controller: state.paidAmount,
                           label: "Bashlangych toleg",
                           required: true,
@@ -123,14 +144,7 @@ class _ContractCreatePage extends StatelessWidget {
                         const SizedBox(height: 20),
                       ],
                     ),
-
-                  AppTextField(
-                    controller: state.filterCount,
-                    label: "Filterin sany",
-                    required: true,
-                  ),
                   const SizedBox(height: 20),
-
                   ElevatedButton(
                     onPressed: () {
                       if (state.formKey.currentState!.validate()) {

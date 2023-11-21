@@ -6,8 +6,8 @@ import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/models/region.dart';
 import 'package:hasap_admin/core/widgets/drawer_menu.dart';
-import 'package:hasap_admin/core/widgets/filter_modal.dart';
 import 'package:hasap_admin/core/widgets/filter_screen.dart';
+import 'package:hasap_admin/core/widgets/snackbar/error_snackbar.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/core/widgets/utils.dart';
 import 'package:hasap_admin/feature/client/data/client_models.dart';
@@ -37,7 +37,7 @@ class ClientListPage extends StatelessWidget {
                       onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              fullscreenDialog: true,
+                                fullscreenDialog: true,
                                 builder: (context) => FilterScreen(
                                       filters: bloc.state.data.filters,
                                       reset: () => bloc.add(const ClientEvent.resetFilter()),
@@ -49,7 +49,7 @@ class ClientListPage extends StatelessWidget {
               drawer: const DrawerMenu(),
               floatingActionButton: FloatingActionButton(
                 onPressed: () async {
-                  Client? client = await Navigator.push(
+                  bool? client = await Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const ClientCreatePage()),
                   );
@@ -74,9 +74,9 @@ class ClientListPage extends StatelessWidget {
     final bloc = context.read<ClientBloc>();
 
     sr.when(
-      showDioError: (error, notifier) => notifier.notify(error, context),
+      showDioError: (error, notifier) => ErrorSnackbar.show(context: context, text: error.safeCustom!.error),
       successNotify: (text) => SuccessSnackbar.show(context: context, text: text),
-      deleted: (client) => bloc.add(const ClientEvent.filter()),
+      deleted: () => bloc.add(const ClientEvent.filter()),
     );
   }
 }
@@ -131,7 +131,7 @@ class _ClientPage extends StatelessWidget {
                   return GestureDetector(
                     onLongPress: () => showContextMenu(context, tapPosition,
                         edit: () async {
-                          Client? updatedClient = await Navigator.push(
+                          bool? updatedClient = await Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => ClientCreatePage(client: client)),
                           );
@@ -153,7 +153,7 @@ class _ClientPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "${client.firstName} ${client.lastName} ${client.surName ?? ''}",
+                                  "${client.firstName} ${client.lastName}",
                                   style: theme.textTheme.title1.copyWith(color: theme.colorTheme.textPrimary, fontSize: 20),
                                 ),
                                 if (client.haveDebt)
@@ -164,18 +164,18 @@ class _ClientPage extends StatelessWidget {
                             ),
                             Row(children: [Text(region.fullName, style: theme.textTheme.title2)]),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text("${client.phone} ${client.phone2 ?? ''}"),
+                                if (!client.isSynced) const Icon(Icons.sync, color: Colors.blueAccent)
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(
-                                  child: Text(
-                                    "${client.creator.firstName ?? ''} ${client.creator.lastName ?? ''}",
-                                    style: theme.textTheme.title2,
-                                  ),
+                                Text(
+                                  "${client.creator.firstName} ${client.creator.lastName}",
+                                  style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
                                 ),
                                 Text(
                                   formattingDate(client.createdAt),

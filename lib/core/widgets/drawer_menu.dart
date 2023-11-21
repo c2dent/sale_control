@@ -27,7 +27,6 @@ class DrawerMenu extends StatelessWidget {
           ),
 
           ListTile(leading: const Icon(Icons.contact_mail), title: const Text("Profile"), onTap: () => context.router.replaceNamed('/profile')),
-          ListTile(leading: const Icon(Icons.shopping_cart), title: const Text("Müşderiler"), onTap: () => context.router.replaceNamed('/client_list')),
           ListTile(leading: const Icon(Icons.assignment), title: const Text("Şertnamalar"), onTap: () => context.router.replaceNamed('/contract_list')),
           ListTile(leading: const Icon(Icons.attach_money), title: const Text("Tölegler"), onTap: () => context.router.replaceNamed('/payment_list')),
           ListTile(leading: const Icon(Icons.room_service), title: const Text("Hyzmatlar"), onTap: () => context.router.replaceNamed('/service_list')),

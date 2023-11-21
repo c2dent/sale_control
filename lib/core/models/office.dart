@@ -6,7 +6,7 @@ part 'office.g.dart';
 @freezed
 class Office with _$Office {
   const factory Office({
-    required int id,
+    required String id,
     required String title,
     @JsonKey(name: "filter_count") required int filterCount,
     required int balance,

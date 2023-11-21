@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hasap_admin/arch/dio_error_handler/models/dio_error_models.dart';
+import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/payment/data/payment_models.dart';
@@ -9,13 +9,13 @@ part 'payment_create_bloc_models.freezed.dart';
 
 @freezed
 class PaymentCreateEvent with _$PaymentCreateEvent {
-  const factory PaymentCreateEvent.init({Payment? payment}) = PaymentCreateEventInit;
+  const factory PaymentCreateEvent.init({PaymentData? payment}) = PaymentCreateEventInit;
 
   const factory PaymentCreateEvent.create() = PaymentCreateEventCreate;
 
   const factory PaymentCreateEvent.update() = PaymentCreateEventUpdate;
 
-  const factory PaymentCreateEvent.selectContract({required Contract? contract}) = PaymentCreateEventSelectContract;
+  const factory PaymentCreateEvent.selectContract({required ContractData? contract}) = PaymentCreateEventSelectContract;
 
   const factory PaymentCreateEvent.selectDate({required DateTime date}) = PaymentCreateEventSelectDate;
 }
@@ -23,13 +23,13 @@ class PaymentCreateEvent with _$PaymentCreateEvent {
 @freezed
 class PaymentCreateSR with _$PaymentCreateSR {
   const factory PaymentCreateSR.showDioError({
-    required CommonResponseError<DefaultApiError> error,
+    required DriftRequestError<DefaultDriftError> error,
     required NotifyErrorSnackbar notifyErrorSnackbar,
   }) = _ShowDioErrorSnackbar;
 
   const factory PaymentCreateSR.successNotify({required String text}) = _SuccessNotify;
 
-  const factory PaymentCreateSR.created({required Payment payment}) = _ClientCreated;
+  const factory PaymentCreateSR.created() = _ClientCreated;
 }
 
 @freezed
@@ -46,7 +46,7 @@ class PaymentCreateState with _$PaymentCreateState {
     required TextEditingController amount,
     required TextEditingController comment,
     required DateTime date,
-    required Contract? contract,
-    required Payment? payment,
+    required ContractData? contract,
+    required PaymentData? payment,
   }) = PaymentCreateStateData;
 }

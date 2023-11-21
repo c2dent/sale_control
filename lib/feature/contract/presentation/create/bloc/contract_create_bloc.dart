@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
-import 'package:hasap_admin/core/widgets/utils.dart';
+import 'package:hasap_admin/core/mappers/client_mapper.dart';
+import 'package:hasap_admin/core/mappers/contract_mapper.dart';
+import 'package:hasap_admin/core/models/employee.dart';
+import 'package:hasap_admin/core/models/region.dart';
+import 'package:hasap_admin/core/storage/datebase/app_database.dart';
 import 'package:hasap_admin/feature/contract/domain/contract_interactor.dart';
 import 'package:hasap_admin/feature/contract/presentation/create/bloc/contract_create_bloc_models.dart';
 import 'package:injectable/injectable.dart';
@@ -13,92 +17,96 @@ import 'package:injectable/injectable.dart';
 class ContractCreateBloc extends SrBloc<ContractCreateEvent, ContractCreateState, ContractCreateSR> {
   final ContractInteractor interactor;
   final NotifyErrorSnackbar _notifyErrorSnackbar;
+  final ContractMapper _mapper;
+  final ClientMapper _clientMapper;
 
-  ContractCreateBloc(this.interactor, this._notifyErrorSnackbar) : super(const ContractCreateState.empty()) {
+  ContractCreateBloc(this.interactor, this._notifyErrorSnackbar, this._mapper, this._clientMapper) : super(const ContractCreateState.empty()) {
     on<ContractCreateEventInit>(_init);
     on<ContractCreateEventCreate>(_create);
     on<ContractCreateEventUpdate>(_update);
-    on<ContractCreateEventSelectRegion>(_selectedRegion);
     on<ContractCreateEventSetupDate>(_selectedDate);
     on<ContractCreateEventSelectAdvertiser>(_selectedAdvertiser);
-    on<ContractCreateEventSelectClient>(_selectedClient);
+    on<ContractCreateEventSelectRegion>(_selectedRegion);
   }
 
   Future<void> _init(ContractCreateEventInit event, Emitter<ContractCreateState> emit) async {
+    final employees = await interactor.getEmployees({});
+    List<Region> regions = [];
+    final regionsResult = await interactor.getAllRegions();
+    if (regionsResult.isRight) regions = regionsResult.right;
+
+    Employee? advertiser;
+    Region? region;
+
+    for (var employee in employees) {
+      if (employee.id == event.contract?.contract.advertiserId) advertiser = employee;
+    }
+
+    for (var reg in regions) {
+      if (reg.id == event.contract?.client.regionId) region = reg;
+    }
+
     emit(ContractCreateState.data(
         isLoading: false,
         formKey: GlobalKey<FormState>(),
-        region: event.contract?.region,
-        regions: [event.contract?.region, null, null, null],
-        client: event.contract?.client,
-        advertiser: event.contract?.advertiser,
-        monthCount: TextEditingController(text: event.contract?.monthCount.toString() ?? ""),
-        dueDateOnMonth: TextEditingController(text: event.contract?.debtOnMonth.toString() ?? ""),
-        priceAmount: TextEditingController(text: event.contract?.priceAmount.toString() ?? ""),
-        filterCount: TextEditingController(text: event.contract?.countFilter.toString() ?? "1"),
+        firstName: TextEditingController(text: event.contract?.client.firstName ?? ""),
+        lastName: TextEditingController(text: event.contract?.client.lastName ?? ""),
+        phone: TextEditingController(text: event.contract?.client.phone ?? ""),
+        phone2: TextEditingController(text: event.contract?.client.phone2 ?? ""),
+        region: region,
+        regions: [region, null, null, null],
+        description: TextEditingController(text: event.contract?.client.description ?? ""),
+        advertiser: advertiser,
+        monthCount: TextEditingController(text: event.contract?.contract.monthCount.toString() ?? ""),
+        dueDateOnMonth: TextEditingController(text: event.contract?.contract.debtOnMonth.toString() ?? ""),
+        priceAmount: TextEditingController(text: event.contract?.contract.priceAmount.toString() ?? ""),
+        filterCount: TextEditingController(text: event.contract?.contract.countFilter.toString() ?? "1"),
         paidAmount: TextEditingController(text: "0"),
-        setupDate: event.contract?.setupDate ?? DateTime.now(),
+        setupDate: event.contract?.contract.setupDate ?? DateTime.now(),
         contract: event.contract));
   }
 
   Future<void> _create(ContractCreateEventCreate event, Emitter<ContractCreateState> emit) async {
     emit(state.data.copyWith(isLoading: true));
-    final result = await interactor.create(_formattingData(state));
+    ClientTableCompanion clientTableCompanion = await _clientMapper.fromStateData(data: state.data, forCreate: true);
+    ContractTableCompanion contractTableCompanion = await _mapper.fromStateData(state.data, true, clientTableCompanion.id.value);
+    final result = await interactor.createDb(contractTableCompanion, clientTableCompanion);
 
     if (result.isLeft) {
       addSr(ContractCreateSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       emit(state.data.copyWith(isLoading: false));
     } else {
       emit(state.data.copyWith(isLoading: false));
-      addSr(const ContractCreateSR.successNotify(text: "Mushderi goshuldyy"));
-      addSr(ContractCreateSR.created(contract: result.right));
+      addSr(const ContractCreateSR.successNotify(text: "Shertnama goshuldyy"));
+      addSr(const ContractCreateSR.created());
     }
   }
 
   Future<void> _update(ContractCreateEventUpdate event, Emitter<ContractCreateState> emit) async {
     emit(state.data.copyWith(isLoading: true));
 
-    final result = await interactor.update(state.data.contract!.id, _formattingData(state));
+    ClientTableCompanion clientTableCompanion = await _clientMapper.fromStateData(data: state.data, forCreate: false);
+    ContractTableCompanion contractTableCompanion = await _mapper.fromStateData(state.data, false, clientTableCompanion.id.value);
+    final result = await interactor.updateDb(contractTableCompanion, clientTableCompanion);
 
     if (result.isLeft) {
       addSr(ContractCreateSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
-      emit(state.data.copyWith(isLoading: false));
     } else {
-      emit(state.data.copyWith(isLoading: false));
       addSr(const ContractCreateSR.successNotify(text: "Toleg uytgedildi"));
-      addSr(ContractCreateSR.created(contract: result.right));
+      addSr(const ContractCreateSR.created());
     }
-  }
-
-  FutureOr<void> _selectedRegion(ContractCreateEventSelectRegion event, Emitter<ContractCreateState> emit) async {
-    emit(state.data.copyWith(region: event.region, regions: event.regions));
+    emit(state.data.copyWith(isLoading: false));
   }
 
   Future<void> _selectedDate(ContractCreateEventSetupDate event, Emitter<ContractCreateState> emit) async {
     emit(state.data.copyWith(setupDate: event.date));
   }
 
-  Future<void> _selectedClient(ContractCreateEventSelectClient event, Emitter<ContractCreateState> emit) async {
-    emit(state.data.copyWith(client: event.client));
-  }
-
   Future<void> _selectedAdvertiser(ContractCreateEventSelectAdvertiser event, Emitter<ContractCreateState> emit) async {
     emit(state.data.copyWith(advertiser: event.employee));
   }
 
-  Map<String, dynamic> _formattingData(ContractCreateState state) {
-    Map<String, dynamic> data = {
-      "client_id": state.data.client?.id,
-      "region_id": state.data.region?.id,
-      "advertiser_id": state.data.advertiser?.id,
-      "month_count": state.data.monthCount.text,
-      "debt_on_month": state.data.dueDateOnMonth.text,
-      "price_amount": state.data.priceAmount.text,
-      "setup_date": dateFormatterYyyyMmDd.format(state.data.setupDate),
-      "count_filter": state.data.filterCount.text,
-      "paid_amount": state.data.paidAmount.text,
-    };
-    return data;
+  FutureOr<void> _selectedRegion(ContractCreateEventSelectRegion event, Emitter<ContractCreateState> emit) async {
+    emit(state.data.copyWith(region: event.region, regions: event.regions));
   }
-
 }

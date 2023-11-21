@@ -6,6 +6,7 @@ import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/widgets/form/date.dart';
 import 'package:hasap_admin/core/widgets/form/select_contract_dropdown.dart';
 import 'package:hasap_admin/core/widgets/form/text_field.dart';
+import 'package:hasap_admin/core/widgets/snackbar/error_snackbar.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/feature/contract_return/data/contract_return_models.dart';
 import 'package:hasap_admin/feature/contract_return/presentation/create/bloc/contract_return_bloc.dart';
@@ -13,7 +14,7 @@ import 'package:hasap_admin/feature/contract_return/presentation/create/bloc/con
 
 @RoutePage()
 class ContractReturnCreatePage extends StatelessWidget {
-  final ContractReturn? contractReturn;
+  final ContractReturnData? contractReturn;
 
   const ContractReturnCreatePage({Key? key, this.contractReturn}) : super(key: key);
 
@@ -40,9 +41,9 @@ class ContractReturnCreatePage extends StatelessWidget {
 
   void _onSingleResult(BuildContext context, ContractReturnCreateSR sr) {
     sr.when(
-      showDioError: (error, notifier) => notifier.notify(error, context),
+      showDioError: (error, notifier) => ErrorSnackbar.show(context: context, text: error.safeCustom!.error),
       successNotify: (text) => SuccessSnackbar.show(context: context, text: text),
-      created: (contractReturn) => Navigator.pop(context, contractReturn),
+      created: () => Navigator.pop(context, true),
     );
   }
 }

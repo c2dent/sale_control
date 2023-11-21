@@ -6,9 +6,9 @@ import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/widgets/drawer_menu.dart';
 import 'package:hasap_admin/core/widgets/filter_screen.dart';
+import 'package:hasap_admin/core/widgets/snackbar/error_snackbar.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/core/widgets/utils.dart';
-import 'package:hasap_admin/feature/client/data/client_models.dart';
 import 'package:hasap_admin/feature/payment/data/payment_models.dart';
 import 'package:hasap_admin/feature/payment/presentation/create/ui/payment_create_page.dart';
 import 'package:hasap_admin/feature/payment/presentation/list/bloc/payment_bloc.dart';
@@ -47,7 +47,7 @@ class PaymentListPage extends StatelessWidget {
               drawer: const DrawerMenu(),
               floatingActionButton: FloatingActionButton(
                 onPressed: () async {
-                  Payment? payment = await Navigator.push(
+                  bool? payment = await Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const PaymentCreatePage()),
                   );
@@ -72,7 +72,7 @@ class PaymentListPage extends StatelessWidget {
     final bloc = context.read<PaymentBloc>();
 
     sr.when(
-      showDioError: (error, notifier) => notifier.notify(error, context),
+      showDioError: (error, notifier) => ErrorSnackbar.show(context: context, text: error.safeCustom!.error),
       successNotify: (text) => SuccessSnackbar.show(context: context, text: text),
       delete: (client) => bloc.add(const PaymentEvent.filter()),
     );
@@ -113,13 +113,12 @@ class _PaymentPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: state.data.payments.length,
               itemBuilder: (BuildContext context, int index) {
-                Payment payment = state.data.payments[index];
-                Client client = payment.contract.client;
+                PaymentData payment = state.data.payments[index];
 
                 return GestureDetector(
                   onLongPress: () => showContextMenu(context, tapPosition,
                       edit: () async {
-                        Payment? updatedPayment = await Navigator.push(
+                        bool? updatedPayment = await Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => PaymentCreatePage(payment: payment)),
                         );
@@ -141,15 +140,28 @@ class _PaymentPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "${client.firstName} ${client.lastName}",
+                                payment.clientName,
                                 style: theme.textTheme.title1.copyWith(color: theme.colorTheme.textPrimary, fontSize: 20),
                               ),
+                              if (!payment.payment.isSynced) const Icon(Icons.sync, color: Colors.blueAccent)
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(Icons.phone, size: 17),
+                                  const SizedBox(width: 10),
+                                  Text("+993 ${payment.client.phone}", style: theme.textTheme.title2),
+                                ],
+                              ),
                               Card(
-                                color: theme.colorTheme.error.withOpacity(0.7),
+                                color: theme.colorTheme.success.withOpacity(0.7),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                 child: Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                    child: Text("${formatCurrency(payment.amount)} тмт",
+                                    child: Text("${formatCurrency(payment.payment.paidAmount)} тмт",
                                         style: TextStyle(color: theme.colorTheme.onSuccess, fontWeight: FontWeight.bold))),
                               ),
                             ],
@@ -159,12 +171,12 @@ class _PaymentPage extends StatelessWidget {
                             children: [
                               Flexible(
                                 child: Text(
-                                  "${payment.creator.firstName ?? ''} ${client.creator.lastName ?? ''}",
+                                  payment.creatorName,
                                   style: theme.textTheme.title2,
                                 ),
                               ),
                               Text(
-                                formattingDate(payment.createdAt),
+                                formattingDate(payment.payment.createdAt),
                                 style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
                               ),
                             ],
