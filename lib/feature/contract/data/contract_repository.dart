@@ -3,6 +3,7 @@ import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.d
 import 'package:hasap_admin/arch/functional_models/either.dart';
 import 'package:hasap_admin/core/storage/datebase/app_database.dart';
 import 'package:hasap_admin/core/storage/datebase/daos/contract_dao.dart';
+import 'package:hasap_admin/core/widgets/filter_widget.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/contract/data/services/contract_api_service.dart';
 import 'package:injectable/injectable.dart';
@@ -18,7 +19,7 @@ abstract class ContractRepository {
 
   Future<Either<DriftRequestError<DefaultDriftError>, int>> createDb(ContractTableCompanion companion);
 
-  Future<Either<DriftRequestError<DefaultDriftError>, List<ContractData>>> listDb();
+  Future<Either<DriftRequestError<DefaultDriftError>, List<ContractData>>> listDb({Map<String, CustomFilterWidget>? filters});
 
   Future<Either<DriftRequestError<DefaultDriftError>, bool>> updateDb(ContractTableCompanion companion);
 
@@ -60,8 +61,8 @@ class ContractRepositoryImpl extends ContractRepository {
   }
 
   @override
-  Future<Either<DriftRequestError<DefaultDriftError>, List<ContractData>>> listDb() {
-    return _dao.getAllContracts();
+  Future<Either<DriftRequestError<DefaultDriftError>, List<ContractData>>> listDb({Map<String, CustomFilterWidget>? filters}) {
+    return _dao.getAllContracts(filters);
   }
 
   @override

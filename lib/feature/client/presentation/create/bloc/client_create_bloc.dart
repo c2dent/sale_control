@@ -46,7 +46,7 @@ class ClientCreateBloc extends SrBloc<ClientCreateEvent, ClientCreateState, Clie
   FutureOr<void> _create(ClientCreateEventCreate event, Emitter<ClientCreateState> emit) async {
     emit(state.data.copyWith(isLoading: true));
 
-    final result = await clientInteractor.createClientDb(await ClientMapper.fromMap(state.data, true, _keyValueStore));
+    final result = await clientInteractor.create(await ClientMapper.fromMap(state.data, true, _keyValueStore));
 
     if (result.isLeft) {
       addSr(ClientCreateSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
@@ -61,7 +61,7 @@ class ClientCreateBloc extends SrBloc<ClientCreateEvent, ClientCreateState, Clie
   FutureOr<void> _update(ClientCreateEventUpdate event, Emitter<ClientCreateState> emit) async {
     emit(state.data.copyWith(isLoading: true));
 
-    final result = await clientInteractor.updateClientDb(await ClientMapper.fromMap(state.data, false, _keyValueStore));
+    final result = await clientInteractor.update(await ClientMapper.fromMap(state.data, false, _keyValueStore));
 
     if (result.isLeft) {
       addSr(ClientCreateSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));

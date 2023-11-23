@@ -9,7 +9,7 @@ part 'payment_create_bloc_models.freezed.dart';
 
 @freezed
 class PaymentCreateEvent with _$PaymentCreateEvent {
-  const factory PaymentCreateEvent.init({PaymentData? payment}) = PaymentCreateEventInit;
+  const factory PaymentCreateEvent.init({PaymentData? payment, ContractData? contractData}) = PaymentCreateEventInit;
 
   const factory PaymentCreateEvent.create() = PaymentCreateEventCreate;
 

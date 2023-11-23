@@ -8,6 +8,7 @@ import 'package:hasap_admin/core/widgets/form/number_field.dart';
 import 'package:hasap_admin/core/widgets/form/select_contract_dropdown.dart';
 import 'package:hasap_admin/core/widgets/snackbar/error_snackbar.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
+import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/payment/data/payment_models.dart';
 import 'package:hasap_admin/feature/payment/presentation/create/bloc/payment_create_bloc.dart';
 import 'package:hasap_admin/feature/payment/presentation/create/bloc/payment_create_bloc_models.dart';
@@ -15,13 +16,14 @@ import 'package:hasap_admin/feature/payment/presentation/create/bloc/payment_cre
 @RoutePage()
 class PaymentCreatePage extends StatelessWidget {
   final PaymentData? payment;
+  final ContractData? contractData;
 
-  const PaymentCreatePage({Key? key, this.payment}) : super(key: key);
+  const PaymentCreatePage({Key? key, this.payment, this.contractData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PaymentCreateBloc>(
-      create: (context) => GetIt.I.get()..add(PaymentCreateEvent.init(payment: payment)),
+      create: (context) => GetIt.I.get()..add(PaymentCreateEvent.init(payment: payment, contractData: contractData)),
       child: SrBlocBuilder<PaymentCreateBloc, PaymentCreateState, PaymentCreateSR>(
         onSR: _onSingleResult,
         builder: (_, state) {

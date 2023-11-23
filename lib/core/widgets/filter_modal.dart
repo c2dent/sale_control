@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hasap_admin/core/models/filter.dart';
+import 'package:hasap_admin/core/widgets/filter_widget.dart';
 
 class FilterModal extends StatefulWidget {
-  final List<Filter> filters;
+  final Map<String, CustomFilterWidget> filters;
   final Function reset;
 
   const FilterModal({super.key, required this.filters, required this.reset});
@@ -37,8 +37,7 @@ class _FilterModalState extends State<FilterModal> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                for (var item in widget.filters)
-                  if (item.visible) Container(margin: const EdgeInsets.only(top: 10), child: item.filterWidget),
+                for (var item in widget.filters.values) Container(margin: const EdgeInsets.only(top: 10), child: item as Widget),
               ],
             ),
           ),

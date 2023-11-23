@@ -9,7 +9,7 @@ part 'service_create_bloc_models.freezed.dart';
 
 @freezed
 class ServiceCreateEvent with _$ServiceCreateEvent {
-  const factory ServiceCreateEvent.init({ServiceData? service}) = ServiceCreateEventInit;
+  const factory ServiceCreateEvent.init({ServiceData? service, ContractData? contractData}) = ServiceCreateEventInit;
   const factory ServiceCreateEvent.create() = ServiceCreateEventCreate;
   const factory ServiceCreateEvent.update() = ServiceCreateEventUpdate;
   const factory ServiceCreateEvent.selectDate({required DateTime date}) = ServiceCreateEventSelectDate;

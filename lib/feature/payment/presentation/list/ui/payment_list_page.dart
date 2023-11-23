@@ -37,7 +37,7 @@ class PaymentListPage extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => FilterScreen(
-                                      filters: bloc.state.data.filters,
+                                      filters: const {},
                                       reset: () => bloc.add(const PaymentEvent.resetFilter()),
                                     )),
                           ),
@@ -176,7 +176,7 @@ class _PaymentPage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                formattingDate(payment.payment.createdAt),
+                                formattingDateTime(payment.payment.createdAt),
                                 style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
                               ),
                             ],

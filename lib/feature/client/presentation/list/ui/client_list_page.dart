@@ -39,7 +39,7 @@ class ClientListPage extends StatelessWidget {
                             MaterialPageRoute(
                                 fullscreenDialog: true,
                                 builder: (context) => FilterScreen(
-                                      filters: bloc.state.data.filters,
+                                      filters: const {},
                                       reset: () => bloc.add(const ClientEvent.resetFilter()),
                                     )),
                           ),
@@ -100,7 +100,6 @@ class _ClientPage extends StatelessWidget {
       return Column(
         children: [
           const SizedBox(height: 5),
-          state.data.filters[0].filterWidget,
           Expanded(
             child: Center(
               child: Text(
@@ -118,8 +117,6 @@ class _ClientPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 6.0),
       child: Column(
         children: [
-          const SizedBox(height: 5),
-          state.data.filters[0].filterWidget,
           const SizedBox(height: 5),
           Expanded(
             child: ListView.builder(
@@ -178,7 +175,7 @@ class _ClientPage extends StatelessWidget {
                                   style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
                                 ),
                                 Text(
-                                  formattingDate(client.createdAt),
+                                  formattingDateTime(client.createdAt),
                                   style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
                                 ),
                               ],

@@ -17,13 +17,14 @@ import 'package:hasap_admin/feature/service/presentation/create/bloc/service_cre
 @RoutePage()
 class ServiceCreatePage extends StatelessWidget {
   final ServiceData? service;
+  final ContractData? contractData;
 
-  const ServiceCreatePage({super.key, this.service});
+  const ServiceCreatePage({super.key, this.service, this.contractData});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ServiceCreateBloc>(
-        create: (context) => GetIt.I.get()..add(ServiceCreateEvent.init(service: service)),
+        create: (context) => GetIt.I.get()..add(ServiceCreateEvent.init(service: service, contractData: contractData)),
         child: SrBlocBuilder<ServiceCreateBloc, ServiceCreateState, ServiceCreateSR>(
           onSR: _onSingleResult,
           builder: (_, state) {

@@ -1,15 +1,14 @@
-import 'package:hasap_admin/arch/dio_error_handler/models/dio_error_models.dart';
 import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.dart';
 import 'package:hasap_admin/arch/functional_models/either.dart';
 import 'package:hasap_admin/core/mappers/payment_mapper.dart';
 import 'package:hasap_admin/core/models/employee.dart';
-import 'package:hasap_admin/core/models/filter.dart';
 import 'package:hasap_admin/core/models/office.dart';
 import 'package:hasap_admin/core/models/region.dart';
 import 'package:hasap_admin/core/repositories/employee_repository.dart';
 import 'package:hasap_admin/core/repositories/office_repository.dart';
 import 'package:hasap_admin/core/repositories/region_repository.dart';
 import 'package:hasap_admin/core/storage/datebase/app_database.dart';
+import 'package:hasap_admin/core/widgets/filter_widget.dart';
 import 'package:hasap_admin/feature/client/data/client_models.dart';
 import 'package:hasap_admin/feature/client/data/client_repository.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
@@ -18,27 +17,21 @@ import 'package:hasap_admin/feature/payment/domain/payment_interactor.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class ContractInteractor {
-  Future<Either<DriftRequestError<DefaultDriftError>, List<ContractData>>> list({required List<Filter> filters});
+  Future<Either<DriftRequestError<DefaultDriftError>, List<ContractData>>> list({required Map<String, CustomFilterWidget> filters});
 
-  Future<Either<CommonResponseError<DefaultApiError>, Contract>> create(Map<String, dynamic> data);
+  Future<Either<DriftRequestError<DefaultDriftError>, int>> createDb(ContractTableCompanion companion, ClientTableCompanion clientCompanion);
 
-  Future<Either<CommonResponseError<DefaultApiError>, Contract>> update(String id, Map<String, dynamic> data);
-
-  Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(String id);
-
-  Future<List<Region>> getRegions(Region? region);
+  Future<Either<DriftRequestError<DefaultDriftError>, bool>> updateDb(ContractTableCompanion companion, ClientTableCompanion clientCompanion);
 
   Future<Either<DriftRequestError<DefaultDriftError>, List<Region>>> getAllRegions();
+
+  Future<List<Region>> getRegions(Region? region);
 
   Future<List<Client>> getClients();
 
   Future<List<Office>> getOffices(Map<String, String>? params);
 
   Future<List<Employee>> getEmployees(Map<String, String>? params);
-
-  Future<Either<DriftRequestError<DefaultDriftError>, int>> createDb(ContractTableCompanion companion, ClientTableCompanion clientCompanion);
-
-  Future<Either<DriftRequestError<DefaultDriftError>, bool>> updateDb(ContractTableCompanion companion, ClientTableCompanion clientCompanion);
 }
 
 @Singleton(as: ContractInteractor)
@@ -62,30 +55,8 @@ class ContractInteractorImpl extends ContractInteractor {
   );
 
   @override
-  Future<Either<DriftRequestError<DefaultDriftError>, List<ContractData>>> list({required List<Filter> filters}) {
-    Map<String, String> params = {};
-    for (Filter filter in filters) {
-      if (filter.filterWidget.value != null) {
-        params[filter.parameterName] = filter.parameterValue(filter.filterWidget.value);
-      }
-    }
-
-    return repository.listDb();
-  }
-
-  @override
-  Future<Either<CommonResponseError<DefaultApiError>, Contract>> create(Map<String, dynamic> data) {
-    return repository.create(data);
-  }
-
-  @override
-  Future<Either<CommonResponseError<DefaultApiError>, Contract>> update(String id, Map<String, dynamic> data) {
-    return repository.update(id, data);
-  }
-
-  @override
-  Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(String id) {
-    return repository.delete(id);
+  Future<Either<DriftRequestError<DefaultDriftError>, List<ContractData>>> list({required Map<String, CustomFilterWidget> filters}) {
+    return repository.listDb(filters: filters);
   }
 
   @override
@@ -135,7 +106,7 @@ class ContractInteractorImpl extends ContractInteractor {
     if (result.isLeft) return Either.left(result.left);
     if (companion.paidAmount.value < 1) return Either.right(result.right);
 
-    final paymentCreateResult = await _paymentInteractor.createDb(_paymentMapper.fromContractCompanion(companion));
+    final paymentCreateResult = await _paymentInteractor.create(_paymentMapper.fromContractCompanion(companion));
     if (paymentCreateResult.isLeft) return Either.left(paymentCreateResult.left);
     return Either.right(result.right);
   }

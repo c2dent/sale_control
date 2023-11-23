@@ -9,7 +9,7 @@ Future<Map<String, dynamic>?> awaitReturnValueFromAddScreen(BuildContext context
   return result;
 }
 
-String formattingDate(DateTime d) {
+String formattingDateTime(DateTime d) {
   String dateString = "";
   var formatterTime = DateFormat("HH:mm");
   final now = DateTime.now();
@@ -34,6 +34,37 @@ String formattingDate(DateTime d) {
       dateString = DateFormat("d MMMM HH:mm").format(d);
     } else {
       dateString = DateFormat("dd.MM.yy HH:mm").format(d);
+    }
+  }
+
+  return dateString;
+}
+
+String formattingDate(DateTime d) {
+  String dateString = "";
+  var formatterTime = DateFormat("HH:mm");
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final yesterday = DateTime(now.year, now.month, now.day - 1);
+  final dayBeforeYesterday = DateTime(now.year, now.month, now.day - 2);
+  final tomorrow = DateTime(now.year, now.month, now.day + 1);
+  final dayAfterTomorrow = DateTime(now.year, now.month, now.day + 2);
+
+  if (DateUtils.dateOnly(d) == DateUtils.dateOnly(today)) {
+    dateString = "Su gun";
+  } else if (DateUtils.dateOnly(d) == DateUtils.dateOnly(yesterday)) {
+    dateString = "Duyn";
+  } else if (DateUtils.dateOnly(d) == DateUtils.dateOnly(tomorrow)) {
+    dateString = "Ertir";
+  } else if (DateUtils.dateOnly(d) == DateUtils.dateOnly(dayAfterTomorrow)) {
+    dateString = "Birun";
+  } else if (DateUtils.dateOnly(d) == DateUtils.dateOnly(dayBeforeYesterday)) {
+    dateString = "Ongun";
+  } else {
+    if (now.year == d.year) {
+      dateString = DateFormat("d MMMM").format(d);
+    } else {
+      dateString = DateFormat("dd.MM.yy").format(d);
     }
   }
 
@@ -112,18 +143,16 @@ String? textFieldRequired(value) {
   return null;
 }
 
-DateTime addMonths(DateTime date, int months) {
-  var year = date.year + ((date.month + months) ~/ 12);
-  var month = (date.month + months) % 12;
-  var day = date.day;
+DateTime addMonths(DateTime dateTime, int monthsToAdd) {
+  int year = dateTime.year + (dateTime.month + monthsToAdd - 1) ~/ 12;
+  int month = (dateTime.month + monthsToAdd - 1) % 12 + 1;
 
-  if (day > 28) {
-    day = 28;
+  int day = dateTime.day;
+  int maxDay = DateTime(year, month + 1, 0).day;
+
+  if (day > maxDay) {
+    day = maxDay;
   }
 
-  var newDate = DateTime(year, month + 1, day, date.hour, date.minute, date.second, date.millisecond, date.microsecond);
-  while (newDate.month != month + 1) {
-    newDate = newDate.subtract(const Duration(days: 1));
-  }
-  return newDate;
+  return DateTime(year, month, day, dateTime.hour, dateTime.minute, dateTime.second, dateTime.millisecond, dateTime.microsecond);
 }

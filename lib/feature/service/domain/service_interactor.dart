@@ -1,9 +1,7 @@
 import 'package:drift/drift.dart';
-import 'package:hasap_admin/arch/dio_error_handler/models/dio_error_models.dart';
 import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.dart';
 import 'package:hasap_admin/arch/functional_models/either.dart';
 import 'package:hasap_admin/core/mappers/operation_mapper.dart';
-import 'package:hasap_admin/core/models/filter.dart';
 import 'package:hasap_admin/core/models/office.dart';
 import 'package:hasap_admin/core/repositories/office_repository.dart';
 import 'package:hasap_admin/core/repositories/operation_repository.dart';
@@ -15,21 +13,13 @@ import 'package:hasap_admin/feature/service/data/services_repository.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class ServiceInteractor {
-  Future<Either<CommonResponseError<DefaultApiError>, List<Service>>> list({required List<Filter> filters});
+  Future<Either<DriftRequestError<DefaultDriftError>, List<ServiceData>>> list();
 
-  Future<Either<CommonResponseError<DefaultApiError>, Service>> create(Map<String, dynamic> data);
+  Future<Either<DriftRequestError<DefaultDriftError>, int>> create(ServiceTableCompanion companion);
 
-  Future<Either<CommonResponseError<DefaultApiError>, Service>> update(String id, Map<String, dynamic> data);
+  Future<Either<DriftRequestError<DefaultDriftError>, bool>> update(ServiceTableCompanion companion);
 
-  Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(String id);
-
-  Future<Either<DriftRequestError<DefaultDriftError>, List<ServiceData>>> getAllDb();
-
-  Future<Either<DriftRequestError<DefaultDriftError>, int>> createDb(ServiceTableCompanion companion);
-
-  Future<Either<DriftRequestError<DefaultDriftError>, bool>> updateDb(ServiceTableCompanion companion);
-
-  Future<Either<DriftRequestError<DefaultDriftError>, bool>> deleteDb(ServiceTableData service);
+  Future<Either<DriftRequestError<DefaultDriftError>, bool>> delete(ServiceTableData service);
 
   Future<List<ContractData>> getContracts();
 
@@ -48,30 +38,33 @@ class ServiceInteractorImpl extends ServiceInteractor {
   ServiceInteractorImpl(this.repository, this.contactRepository, this.officeRepository, this._operationRepository, this._operationMapper);
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>, List<Service>>> list({required List<Filter> filters}) {
-    Map<String, String> params = {};
-    for (Filter filter in filters) {
-      if (filter.filterWidget.value != null) {
-        params[filter.parameterName] = filter.parameterValue(filter.filterWidget.value);
-      }
-    }
-
-    return repository.list(params);
+  Future<Either<DriftRequestError<DefaultDriftError>, List<ServiceData>>> list() {
+    return repository.getAllDb();
   }
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>, Service>> create(Map<String, dynamic> data) {
-    return repository.create(data);
+  Future<Either<DriftRequestError<DefaultDriftError>, int>> create(ServiceTableCompanion companion) async {
+    final createResult = await _operationRepository.createDb(await _operationMapper.fromServiceCompanion(companion, true));
+    if (createResult.isLeft) return Either.left(createResult.left);
+    companion = companion.copyWith(operationId: Value(createResult.right));
+    return await repository.createDb(companion);
   }
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>, Service>> update(String id, Map<String, dynamic> data) {
-    return repository.update(id, data);
+  Future<Either<DriftRequestError<DefaultDriftError>, bool>> update(ServiceTableCompanion companion) async {
+    final operationResult = await _operationRepository.updateDb(await _operationMapper.fromServiceCompanion(companion, false));
+    if (operationResult.isLeft) return Either.left(operationResult.left);
+    return await repository.updateDb(companion);
   }
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(String id) {
-    return repository.delete(id);
+  Future<Either<DriftRequestError<DefaultDriftError>, bool>> delete(ServiceTableData service) async {
+    final operationResult = await _operationRepository.deleteDb(service.operationId);
+    if (operationResult.isLeft) return Either.left(operationResult.left);
+
+    final result = await repository.deleteDb(service.id);
+    if (operationResult.isLeft) return Either.left(operationResult.left);
+    return result;
   }
 
   @override
@@ -88,35 +81,5 @@ class ServiceInteractorImpl extends ServiceInteractor {
 
     if (result.isLeft) return [];
     return result.right;
-  }
-
-  @override
-  Future<Either<DriftRequestError<DefaultDriftError>, int>> createDb(ServiceTableCompanion companion) async {
-    final createResult = await _operationRepository.createDb(await _operationMapper.fromServiceCompanion(companion, true));
-    if (createResult.isLeft) return Either.left(createResult.left);
-    companion = companion.copyWith(operationId: Value(createResult.right));
-    return await repository.createDb(companion);
-  }
-
-  @override
-  Future<Either<DriftRequestError<DefaultDriftError>, List<ServiceData>>> getAllDb() {
-    return repository.getAllDb();
-  }
-
-  @override
-  Future<Either<DriftRequestError<DefaultDriftError>, bool>> updateDb(ServiceTableCompanion companion) async {
-    final operationResult = await _operationRepository.updateDb(await _operationMapper.fromServiceCompanion(companion, false));
-    if (operationResult.isLeft) return Either.left(operationResult.left);
-    return await repository.updateDb(companion);
-  }
-
-  @override
-  Future<Either<DriftRequestError<DefaultDriftError>, bool>> deleteDb(ServiceTableData service) async {
-    final operationResult = await _operationRepository.deleteDb(service.operationId);
-    if (operationResult.isLeft) return Either.left(operationResult.left);
-
-    final result = await repository.deleteDb(service.id);
-    if (operationResult.isLeft) return Either.left(operationResult.left);
-    return result;
   }
 }

@@ -1,8 +1,6 @@
-import 'package:hasap_admin/arch/dio_error_handler/models/dio_error_models.dart';
 import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.dart';
 import 'package:hasap_admin/arch/functional_models/either.dart';
 import 'package:hasap_admin/core/models/employee.dart';
-import 'package:hasap_admin/core/models/filter.dart';
 import 'package:hasap_admin/core/models/office.dart';
 import 'package:hasap_admin/core/repositories/employee_repository.dart';
 import 'package:hasap_admin/core/repositories/office_repository.dart';
@@ -14,21 +12,13 @@ import 'package:hasap_admin/feature/contract_return/data/contract_return_reposit
 import 'package:injectable/injectable.dart';
 
 abstract class ContractorReturnInteractor {
-  Future<Either<CommonResponseError<DefaultApiError>, List<ContractReturn>>> list({required List<Filter> filters});
+  Future<Either<DriftRequestError<DefaultDriftError>, List<ContractReturnData>>> list();
 
-  Future<Either<CommonResponseError<DefaultApiError>, ContractReturn>> create(Map<String, dynamic> data);
+  Future<Either<DriftRequestError<DefaultDriftError>, int>> create(ContractReturnTableCompanion companion);
 
-  Future<Either<CommonResponseError<DefaultApiError>, ContractReturn>> update(String id, Map<String, dynamic> data);
+  Future<Either<DriftRequestError<DefaultDriftError>, bool>> update(ContractReturnTableCompanion companion);
 
-  Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(String id);
-
-  Future<Either<DriftRequestError<DefaultDriftError>, List<ContractReturnData>>> getAll();
-
-  Future<Either<DriftRequestError<DefaultDriftError>, int>> createDb(ContractReturnTableCompanion companion);
-
-  Future<Either<DriftRequestError<DefaultDriftError>, bool>> updateDb(ContractReturnTableCompanion companion);
-
-  Future<Either<DriftRequestError<DefaultDriftError>, bool>> deleteDb(String id);
+  Future<Either<DriftRequestError<DefaultDriftError>, bool>> delete(String id);
 
   Future<List<Employee>> getEmployees(Map<String, String>? params);
 
@@ -47,33 +37,6 @@ class ContractReturnInteractorImpl extends ContractorReturnInteractor {
   ContractReturnInteractorImpl(this.repository, this.employeeRepository, this.contractRepository, this.officeRepository);
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>, List<ContractReturn>>> list({required List<Filter> filters}) {
-    Map<String, String> params = {};
-    for (Filter filter in filters) {
-      if (filter.filterWidget.value != null) {
-        params[filter.parameterName] = filter.parameterValue(filter.filterWidget.value);
-      }
-    }
-
-    return repository.list(params);
-  }
-
-  @override
-  Future<Either<CommonResponseError<DefaultApiError>, ContractReturn>> create(Map<String, dynamic> data) {
-    return repository.create(data);
-  }
-
-  @override
-  Future<Either<CommonResponseError<DefaultApiError>, ContractReturn>> update(String id, Map<String, dynamic> data) {
-    return repository.update(id, data);
-  }
-
-  @override
-  Future<Either<CommonResponseError<DefaultApiError>, Map<String, String>>> delete(String id) {
-    return repository.delete(id);
-  }
-
-  @override
   Future<List<Employee>> getEmployees(Map<String, String>? params) async {
     final result = await employeeRepository.getEmployees(params);
 
@@ -82,6 +45,28 @@ class ContractReturnInteractorImpl extends ContractorReturnInteractor {
     }
 
     return result.right;
+  }
+
+  @override
+  Future<Either<DriftRequestError<DefaultDriftError>, List<ContractReturnData>>> list() {
+    return repository.getAll();
+  }
+
+  @override
+  Future<Either<DriftRequestError<DefaultDriftError>, int>> create(ContractReturnTableCompanion companion) async {
+    final result = await repository.createDb(companion);
+    await contractRepository.close(companion.contractId.value);
+    return result;
+  }
+
+  @override
+  Future<Either<DriftRequestError<DefaultDriftError>, bool>> update(ContractReturnTableCompanion companion) {
+    return repository.updateDb(companion);
+  }
+
+  @override
+  Future<Either<DriftRequestError<DefaultDriftError>, bool>> delete(String id) {
+    return repository.deleteDb(id);
   }
 
   @override
@@ -97,27 +82,5 @@ class ContractReturnInteractorImpl extends ContractorReturnInteractor {
 
     if (result.isLeft) return [];
     return result.right;
-  }
-
-  @override
-  Future<Either<DriftRequestError<DefaultDriftError>, int>> createDb(ContractReturnTableCompanion companion) async {
-    final result = await repository.createDb(companion);
-    await contractRepository.close(companion.contractId.value);
-    return result;
-  }
-
-  @override
-  Future<Either<DriftRequestError<DefaultDriftError>, List<ContractReturnData>>> getAll() {
-    return repository.getAll();
-  }
-
-  @override
-  Future<Either<DriftRequestError<DefaultDriftError>, bool>> updateDb(ContractReturnTableCompanion companion) {
-    return repository.updateDb(companion);
-  }
-
-  @override
-  Future<Either<DriftRequestError<DefaultDriftError>, bool>> deleteDb(String id) {
-    return repository.deleteDb(id);
   }
 }

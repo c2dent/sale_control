@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
-import 'package:hasap_admin/core/models/filter.dart';
+import 'package:hasap_admin/core/widgets/filter_widget.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 
 part 'contract_bloc_models.freezed.dart';
@@ -11,7 +11,6 @@ class ContractEvent with _$ContractEvent {
   const factory ContractEvent.init() = ContractEventInit;
   const factory ContractEvent.filter() = ContractEventFilter;
   const factory ContractEvent.resetFilter() = ContractEventResetFilter;
-  const factory ContractEvent.delete({required Contract contract}) = ContractEventDelete;
 }
 
 @freezed
@@ -36,7 +35,20 @@ class ContractState with _$ContractState {
 
   const factory ContractState.data({
     required bool isLoading,
-    required List<Filter> filters,
+    required Map<String, CustomFilterWidget> filters,
     required List<ContractData> contracts,
   }) = ContractStateData;
+}
+
+enum ContractSortType {
+  createDate(name: "Goshulan wagt", value: "createDate"),
+  paymentDate(name: "Toleg wagt", value: "paymentDate");
+
+  final String name;
+  final String value;
+
+  const ContractSortType({
+    required this.name,
+    required this.value
+});
 }

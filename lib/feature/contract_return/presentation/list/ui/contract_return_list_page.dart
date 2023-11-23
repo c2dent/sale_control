@@ -37,7 +37,7 @@ class ContractReturnListPage extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => FilterScreen(
-                                      filters: bloc.state.data.filters,
+                                      filters: const {},
                                       reset: () => bloc.add(const ContractReturnEvent.resetFilter()),
                                     )),
                           ),
@@ -169,7 +169,7 @@ class _ContractReturnPage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                formattingDate(contractReturn.contractReturn.date),
+                                formattingDateTime(contractReturn.contractReturn.date),
                                 style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
                               ),
                             ],

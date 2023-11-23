@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
-import 'package:hasap_admin/core/models/filter.dart';
+import 'package:hasap_admin/core/widgets/filter_widget.dart';
 import 'package:hasap_admin/feature/payment/data/payment_models.dart';
 
 part 'payment_bloc_models.freezed.dart';
@@ -36,7 +36,7 @@ class PaymentState with _$PaymentState {
 
   const factory PaymentState.data({
     required bool isLoading,
-    required List<Filter> filters,
+    required Map<String, List<CustomFilterWidget>> filters,
     required List<PaymentData> payments,
   }) = PaymentStateData;
 }

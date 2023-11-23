@@ -44,7 +44,7 @@ class ContractReturnCreateBloc extends SrBloc<ContractReturnCreateEvent, Contrac
   FutureOr<void> _create(ContractReturnCreateEventCreate event, Emitter<ContractReturnCreateState> emit) async {
     emit(state.data.copyWith(isLoading: true));
 
-    final result = await interactor.createDb(await _mapper.fromContractReturnCreateStateData(data: state.data, forCreate: true));
+    final result = await interactor.create(await _mapper.fromContractReturnCreateStateData(data: state.data, forCreate: true));
 
     if (result.isLeft) {
       addSr(ContractReturnCreateSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
@@ -59,7 +59,7 @@ class ContractReturnCreateBloc extends SrBloc<ContractReturnCreateEvent, Contrac
   FutureOr<void> _update(ContractReturnCreateEventUpdate event, Emitter<ContractReturnCreateState> emit) async {
     emit(state.data.copyWith(isLoading: true));
 
-    final result = await interactor.updateDb(await _mapper.fromContractReturnCreateStateData(data: state.data, forCreate: false));
+    final result = await interactor.update(await _mapper.fromContractReturnCreateStateData(data: state.data, forCreate: false));
 
     if (result.isLeft) {
       addSr(ContractReturnCreateSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
@@ -68,8 +68,8 @@ class ContractReturnCreateBloc extends SrBloc<ContractReturnCreateEvent, Contrac
       emit(state.data.copyWith(isLoading: false));
       addSr(const ContractReturnCreateSR.successNotify(text: "Toleg uytgedildi"));
       addSr(const ContractReturnCreateSR.created());
-      }
-      }
+    }
+  }
 
   Future<void> _selectedContract(ContractReturntCreateEventSelectContract event, Emitter<ContractReturnCreateState> emit) async {
     emit(state.data.copyWith(contract: event.contract));

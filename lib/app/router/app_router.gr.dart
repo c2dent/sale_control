@@ -111,6 +111,7 @@ abstract class $AppRouter extends _i13.RootStackRouter {
         child: _i8.PaymentCreatePage(
           key: args.key,
           payment: args.payment,
+          contractData: args.contractData,
         ),
       );
     },
@@ -134,6 +135,7 @@ abstract class $AppRouter extends _i13.RootStackRouter {
         child: _i11.ServiceCreatePage(
           key: args.key,
           service: args.service,
+          contractData: args.contractData,
         ),
       );
     },
@@ -323,12 +325,14 @@ class PaymentCreateRoute extends _i13.PageRouteInfo<PaymentCreateRouteArgs> {
   PaymentCreateRoute({
     _i14.Key? key,
     _i18.PaymentData? payment,
+    _i16.ContractData? contractData,
     List<_i13.PageRouteInfo>? children,
   }) : super(
           PaymentCreateRoute.name,
           args: PaymentCreateRouteArgs(
             key: key,
             payment: payment,
+            contractData: contractData,
           ),
           initialChildren: children,
         );
@@ -343,15 +347,18 @@ class PaymentCreateRouteArgs {
   const PaymentCreateRouteArgs({
     this.key,
     this.payment,
+    this.contractData,
   });
 
   final _i14.Key? key;
 
   final _i18.PaymentData? payment;
 
+  final _i16.ContractData? contractData;
+
   @override
   String toString() {
-    return 'PaymentCreateRouteArgs{key: $key, payment: $payment}';
+    return 'PaymentCreateRouteArgs{key: $key, payment: $payment, contractData: $contractData}';
   }
 }
 
@@ -389,12 +396,14 @@ class ServiceCreateRoute extends _i13.PageRouteInfo<ServiceCreateRouteArgs> {
   ServiceCreateRoute({
     _i14.Key? key,
     _i19.ServiceData? service,
+    _i16.ContractData? contractData,
     List<_i13.PageRouteInfo>? children,
   }) : super(
           ServiceCreateRoute.name,
           args: ServiceCreateRouteArgs(
             key: key,
             service: service,
+            contractData: contractData,
           ),
           initialChildren: children,
         );
@@ -409,15 +418,18 @@ class ServiceCreateRouteArgs {
   const ServiceCreateRouteArgs({
     this.key,
     this.service,
+    this.contractData,
   });
 
   final _i14.Key? key;
 
   final _i19.ServiceData? service;
 
+  final _i16.ContractData? contractData;
+
   @override
   String toString() {
-    return 'ServiceCreateRouteArgs{key: $key, service: $service}';
+    return 'ServiceCreateRouteArgs{key: $key, service: $service, contractData: $contractData}';
   }
 }
 

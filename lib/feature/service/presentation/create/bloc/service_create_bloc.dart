@@ -26,7 +26,7 @@ class ServiceCreateBloc extends SrBloc<ServiceCreateEvent, ServiceCreateState, S
 
   Future<void> _init(ServiceCreateEventInit event, Emitter<ServiceCreateState> emit) async {
     final contracts = await interactor.getContracts();
-    ContractData? contractData;
+    ContractData? contractData = event.contractData;
     for (var contract in contracts) {
       if (contract.contract.id == event.service?.service.contractId) contractData = contract;
     }
@@ -44,7 +44,7 @@ class ServiceCreateBloc extends SrBloc<ServiceCreateEvent, ServiceCreateState, S
 
   Future<void> _create(ServiceCreateEventCreate event, Emitter<ServiceCreateState> emit) async {
     emit(state.data.copyWith(isLoading: true));
-    final result = await interactor.createDb(await _mapper.fromServiceCreateStateData(data: state.data, forCreate: true));
+    final result = await interactor.create(await _mapper.fromServiceCreateStateData(data: state.data, forCreate: true));
 
     if (result.isLeft) {
       addSr(ServiceCreateSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
@@ -59,7 +59,7 @@ class ServiceCreateBloc extends SrBloc<ServiceCreateEvent, ServiceCreateState, S
   Future<void> _update(ServiceCreateEventUpdate event, Emitter<ServiceCreateState> emit) async {
     emit(state.data.copyWith(isLoading: true));
 
-    final result = await interactor.updateDb(await _mapper.fromServiceCreateStateData(data: state.data, forCreate: false));
+    final result = await interactor.update(await _mapper.fromServiceCreateStateData(data: state.data, forCreate: false));
 
     if (result.isLeft) {
       addSr(ServiceCreateSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));

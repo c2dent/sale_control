@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class FilterWidget<T> extends StatelessWidget {
@@ -6,11 +5,7 @@ class FilterWidget<T> extends StatelessWidget {
   List<T?> values;
   void Function(T? value) onChange;
 
-  FilterWidget({
-    required this.value,
-    required this.onChange,
-    required this.values,
-    super.key});
+  FilterWidget({required this.value, required this.onChange, required this.values, super.key});
 
   void clear() {}
 
@@ -18,4 +13,10 @@ class FilterWidget<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center();
   }
+}
+
+abstract class CustomFilterWidget<T> {
+  String getName();
+
+  T getValue();
 }

@@ -37,7 +37,7 @@ class ServiceListPage extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => FilterScreen(
-                                      filters: bloc.state.data.filters,
+                                      filters: const {},
                                       reset: () => bloc.add(const ServiceEvent.resetFilter()),
                                     )),
                           ),
@@ -193,7 +193,7 @@ class _ServicePage extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    formattingDate(service.service.createdAt),
+                                    formattingDateTime(service.service.createdAt),
                                     style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
                                   ),
                                 ],

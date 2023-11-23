@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
 import 'package:hasap_admin/core/mappers/payment_mapper.dart';
-import 'package:hasap_admin/core/widgets/utils.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/payment/domain/payment_interactor.dart';
 import 'package:hasap_admin/feature/payment/presentation/create/bloc/payment_create_bloc_models.dart';
@@ -27,7 +26,7 @@ class PaymentCreateBloc extends SrBloc<PaymentCreateEvent, PaymentCreateState, P
 
   FutureOr<void> _init(PaymentCreateEventInit event, Emitter<PaymentCreateState> emit) async {
     final contracts = await paymentInteractor.getContracts();
-    ContractData? contractData;
+    ContractData? contractData = event.contractData;
     for (var item in contracts) {
       if (item.contract.id == event.payment?.payment.contractId) contractData = item;
     }
@@ -46,7 +45,7 @@ class PaymentCreateBloc extends SrBloc<PaymentCreateEvent, PaymentCreateState, P
   FutureOr<void> _create(PaymentCreateEventCreate event, Emitter<PaymentCreateState> emit) async {
     emit(state.data.copyWith(isLoading: true));
 
-    final result = await paymentInteractor.createDb(await _paymentMapper.fromPaymentCreateState(state, true));
+    final result = await paymentInteractor.create(await _paymentMapper.fromPaymentCreateState(state, true));
 
     if (result.isLeft) {
       addSr(PaymentCreateSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
@@ -61,7 +60,7 @@ class PaymentCreateBloc extends SrBloc<PaymentCreateEvent, PaymentCreateState, P
   FutureOr<void> _update(PaymentCreateEventUpdate event, Emitter<PaymentCreateState> emit) async {
     emit(state.data.copyWith(isLoading: true));
 
-    final result = await paymentInteractor.updateDb(await _paymentMapper.fromPaymentCreateState(state, false));
+    final result = await paymentInteractor.update(await _paymentMapper.fromPaymentCreateState(state, false));
     if (result.isLeft) {
       addSr(PaymentCreateSR.showDioError(error: result.left, notifyErrorSnackbar: _notifyErrorSnackbar));
       emit(state.data.copyWith(isLoading: false));

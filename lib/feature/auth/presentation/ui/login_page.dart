@@ -32,7 +32,7 @@ class LoginPage extends StatelessWidget {
 
   void _onSingleResult(BuildContext context, LoginSR sr) {
     sr.when(
-        success: () => context.router.replaceNamed('/client_list'),
+        success: () => context.router.replaceNamed('/contract_list'),
         showDioError: (error, notifier) => notifier.notify(error, context)
     );
   }
