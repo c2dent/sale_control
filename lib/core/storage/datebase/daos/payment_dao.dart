@@ -15,7 +15,7 @@ part 'payment_dao.g.dart';
 class PaymentDao extends DatabaseAccessor<AppDatabase> with _$PaymentDaoMixin {
   final DriftErrorHandler<DefaultDriftError> _errorHandler = GetIt.instance.get<DriftErrorHandler<DefaultDriftError>>();
 
-  PaymentDao(AppDatabase db) : super(db);
+  PaymentDao(super.db);
 
   Future<Either<DriftRequestError<DefaultDriftError>, List<PaymentData>>> getAllPayments() async =>
       await _errorHandler.processRequest(() => (select(paymentTable)
@@ -25,13 +25,41 @@ class PaymentDao extends DatabaseAccessor<AppDatabase> with _$PaymentDaoMixin {
             leftOuterJoin(db.employeeTable, db.employeeTable.id.equalsExp(paymentTable.creatorId), useColumns: true),
             leftOuterJoin(db.contractTable, db.contractTable.id.equalsExp(paymentTable.contractId), useColumns: false),
             leftOuterJoin(db.clientTable, db.clientTable.id.equalsExp(db.contractTable.clientId), useColumns: true),
+            leftOuterJoin(db.regionTable, db.regionTable.id.equalsExp(db.clientTable.regionId) & db.regionTable.isDeleted.equals(false), useColumns: true),
           ])
           .map((types) => PaymentData(
                 client: types.readTable(db.clientTable),
                 creator: types.readTable(db.employeeTable),
                 payment: types.readTable(db.paymentTable),
+                region: types.readTable(db.regionTable),
               ))
           .get());
+
+  Future<Either<DriftRequestError<DefaultDriftError>, PaymentDetail>> detail(String id) async => await _errorHandler.processRequest(() => (select(paymentTable)
+        ..where((tbl) => tbl.isDeleted.equals(false) & tbl.id.equals(id))
+        ..orderBy([(t) => OrderingTerm(expression: t.createdAt, mode: OrderingMode.desc)]))
+      .join([
+        leftOuterJoin(db.employeeTable, db.employeeTable.id.equalsExp(paymentTable.creatorId), useColumns: true),
+        leftOuterJoin(db.contractTable, db.contractTable.id.equalsExp(paymentTable.contractId), useColumns: true),
+        leftOuterJoin(db.clientTable, db.clientTable.id.equalsExp(db.contractTable.clientId), useColumns: true),
+        leftOuterJoin(db.regionTable, db.regionTable.id.equalsExp(db.clientTable.regionId) & db.regionTable.isDeleted.equals(false), useColumns: true),
+      ])
+      .map((types) async {
+        RegionTableData region = types.readTable(db.regionTable);
+        RegionTableData regionParent =
+            await (select(db.regionTable)..where((tbl) => tbl.parentId.equals(region.parentId ?? 1000))).get().then((value) => value.first);
+
+        return PaymentDetail(
+          client: types.readTable(db.clientTable),
+          creator: types.readTable(db.employeeTable),
+          payment: types.readTable(db.paymentTable),
+          contract: types.readTable(db.contractTable),
+          region: region,
+          parentRegion: regionParent,
+        );
+      })
+      .get()
+      .then((value) => value.first));
 
   Future<Either<DriftRequestError<DefaultDriftError>, String>> insertPayment(PaymentTableCompanion payment) async =>
       await _errorHandler.processRequest(() async {
@@ -39,12 +67,8 @@ class PaymentDao extends DatabaseAccessor<AppDatabase> with _$PaymentDaoMixin {
         return payment.id.value;
       });
 
-  Future<Either<DriftRequestError<DefaultDriftError>, bool>> updatePayment(PaymentTableCompanion payment) async =>
-      await _errorHandler.processRequest(() async {
-        bool have = await (select(db.paymentTable)
-          ..where((tbl) => tbl.id.equals(payment.id.value)))
-            .get()
-            .then((value) => value.isNotEmpty);
+  Future<Either<DriftRequestError<DefaultDriftError>, bool>> updatePayment(PaymentTableCompanion payment) async => await _errorHandler.processRequest(() async {
+        bool have = await (select(db.paymentTable)..where((tbl) => tbl.id.equals(payment.id.value))).get().then((value) => value.isNotEmpty);
 
         if (!have) throw DriftError("Toleg tapylmady");
         return await update(db.paymentTable).replace(payment);
@@ -56,12 +80,8 @@ class PaymentDao extends DatabaseAccessor<AppDatabase> with _$PaymentDaoMixin {
     return Either.right(result.right.isNotEmpty);
   }
 
-  Future<Either<DriftRequestError<DefaultDriftError>, bool>> deletePayment(String id) async =>
-      await _errorHandler.processRequest(() async {
-        bool have = await (select(db.paymentTable)
-          ..where((tbl) => tbl.id.equals(id)))
-            .get()
-            .then((value) => value.isNotEmpty);
+  Future<Either<DriftRequestError<DefaultDriftError>, bool>> deletePayment(String id) async => await _errorHandler.processRequest(() async {
+        bool have = await (select(db.paymentTable)..where((tbl) => tbl.id.equals(id))).get().then((value) => value.isNotEmpty);
 
         if (!have) throw DriftError("Toleg tapylmady");
         String query = "UPDATE payment_table SET is_deleted = ?, is_synced = ? WHERE id = ?";

@@ -1,5 +1,6 @@
 import 'package:hasap_admin/arch/data_sync/table_sync.dart';
 import 'package:hasap_admin/arch/key_value_store_migrator/key_value_store.dart';
+import 'package:hasap_admin/core/data_sync_services/admission_sync_service.dart';
 import 'package:hasap_admin/core/data_sync_services/client_sync_service.dart';
 import 'package:hasap_admin/core/data_sync_services/contract_return_sync_service.dart';
 import 'package:hasap_admin/core/data_sync_services/contract_sync_service.dart';
@@ -7,6 +8,8 @@ import 'package:hasap_admin/core/data_sync_services/employee_sync_service.dart';
 import 'package:hasap_admin/core/data_sync_services/office_sync_service.dart';
 import 'package:hasap_admin/core/data_sync_services/operation_sync_service.dart';
 import 'package:hasap_admin/core/data_sync_services/payment_sync_service.dart';
+import 'package:hasap_admin/core/data_sync_services/product_operation_sync_service.dart';
+import 'package:hasap_admin/core/data_sync_services/product_sync_service.dart';
 import 'package:hasap_admin/core/data_sync_services/region_sync_service.dart';
 import 'package:hasap_admin/core/data_sync_services/service_sync_service.dart';
 import 'package:hasap_admin/core/widgets/utils.dart';
@@ -29,12 +32,27 @@ class DataSyncServiceImpl implements DataSyncService {
   final OperationSyncService operationSyncService;
   final PaymentSyncService paymentSyncService;
   final ServiceSyncService serviceSyncService;
+  final ProductSyncService productSyncService;
+  final ProductOperationSyncService productOperationSyncService;
+  final AdmissionSyncService admissionSyncService;
   final KeyValueStore keyValueStore;
 
   List<TableSync> tableSyncs = [];
 
-  DataSyncServiceImpl(this.reginSyncService, this.keyValueStore, this.officeSyncService, this.employeeSyncService, this.clientSyncService,
-      this.contractSyncService, this.contractReturnSyncService, this.operationSyncService, this.paymentSyncService, this.serviceSyncService) {
+  DataSyncServiceImpl(
+      this.reginSyncService,
+      this.keyValueStore,
+      this.officeSyncService,
+      this.employeeSyncService,
+      this.clientSyncService,
+      this.contractSyncService,
+      this.contractReturnSyncService,
+      this.operationSyncService,
+      this.paymentSyncService,
+      this.serviceSyncService,
+      this.productSyncService,
+      this.productOperationSyncService,
+      this.admissionSyncService) {
     tableSyncs.addAll([
       reginSyncService,
       officeSyncService,
@@ -45,6 +63,9 @@ class DataSyncServiceImpl implements DataSyncService {
       operationSyncService,
       paymentSyncService,
       serviceSyncService,
+      productSyncService,
+      productOperationSyncService,
+      admissionSyncService,
     ]);
   }
 
@@ -55,8 +76,8 @@ class DataSyncServiceImpl implements DataSyncService {
       Map<String, String> params = lastUpdateDateTime == null ? {} : {'datetime': lastUpdateDateTime};
 
       try {
-        await tableSync.incomingSync(params);
-        await keyValueStore.write(tableSync.updateDatetimeKey, dateTimeFormatter.format(DateTime.now().toUtc()));
+        final result = await tableSync.incomingSync(params);
+        if (result) await keyValueStore.write(tableSync.updateDatetimeKey, dateTimeFormatter.format(DateTime.now().toUtc()));
       } catch (e) {
         print(e);
       }

@@ -6,7 +6,6 @@ import 'package:hasap_admin/arch/sr_bloc/sr_bloc.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
 import 'package:hasap_admin/core/mappers/client_mapper.dart';
 import 'package:hasap_admin/core/mappers/contract_mapper.dart';
-import 'package:hasap_admin/core/models/employee.dart';
 import 'package:hasap_admin/core/models/region.dart';
 import 'package:hasap_admin/core/storage/datebase/app_database.dart';
 import 'package:hasap_admin/feature/contract/domain/contract_interactor.dart';
@@ -24,18 +23,20 @@ class ContractCreateBloc extends SrBloc<ContractCreateEvent, ContractCreateState
     on<ContractCreateEventInit>(_init);
     on<ContractCreateEventCreate>(_create);
     on<ContractCreateEventUpdate>(_update);
-    on<ContractCreateEventSetupDate>(_selectedDate);
+    on<ContractCreateEventSelectDate>(_selectedDate);
     on<ContractCreateEventSelectAdvertiser>(_selectedAdvertiser);
     on<ContractCreateEventSelectRegion>(_selectedRegion);
+    on<ContractCreateEventSelectNextPaymentDate>(_selectedNextPaymentDate);
   }
 
   Future<void> _init(ContractCreateEventInit event, Emitter<ContractCreateState> emit) async {
-    final employees = await interactor.getEmployees({});
     List<Region> regions = [];
+    final employees = await interactor.getEmployees();
+
     final regionsResult = await interactor.getAllRegions();
     if (regionsResult.isRight) regions = regionsResult.right;
 
-    Employee? advertiser;
+    EmployeeTableData? advertiser;
     Region? region;
 
     for (var employee in employees) {
@@ -63,7 +64,9 @@ class ContractCreateBloc extends SrBloc<ContractCreateEvent, ContractCreateState
         filterCount: TextEditingController(text: event.contract?.contract.countFilter.toString() ?? "1"),
         paidAmount: TextEditingController(text: "0"),
         setupDate: event.contract?.contract.setupDate ?? DateTime.now(),
-        contract: event.contract));
+        nextPaymentDate: event.contract?.contract.nextPaymentTime ?? DateTime.now(),
+        contract: event.contract,
+        employees: employees));
   }
 
   Future<void> _create(ContractCreateEventCreate event, Emitter<ContractCreateState> emit) async {
@@ -98,8 +101,12 @@ class ContractCreateBloc extends SrBloc<ContractCreateEvent, ContractCreateState
     emit(state.data.copyWith(isLoading: false));
   }
 
-  Future<void> _selectedDate(ContractCreateEventSetupDate event, Emitter<ContractCreateState> emit) async {
+  Future<void> _selectedDate(ContractCreateEventSelectDate event, Emitter<ContractCreateState> emit) async {
     emit(state.data.copyWith(setupDate: event.date));
+  }
+
+  Future<void> _selectedNextPaymentDate(ContractCreateEventSelectNextPaymentDate event, Emitter<ContractCreateState> emit) async {
+    emit(state.data.copyWith(nextPaymentDate: event.date));
   }
 
   Future<void> _selectedAdvertiser(ContractCreateEventSelectAdvertiser event, Emitter<ContractCreateState> emit) async {

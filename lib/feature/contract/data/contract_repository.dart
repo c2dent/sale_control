@@ -26,6 +26,8 @@ abstract class ContractRepository {
   Future<Either<DriftRequestError<DefaultDriftError>, bool>> recalculateDb(String id);
 
   Future<Either<DriftRequestError<DefaultDriftError>, bool>> close(String id);
+
+  Future<Either<DriftRequestError<DefaultDriftError>, ContractDataDetail>> detail(String id);
 }
 
 @Singleton(as: ContractRepository)
@@ -78,5 +80,10 @@ class ContractRepositoryImpl extends ContractRepository {
   @override
   Future<Either<DriftRequestError<DefaultDriftError>, bool>> recalculateDb(String id) {
     return _dao.recalculateContract(id);
+  }
+
+  @override
+  Future<Either<DriftRequestError<DefaultDriftError>, ContractDataDetail>> detail(String id) {
+    return _dao.getContractDetail(id);
   }
 }

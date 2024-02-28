@@ -1,22 +1,23 @@
 import 'package:drift/drift.dart';
-import 'package:hasap_admin/arch/key_value_store_migrator/key_value_store.dart';
 import 'package:hasap_admin/core/models/sync/service_sync.dart';
+import 'package:hasap_admin/core/models/user.dart';
+import 'package:hasap_admin/core/services/settings_service.dart';
 import 'package:hasap_admin/core/storage/datebase/app_database.dart';
-import 'package:hasap_admin/core/storage/sharedPrefs/store_keys.dart';
 import 'package:hasap_admin/feature/service/presentation/create/bloc/service_create_bloc_models.dart';
 import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
 
 @injectable
 class ServiceMapper {
-  final KeyValueStore _store;
+  final SettingsService _settingsService;
 
-  ServiceMapper(this._store);
+  ServiceMapper(this._settingsService);
 
   static ServiceTableCompanion fromServiceSync(ServiceSync serviceSync) {
     return ServiceTableCompanion(
       id: Value(serviceSync.id),
       contractId: Value(serviceSync.contractId),
+      operationId: Value(serviceSync.operationId),
       creatorId: Value(serviceSync.creatorId),
       type: Value(serviceSync.type),
       amount: Value(serviceSync.amount),
@@ -30,21 +31,20 @@ class ServiceMapper {
 
   Future<ServiceTableCompanion> fromServiceCreateStateData({required ServiceCreateStateData data, required bool forCreate}) async {
     var uuid = const Uuid();
-    String? employeeId = await _store.read(StoreKeys.prefsCurrentEmployeeId);
+    User? user = await _settingsService.getCurrentUser();
 
     return ServiceTableCompanion(
-      id: Value(forCreate ? uuid.v4() : data.service!.service.id),
-      creatorId: Value(forCreate ? employeeId : data.service?.service.creatorId),
-      operationId: Value(forCreate ? "" : data.service!.service.operationId),
-      createdAt: Value(forCreate ? DateTime.now() : data.service!.service.createdAt),
-      comment: Value(data.comment.text),
-      date: Value(data.date),
-      modifiedAt: Value(DateTime.now()),
-      amount: Value(int.tryParse(data.amount.text) ?? 0),
-      type: Value(data.type!.value),
-      contractId: Value(data.contract!.contract.id),
-      isSynced: const Value(false),
-      isDeleted: const Value(false)
-    );
+        id: Value(forCreate ? uuid.v4() : data.service!.service.id),
+        creatorId: Value(forCreate ? user?.employee.id : data.service?.service.creatorId),
+        operationId: Value(forCreate ? "" : data.service!.service.operationId),
+        createdAt: Value(forCreate ? DateTime.now() : data.service!.service.createdAt),
+        comment: Value(data.comment.text),
+        date: Value(data.date),
+        modifiedAt: Value(DateTime.now()),
+        amount: Value(int.tryParse(data.amount.text) ?? 0),
+        type: Value(data.type!.value),
+        contractId: Value(data.contract!.contract.id),
+        isSynced: const Value(false),
+        isDeleted: const Value(false));
   }
 }

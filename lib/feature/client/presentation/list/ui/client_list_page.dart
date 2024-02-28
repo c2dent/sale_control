@@ -46,7 +46,7 @@ class ClientListPage extends StatelessWidget {
                       icon: const Icon(Icons.filter_alt_rounded))
                 ],
               ),
-              drawer: const DrawerMenu(),
+              drawer: const DrawerMenu(index: 6),
               floatingActionButton: FloatingActionButton(
                 onPressed: () async {
                   bool? client = await Navigator.push(
@@ -104,7 +104,7 @@ class _ClientPage extends StatelessWidget {
             child: Center(
               child: Text(
                 "Hic zat tapylmadyy",
-                style: theme.textTheme.title2.copyWith(color: theme.colorTheme.textSecondary),
+                style: theme.textTheme.title2,
               ),
             ),
           ),
@@ -151,10 +151,10 @@ class _ClientPage extends StatelessWidget {
                               children: [
                                 Text(
                                   "${client.firstName} ${client.lastName}",
-                                  style: theme.textTheme.title1.copyWith(color: theme.colorTheme.textPrimary, fontSize: 20),
+                                  style: theme.textTheme.title1.copyWith(fontSize: 20),
                                 ),
                                 if (client.haveDebt)
-                                  Icon(Icons.check_circle, color: theme.colorTheme.success)
+                                  const Icon(Icons.check_circle)
                                 else
                                   Icon(Icons.cancel, color: theme.colorTheme.error)
                               ],
@@ -172,11 +172,11 @@ class _ClientPage extends StatelessWidget {
                               children: [
                                 Text(
                                   "${client.creator.firstName} ${client.creator.lastName}",
-                                  style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
+                                  style: theme.textTheme.subtitle,
                                 ),
                                 Text(
                                   formattingDateTime(client.createdAt),
-                                  style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
+                                  style: theme.textTheme.subtitle,
                                 ),
                               ],
                             )

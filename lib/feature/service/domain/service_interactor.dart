@@ -21,6 +21,8 @@ abstract class ServiceInteractor {
 
   Future<Either<DriftRequestError<DefaultDriftError>, bool>> delete(ServiceTableData service);
 
+  Future<Either<DriftRequestError<DefaultDriftError>, ServiceDetail>> detail(String id);
+
   Future<List<ContractData>> getContracts();
 
   Future<List<Office>> getOffices(Map<String, String>? params);
@@ -81,5 +83,10 @@ class ServiceInteractorImpl extends ServiceInteractor {
 
     if (result.isLeft) return [];
     return result.right;
+  }
+
+  @override
+  Future<Either<DriftRequestError<DefaultDriftError>, ServiceDetail>> detail(String id) {
+    return repository.detail(id);
   }
 }

@@ -23,6 +23,8 @@ abstract class PaymentInteractor {
 
   Future<Either<DriftRequestError<DefaultDriftError>, bool>> delete(PaymentData paymentData);
 
+  Future<Either<DriftRequestError<DefaultDriftError>, PaymentDetail>> detail(String id);
+
   Future<List<Employee>> getEmployees(Map<String, String>? params);
 
   Future<List<ContractData>> getContracts();
@@ -100,5 +102,10 @@ class PaymentInteractorImpl extends PaymentInteractor {
     final result = await officeRepository.getList({});
     if (result.isLeft) return [];
     return result.right;
+  }
+
+  @override
+  Future<Either<DriftRequestError<DefaultDriftError>, PaymentDetail>> detail(String id) {
+    return repository.detail(id);
   }
 }

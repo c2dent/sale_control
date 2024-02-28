@@ -1,10 +1,9 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
-import 'package:hasap_admin/core/services/settings_service.dart';
 import 'package:hasap_admin/feature/auth/domain/auth_interactor.dart';
 import 'package:hasap_admin/feature/auth/presentation/bloc/login_bloc_models.dart';
 import 'package:injectable/injectable.dart';
@@ -15,7 +14,6 @@ class LoginBloc extends SrBloc<LoginEvent, LoginState, LoginSR> {
   final AuthInteractor _authInteractor;
   final NotifyErrorSnackbar _notifyErrorSnackbar;
 
-  final SettingsService _settingsService;
   late GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -24,8 +22,7 @@ class LoginBloc extends SrBloc<LoginEvent, LoginState, LoginSR> {
   LoginBloc(
     this._authInteractor,
     this._notifyErrorSnackbar,
-  )   : _settingsService = GetIt.instance.get<SettingsService>(),
-        super(const LoginState.empty()) {
+  ) : super(const LoginState.empty()) {
     on<LoginEventInit>(_init);
     on<LoginEventAuthorize>(_authorize);
     on<LoginEventSwitchShowPassword>(_switchShowPassword);

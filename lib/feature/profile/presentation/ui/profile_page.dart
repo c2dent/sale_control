@@ -2,10 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/models/user.dart';
+import 'package:hasap_admin/core/storage/datebase/app_database.dart';
+import 'package:hasap_admin/core/widgets/constants.dart';
 import 'package:hasap_admin/core/widgets/drawer_menu.dart';
+import 'package:hasap_admin/core/widgets/snackbar/error_snackbar.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/core/widgets/utils.dart';
 import 'package:hasap_admin/feature/profile/presentation/bloc/profile_bloc.dart';
@@ -26,7 +28,7 @@ class ProfilePage extends StatelessWidget {
               appBar: AppBar(
                 title: const Text("Profile"),
               ),
-              drawer: const DrawerMenu(),
+              drawer: const DrawerMenu(index: 0),
               body: state.map(
                 empty: (_) => const Center(child: CircularProgressIndicator()),
                 data: (state) => _ProfilePage(state: state),
@@ -40,6 +42,8 @@ class ProfilePage extends StatelessWidget {
     sr.when(
       showDioError: (error, notifier) => notifier.notify(error, context),
       successNotify: (text) => SuccessSnackbar.show(context: context, text: text),
+      errorNotify: (text) => ErrorSnackbar.show(context: context, text: text),
+      logout: () => context.router.replaceNamed('/login'),
     );
   }
 }
@@ -47,26 +51,18 @@ class ProfilePage extends StatelessWidget {
 class _ProfilePage extends StatelessWidget {
   final ProfileStateData state;
 
-  const _ProfilePage({required this.state, Key? key}) : super(key: key);
+  const _ProfilePage({required this.state});
 
   @override
   Widget build(BuildContext context) {
     final User? user = state.user;
-    AppTheme theme = AppTheme.of(context);
+    ThemeData theme = Theme.of(context);
     final bloc = context.read<ProfileBloc>();
+    OfficeTableData office = state.data.office;
 
     if (state.data.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-
-    const rowSpacer = TableRow(children: [
-      SizedBox(
-        height: 8,
-      ),
-      SizedBox(
-        height: 8,
-      )
-    ]);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 3),
@@ -76,51 +72,15 @@ class _ProfilePage extends StatelessWidget {
           const SizedBox(height: 15),
           Table(
             children: [
-              TableRow(children: [
-                TableCell(
-                  child: Text("Ady", style: theme.textTheme.title2.copyWith(color: theme.colorTheme.textSecondary)),
-                ),
-                TableCell(
-                  child: Text(
-                    "${user!.employee.firstName} ${user.employee.lastName}",
-                    style: theme.textTheme.title1,
-                  ),
-                )
-              ]),
-              rowSpacer,
-              TableRow(children: [
-                TableCell(
-                  child: Text("Wesipesi", style: theme.textTheme.title2.copyWith(color: theme.colorTheme.textSecondary)),
-                ),
-                TableCell(
-                  child: Text(user.permission, style: theme.textTheme.title1),
-                )
-              ]),
-              rowSpacer,
-              TableRow(children: [
-                TableCell(
-                  child: Text("Ofisi", style: theme.textTheme.title2.copyWith(color: theme.colorTheme.textSecondary)),
-                ),
-                TableCell(
-                  child: Text(user.office.title, style: theme.textTheme.title1),
-                )
-              ]),
-              rowSpacer,
-              TableRow(children: [
-                TableCell(
-                  child: Text("Balansy", style: theme.textTheme.title2.copyWith(color: theme.colorTheme.textSecondary)),
-                ),
-                TableCell(child: Text("${formatCurrency(user.office.balance)} TMT", style: theme.textTheme.title1)),
-              ]),
-              rowSpacer,
-              TableRow(children: [
-                TableCell(
-                  child: Text("Filter sany", style: theme.textTheme.title2.copyWith(color: theme.colorTheme.textSecondary)),
-                ),
-                TableCell(
-                  child: Text(user.office.filterCount.toString(), style: theme.textTheme.title1),
-                )
-              ])
+              getTableRow("Ady", Text("${user!.employee.firstName} ${user.employee.lastName}", style: theme.textTheme.labelLarge), theme, withExpanded: true),
+              rowSpacerTwoColumn,
+              getTableRow("Wesipesi", Text(user.permission, style: theme.textTheme.labelLarge), theme),
+              rowSpacerTwoColumn,
+              getTableRow("Ofisi", Text(office.title, style: theme.textTheme.labelLarge), theme),
+              rowSpacerTwoColumn,
+              getTableRow("Balansy", Text("${formatCurrency(office.balance)} TMT", style: theme.textTheme.labelLarge), theme),
+              rowSpacerTwoColumn,
+              getTableRow("Filter sany", Text(office.filterCount.toString(), style: theme.textTheme.labelLarge), theme),
             ],
           ),
           const SizedBox(height: 30),
@@ -131,30 +91,40 @@ class _ProfilePage extends StatelessWidget {
                   child: const Text("Balansy hasapla"))
             ],
           ),
-
           const SizedBox(height: 20),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
-                onPressed: () => state.data.syncLoading ? null : bloc.add(const ProfileEvent.synchronize()),
+                onPressed: state.data.syncLoading ? null : () => bloc.add(const ProfileEvent.synchronize()),
                 child: const Text("Synhronizle"),
               ),
-              if (state.data.syncLoading) const CircularProgressIndicator()
-              else Text(state.data.syncStatus, style: theme.textTheme.title2),
+              Row(
+                children: [
+                  if (state.data.syncLoading)
+                    const SizedBox(width: 20, height: 20, child: CircularProgressIndicator())
+                  else
+                    Text(state.data.syncStatus, style: theme.textTheme.bodyMedium),
+                  const SizedBox(width: 20)
+                ],
+              )
             ],
           ),
-
           const SizedBox(height: 30),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color?>(theme.colorTheme.error)),
-                  onPressed: () => bloc.add(ProfileEvent.logout(context)),
-                  child: const Text("Chykmak"))
-            ],
+          Expanded(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color?>(theme.colorScheme.error)),
+                    onPressed: () => bloc.add(const ProfileEvent.logout()),
+                    child: Text(
+                      "Chykmak",
+                      style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.onError),
+                    ))
+              ],
+            ),
           )
         ],
       ),

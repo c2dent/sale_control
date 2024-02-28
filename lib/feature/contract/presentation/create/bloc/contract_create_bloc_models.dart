@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
-import 'package:hasap_admin/core/models/employee.dart';
 import 'package:hasap_admin/core/models/region.dart';
-import 'package:hasap_admin/feature/client/data/client_models.dart';
+import 'package:hasap_admin/core/storage/datebase/app_database.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 
 part 'contract_create_bloc_models.freezed.dart';
@@ -22,9 +21,11 @@ class ContractCreateEvent with _$ContractCreateEvent {
     required List<Region?> regions,
   }) = ContractCreateEventSelectRegion;
 
-  const factory ContractCreateEvent.selectAdvertiser({required Employee? employee}) = ContractCreateEventSelectAdvertiser;
+  const factory ContractCreateEvent.selectAdvertiser({required EmployeeTableData? employee}) = ContractCreateEventSelectAdvertiser;
 
-  const factory ContractCreateEvent.setupDate({required DateTime date}) = ContractCreateEventSetupDate;
+  const factory ContractCreateEvent.selectDate({required DateTime date}) = ContractCreateEventSelectDate;
+
+  const factory ContractCreateEvent.selectNextPaymentDate({required DateTime date}) = ContractCreateEventSelectNextPaymentDate;
 }
 
 @freezed
@@ -57,13 +58,15 @@ class ContractCreateState with _$ContractCreateState {
     required TextEditingController description,
     required Region? region,
     required List<Region?> regions,
-    required Employee? advertiser,
+    required EmployeeTableData? advertiser,
     required TextEditingController monthCount,
     required TextEditingController dueDateOnMonth,
     required TextEditingController priceAmount,
     required TextEditingController filterCount,
     required TextEditingController paidAmount,
     required DateTime setupDate,
+    required DateTime nextPaymentDate,
+    required List<EmployeeTableData> employees,
     required ContractData? contract,
   }) = ContractCreateStateData;
 }

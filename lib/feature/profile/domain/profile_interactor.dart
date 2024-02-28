@@ -1,31 +1,27 @@
-import 'package:flutter/material.dart';
-import 'package:hasap_admin/arch/dio_error_handler/models/dio_error_models.dart';
+import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.dart';
 import 'package:hasap_admin/arch/functional_models/either.dart';
-import 'package:hasap_admin/core/models/office.dart';
 import 'package:hasap_admin/core/repositories/office_repository.dart';
-import 'package:hasap_admin/feature/auth/data/auth_repository.dart';
+import 'package:hasap_admin/core/storage/datebase/app_database.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class ProfileInteractor {
-  void unAuthorize(BuildContext context);
-
-  Future<Either<CommonResponseError<DefaultApiError>, Office>> recalculateBalance(Office office);
+  Future<Either<DriftRequestError<DefaultDriftError>, bool>> recalculateBalance();
+  Future<Either<DriftRequestError<DefaultDriftError>, OfficeTableData>> get(String id);
 }
 
 @Singleton(as: ProfileInteractor)
 class ProfileInteractorImpl extends ProfileInteractor {
-  final AuthRepository _authRepository;
   final OfficeRepository _officeRepository;
 
-  ProfileInteractorImpl(this._authRepository, this._officeRepository);
+  ProfileInteractorImpl(this._officeRepository);
 
   @override
-  void unAuthorize(BuildContext context) {
-    _authRepository.unAuthorize(context);
+  Future<Either<DriftRequestError<DefaultDriftError>, bool>> recalculateBalance() {
+    return _officeRepository.recalculateBalance();
   }
 
   @override
-  Future<Either<CommonResponseError<DefaultApiError>, Office>> recalculateBalance(Office office) {
-    return _officeRepository.recalculateBalance(office);
+  Future<Either<DriftRequestError<DefaultDriftError>, OfficeTableData>> get(String id) {
+    return _officeRepository.get(id);
   }
 }

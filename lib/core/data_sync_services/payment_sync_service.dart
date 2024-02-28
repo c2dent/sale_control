@@ -20,18 +20,20 @@ class PaymentSyncService implements TableSync {
   TypeStoreKey<String> get updateDatetimeKey => StoreKeys.prefsPaymentLastUpdateDateKey;
 
   @override
-  Future<void> incomingSync(Map<String, String> params) async {
+  Future<bool> incomingSync(Map<String, String> params) async {
     final result = await _apiService.listSync(params);
-    if (result.isLeft) return;
+    if (result.isLeft) return false;
 
     List<PaymentSync> payments = result.right;
     for (PaymentSync payment in payments) {
       PaymentTableCompanion companion = _mapper.fromPaymentSync(payment);
       final result = await _dao.isExists(payment.id);
-      if (result.right) return;
+      if (result.isLeft) return false;
 
-      result.right ? await _dao.updatePayment(companion) : await _dao.insertPayment(companion);
+      final res = result.right ? await _dao.updatePayment(companion) : await _dao.insertPayment(companion);
+      if (res.isLeft) return false;
     }
+    return true;
   }
 
   @override

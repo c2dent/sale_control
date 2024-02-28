@@ -8,7 +8,7 @@ import 'package:hasap_admin/feature/auth/presentation/bloc/login_bloc_models.dar
 
 @RoutePage()
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,34 +18,31 @@ class LoginPage extends StatelessWidget {
           onSR: _onSingleResult,
           builder: (_, blocState) {
             return Scaffold(
-              appBar: AppBar(
-                title: const Text("Авторизация", style: TextStyle(color: Colors.white)),
-              ),
-              body: blocState.map(
-                empty: (_) => const Center(),
-                data: (state) => _LoginScreen(state: state),
-              )
-            );
+                appBar: AppBar(
+                  title: const Text("Авторизация", style: TextStyle(color: Colors.white)),
+                ),
+                body: blocState.map(
+                  empty: (_) => const Center(),
+                  data: (state) => _LoginScreen(state: state),
+                ));
           }),
     );
   }
 
   void _onSingleResult(BuildContext context, LoginSR sr) {
-    sr.when(
-        success: () => context.router.replaceNamed('/contract_list'),
-        showDioError: (error, notifier) => notifier.notify(error, context)
-    );
+    sr.when(success: () => context.router.replaceNamed('/contract_list'), showDioError: (error, notifier) => notifier.notify(error, context));
   }
 }
 
 class _LoginScreen extends StatelessWidget {
   final LoginStateData state;
 
-  const _LoginScreen({required this.state, Key? key}) : super(key: key);
+  const _LoginScreen({required this.state});
 
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<LoginBloc>();
+    ThemeData theme = Theme.of(context);
 
     void onClick() {
       if (state.formKey.currentState!.validate()) {
@@ -58,14 +55,17 @@ class _LoginScreen extends StatelessWidget {
         constraints: const BoxConstraints(maxWidth: 400),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
             Form(
                 key: state.formKey,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
+                      Image.asset('assets/images/logo.png', width: 120, color: theme.colorScheme.primary, height: 120),
+                      const SizedBox(height: 40),
                       TextFormField(
                         controller: state.usernameController,
                         onFieldSubmitted: (String? val) {
@@ -74,8 +74,10 @@ class _LoginScreen extends StatelessWidget {
                           }
                         },
                         decoration: const InputDecoration(
-                          hintText: "Имя пользователя",
-                          icon: Icon(Icons.account_box),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                          isDense: true,
+                          labelText: "Ulanyjyn ady",
+                          border: OutlineInputBorder(),
                         ),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
@@ -84,6 +86,7 @@ class _LoginScreen extends StatelessWidget {
                           return null;
                         },
                       ),
+                      const SizedBox(height: 10),
                       TextFormField(
                         controller: state.passwordController,
                         obscureText: !state.showPassword,
@@ -93,13 +96,10 @@ class _LoginScreen extends StatelessWidget {
                           }
                         },
                         decoration: InputDecoration(
-                          hintText: "Пароль",
-                          icon: const Icon(Icons.lock),
-                          suffixIcon: IconButton(
-                              onPressed: () => bloc.add(const LoginEvent.switchShowPassword()),
-                              icon: const Icon(Icons.visibility)
-                          )
-                        ),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                            border: const OutlineInputBorder(),
+                            hintText: "Parol",
+                            suffixIcon: IconButton(onPressed: () => bloc.add(const LoginEvent.switchShowPassword()), icon: const Icon(Icons.visibility))),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
                             return 'Пожалуюста заполните поля';
@@ -108,16 +108,15 @@ class _LoginScreen extends StatelessWidget {
                         },
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        child: Column(
-                          children: [
-                            ElevatedButton(
-                              onPressed: !state.isLoading ? onClick : null,
-                              child: const Text("Войти"),
-                            ),
-                          ],
-                        )
-                      )
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          child: Column(
+                            children: [
+                              ElevatedButton(
+                                onPressed: !state.isLoading ? onClick : null,
+                                child: const Text("Girmek"),
+                              ),
+                            ],
+                          ))
                     ],
                   ),
                 ))
@@ -126,5 +125,4 @@ class _LoginScreen extends StatelessWidget {
       ),
     );
   }
-
 }

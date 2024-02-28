@@ -23,6 +23,8 @@ abstract class PaymentRepository {
   Future<Either<DriftRequestError<DefaultDriftError>, List<PaymentData>>> getAllDb();
 
   Future<Either<DriftRequestError<DefaultDriftError>, bool>> deleteDb(String id);
+
+  Future<Either<DriftRequestError<DefaultDriftError>, PaymentDetail>> detail(String id);
 }
 
 @Singleton(as: PaymentRepository)
@@ -70,5 +72,10 @@ class PaymentRepositoryImpl extends PaymentRepository {
   @override
   Future<Either<DriftRequestError<DefaultDriftError>, bool>> deleteDb(String id) {
     return paymentDao.deletePayment(id);
+  }
+
+  @override
+  Future<Either<DriftRequestError<DefaultDriftError>, PaymentDetail>> detail(String id) {
+    return paymentDao.detail(id);
   }
 }

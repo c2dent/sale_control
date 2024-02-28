@@ -19,21 +19,20 @@ class ContractSyncService implements TableSync {
   TypeStoreKey<String> get updateDatetimeKey => StoreKeys.prefsContractLastUpdateDateKey;
 
   @override
-  Future<void> incomingSync(Map<String, String> params) async {
+  Future<bool> incomingSync(Map<String, String> params) async {
     final result = await _apiService.listSync(params);
-
-    if (result.isLeft) {
-      return;
-    }
+    if (result.isLeft) return false;
 
     List<ContractSync> contracts = result.right;
     for (ContractSync contract in contracts) {
       ContractTableCompanion contractTableCompanion = ContractMapper.fromContractSync(contract);
       final result = await _dao.isExists(contract.id);
-      if (result.isLeft) return;
+      if (result.isLeft) return false;
 
-      result.right ? await _dao.updateContract(contractTableCompanion) : await _dao.insertContract(contractTableCompanion);
+      final res = result.right ? await _dao.updateContract(contractTableCompanion) : await _dao.insertContract(contractTableCompanion);
+      if (res.isLeft) return false;
     }
+    return true;
   }
 
   @override

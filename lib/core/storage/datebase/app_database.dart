@@ -8,8 +8,10 @@ import 'package:hasap_admin/core/storage/datebase/daos/employee_dao.dart';
 import 'package:hasap_admin/core/storage/datebase/daos/office_dao.dart';
 import 'package:hasap_admin/core/storage/datebase/daos/operation_dao.dart';
 import 'package:hasap_admin/core/storage/datebase/daos/payment_dao.dart';
+import 'package:hasap_admin/core/storage/datebase/daos/product_dao.dart';
 import 'package:hasap_admin/core/storage/datebase/daos/region_dao.dart';
 import 'package:hasap_admin/core/storage/datebase/daos/service_dao.dart';
+import 'package:hasap_admin/core/storage/datebase/tables/admission_table.dart';
 import 'package:hasap_admin/core/storage/datebase/tables/client_table.dart';
 import 'package:hasap_admin/core/storage/datebase/tables/contract_return_table.dart';
 import 'package:hasap_admin/core/storage/datebase/tables/contract_table.dart';
@@ -17,14 +19,45 @@ import 'package:hasap_admin/core/storage/datebase/tables/employee_table.dart';
 import 'package:hasap_admin/core/storage/datebase/tables/office_table.dart';
 import 'package:hasap_admin/core/storage/datebase/tables/operation_table.dart';
 import 'package:hasap_admin/core/storage/datebase/tables/payment_table.dart';
+import 'package:hasap_admin/core/storage/datebase/tables/product_operation_table.dart';
+import 'package:hasap_admin/core/storage/datebase/tables/product_table.dart';
 import 'package:hasap_admin/core/storage/datebase/tables/region_table.dart';
 import 'package:hasap_admin/core/storage/datebase/tables/service_table.dart';
+
+import 'daos/admission_dao.dart';
+import 'daos/product_operation_dao.dart';
 
 part 'app_database.g.dart';
 
 @DriftDatabase(
-  tables: [RegionTable, OfficeTable, EmployeeTable, ClientTable, ContractTable, ContractReturnTable, OperationTable, PaymentTable, ServiceTable],
-  daos: [RegionDao, ClientDao, OfficeDao, EmployeeDao, ContractDao, ContractReturnDao, OperationDao, PaymentDao, ServiceDao],
+  tables: [
+    RegionTable,
+    OfficeTable,
+    EmployeeTable,
+    ClientTable,
+    ContractTable,
+    ContractReturnTable,
+    OperationTable,
+    PaymentTable,
+    ServiceTable,
+    ProductTable,
+    ProductOperationTable,
+    AdmissionTable,
+  ],
+  daos: [
+    RegionDao,
+    ClientDao,
+    OfficeDao,
+    EmployeeDao,
+    ContractDao,
+    ContractReturnDao,
+    OperationDao,
+    PaymentDao,
+    ServiceDao,
+    ProductDao,
+    ProductOperationDao,
+    AdmissionDao
+  ],
 )
 class AppDatabase extends _$AppDatabase {
   @protected

@@ -15,7 +15,7 @@ part 'contract_return_dao.g.dart';
 class ContractReturnDao extends DatabaseAccessor<AppDatabase> with _$ContractReturnDaoMixin {
   final DriftErrorHandler<DefaultDriftError> _errorHandler = GetIt.instance.get<DriftErrorHandler<DefaultDriftError>>();
 
-  ContractReturnDao(AppDatabase db) : super(db);
+  ContractReturnDao(super.db);
 
   Future<Either<DriftRequestError<DefaultDriftError>, List<ContractReturnData>>> getAll() async =>
       await _errorHandler.processRequest(() async => await (select(contractReturnTable)
@@ -25,12 +25,14 @@ class ContractReturnDao extends DatabaseAccessor<AppDatabase> with _$ContractRet
             leftOuterJoin(db.contractTable, db.contractTable.id.equalsExp(contractReturnTable.contractId), useColumns: true),
             leftOuterJoin(db.employeeTable, db.employeeTable.id.equalsExp(contractReturnTable.creatorId), useColumns: true),
             leftOuterJoin(db.clientTable, db.clientTable.id.equalsExp(db.contractTable.clientId), useColumns: true),
+            leftOuterJoin(db.regionTable, db.regionTable.id.equalsExp(db.clientTable.regionId), useColumns: true),
           ])
           .map((row) => ContractReturnData(
               contract: row.readTable(db.contractTable),
               contractReturn: row.readTable(contractReturnTable),
               creator: row.readTable(db.employeeTable),
-              client: row.readTable(db.clientTable)))
+              client: row.readTable(db.clientTable),
+              region: row.readTable(db.regionTable)))
           .get());
 
   Future<Either<DriftRequestError<DefaultDriftError>, int>> insertContractReturn(ContractReturnTableCompanion contractReturn) async =>

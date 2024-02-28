@@ -156,3 +156,21 @@ DateTime addMonths(DateTime dateTime, int monthsToAdd) {
 
   return DateTime(year, month, day, dateTime.hour, dateTime.minute, dateTime.second, dateTime.millisecond, dateTime.microsecond);
 }
+
+TableRow getTableRow(String name, Widget value, ThemeData theme, {bool? withExpanded}) {
+  return TableRow(children: [
+    TableCell(
+      child: Text(name, style: theme.textTheme.titleMedium),
+    ),
+    TableCell(
+        child: Row(
+          children: [
+            withExpanded != null ? Expanded(child: value) : value,
+          ],
+        ))
+  ]);
+}
+
+TableRow tableSizedBox({required double height}) {
+  return TableRow(children: [TableCell(child: SizedBox(height: height)), TableCell(child: SizedBox(height: height))]);
+}

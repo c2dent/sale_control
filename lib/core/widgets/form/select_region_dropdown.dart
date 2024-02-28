@@ -5,13 +5,12 @@ import 'package:hasap_admin/core/repositories/region_repository.dart';
 import 'package:hasap_admin/core/widgets/c_dropdown_search.dart';
 
 class SelectRegionDropdown extends StatelessWidget {
-  void Function(Region? region, List<Region?> regions) onChange;
-  List<Region?> regions;
-  Future<List<Region>> Function(Region? region) getRegions;
+  final void Function(Region? region, List<Region?> regions) onChange;
+  final List<Region?> regions;
+  final Future<List<Region>> Function(Region? region) getRegions;
+  final RegionRepository regionRepository = GetIt.instance<RegionRepository>();
 
   SelectRegionDropdown({super.key, required this.onChange, required this.getRegions, required this.regions});
-
-  final RegionRepository regionRepository = GetIt.instance<RegionRepository>();
 
   void change(int index, Region? region) {
     List<Region?> tmp = [];

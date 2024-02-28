@@ -2,19 +2,20 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
-import 'package:hasap_admin/core/storage/datebase/app_database.dart';
 import 'package:hasap_admin/core/widgets/drawer_menu.dart';
 import 'package:hasap_admin/core/widgets/filter_screen.dart';
-import 'package:hasap_admin/core/widgets/line_progress.dart';
 import 'package:hasap_admin/core/widgets/snackbar/error_snackbar.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/core/widgets/utils.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/contract/presentation/create/ui/contract_create_page.dart';
+import 'package:hasap_admin/feature/contract/presentation/detail/ui/contract_detail_page.dart';
 import 'package:hasap_admin/feature/contract/presentation/list/bloc/contract_bloc.dart';
 import 'package:hasap_admin/feature/contract/presentation/list/bloc/contract_bloc_models.dart';
+import 'package:hasap_admin/feature/contract/presentation/list/ui/badge_button.dart';
+import 'package:hasap_admin/feature/contract/presentation/list/ui/helper.dart';
+import 'package:hasap_admin/core/widgets/text_clipboard.dart';
 import 'package:hasap_admin/feature/payment/presentation/create/ui/payment_create_page.dart';
 import 'package:hasap_admin/feature/service/presentation/create/ui/service_create_page.dart';
 
@@ -30,7 +31,7 @@ class ContractListPage extends StatelessWidget {
         onSR: _onSingleResult,
         builder: (context, state) {
           final bloc = context.read<ContractBloc>();
-          AppTheme theme = AppTheme.of(context);
+          ThemeData theme = Theme.of(context);
 
           return Scaffold(
               appBar: AppBar(
@@ -48,7 +49,7 @@ class ContractListPage extends StatelessWidget {
                       icon: const Icon(Icons.filter_alt_rounded))
                 ],
               ),
-              drawer: const DrawerMenu(),
+              drawer: const DrawerMenu(index: 1),
               floatingActionButton: FloatingActionButton(
                 onPressed: () async {
                   bool? contract = await Navigator.push(
@@ -60,8 +61,11 @@ class ContractListPage extends StatelessWidget {
                     bloc.add(const ContractEvent.filter());
                   }
                 },
-                backgroundColor: theme.colorTheme.primary,
-                child: const Icon(Icons.add_circle_outline),
+                backgroundColor: theme.colorScheme.primary,
+                child: Icon(
+                  Icons.add_circle_outline,
+                  color: theme.colorScheme.onPrimary,
+                ),
               ),
               body: state.map(
                 empty: (_) => const Center(child: CircularProgressIndicator()),
@@ -79,6 +83,7 @@ class ContractListPage extends StatelessWidget {
       showDioError: (error, notifier) => ErrorSnackbar.show(context: context, text: error.safeCustom!.error),
       successNotify: (text) => SuccessSnackbar.show(context: context, text: text),
       delete: (client) => bloc.add(const ContractEvent.filter()),
+      logout: () => context.router.replaceNamed('/login'),
     );
   }
 }
@@ -86,11 +91,11 @@ class ContractListPage extends StatelessWidget {
 class _ContractPage extends StatelessWidget {
   final ContractStateData state;
 
-  const _ContractPage({required this.state, Key? key}) : super(key: key);
+  const _ContractPage({required this.state});
 
   @override
   Widget build(BuildContext context) {
-    AppTheme theme = AppTheme.of(context);
+    ThemeData theme = Theme.of(context);
     Offset tapPosition = Offset.zero;
     final bloc = context.read<ContractBloc>();
 
@@ -107,7 +112,7 @@ class _ContractPage extends StatelessWidget {
             child: Center(
               child: Text(
                 "Hic zat tapylmadyy",
-                style: theme.textTheme.title2.copyWith(color: theme.colorTheme.textSecondary),
+                style: theme.textTheme.titleMedium,
               ),
             ),
           ),
@@ -131,6 +136,10 @@ class _ContractPage extends StatelessWidget {
                   (Color, Color) paymentColor = getPaymentColor(contract.contract, theme);
 
                   return GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ContractDetailPage(contractTableData: contract.contract)),
+                    ),
                     onLongPress: () => showContextMenu(context, tapPosition, edit: () async {
                       bool? updateContract = await Navigator.push(
                         context,
@@ -145,15 +154,8 @@ class _ContractPage extends StatelessWidget {
                       tapPosition = Offset(details.globalPosition.dx, details.globalPosition.dy);
                     }),
                     child: Card(
+                      elevation: 3,
                       child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [paymentColor.$1.withOpacity(0.3), paymentColor.$2],
-                            begin: Alignment.topCenter, // Начальная точка градиента
-                            end: Alignment.bottomCenter, // Конечная точка градиента
-                            stops: const [0.0, 0.15], // Остановки для цветов градиента (можно настроить по желанию)
-                          ),
-                        ),
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                         child: Column(
                           children: [
@@ -162,9 +164,9 @@ class _ContractPage extends StatelessWidget {
                               children: [
                                 Text(
                                   contract.clientName,
-                                  style: theme.textTheme.title1.copyWith(color: theme.colorTheme.textPrimary, fontSize: 20),
+                                  style: theme.textTheme.bodyLarge,
                                 ),
-                                if (!contract.contract.isSynced) const Icon(Icons.sync, color: Colors.blueAccent)
+                                if (!contract.contract.isSynced) Icon(Icons.sync, color: theme.colorScheme.tertiary)
                               ],
                             ),
                             const SizedBox(height: 5),
@@ -174,65 +176,68 @@ class _ContractPage extends StatelessWidget {
                                 Row(
                                   children: [
                                     const Icon(Icons.phone, size: 17),
-                                    const SizedBox(width: 10),
-                                    Text("+993 ${contract.client.phone}", style: theme.textTheme.title2),
-                                    const SizedBox(width: 10),
-                                    Text(contract.client.phone2 ?? ""),
+                                    const SizedBox(width: 5),
+                                    ClipboardText(text: "+993 ${contract.client.phone}", value: '+993${contract.client.phone}'),
+                                    const SizedBox(width: 5),
+                                    if (contract.client.phone2 != null && contract.client.phone2 != "")
+                                      ClipboardText(text: "+993 ${contract.client.phone2}", value: '+993${contract.client.phone2}'),
                                   ],
                                 ),
-                                Card(
-                                  color: paymentColor.$1.withOpacity(0.7),
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-                                      child: Text(getPaymentDate(contract.contract), style: TextStyle(color: paymentColor.$2, fontWeight: FontWeight.bold))),
-                                ),
+                                Badge(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    textColor: paymentColor.$2,
+                                    largeSize: 23,
+                                    label: Text(getPaymentDate(contract.contract), style: theme.textTheme.titleMedium?.copyWith(color: paymentColor.$2)),
+                                    backgroundColor: paymentColor.$1),
                               ],
                             ),
                             const SizedBox(height: 5),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Toleg: ", style: theme.textTheme.title2),
+                                Text("Toleg: ", style: theme.textTheme.bodyMedium),
                                 Text("${formatCurrency(contract.contract.priceAmount)} тмт/ ${formatCurrency(contract.contract.paidAmount)} тмт",
-                                    style: theme.textTheme.title2)
+                                    style: theme.textTheme.bodyMedium)
                               ],
                             ),
                             const SizedBox(height: 5),
-                            CustomProgressBar(progress: contract.contract.paidAmount / contract.contract.priceAmount),
+                            LinearProgressIndicator(
+                                minHeight: 6,
+                                borderRadius: const BorderRadius.all(Radius.circular(3)),
+                                value: contract.contract.paidAmount / contract.contract.priceAmount,
+                                backgroundColor: Theme.of(context).colorScheme.error),
                             const SizedBox(height: 5),
-                            if (!contract.contract.closed)
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  TextButton(
-                                      style: TextButton.styleFrom(
-                                          backgroundColor: theme.colorTheme.primary, padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 0.0)),
-                                      onPressed: () async => await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => PaymentCreatePage(contractData: contract)),
-                                          ),
-                                      child: Text("+ Toleg", style: theme.textTheme.title1.copyWith(color: theme.colorTheme.onPrimary))),
-                                  TextButton(
-                                      style: TextButton.styleFrom(
-                                          backgroundColor: theme.colorTheme.primary, padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 0.0)),
-                                      onPressed: () async => await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => ServiceCreatePage(contractData: contract)),
-                                          ),
-                                      child: Text("+ Hyzmat", style: theme.textTheme.title1.copyWith(color: theme.colorTheme.onPrimary))),
-                                ],
-                              ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(contract.creatorName, style: theme.textTheme.title2),
+                                Text(contract.creatorName, style: theme.textTheme.bodySmall),
                                 Text(
                                   formattingDateTime(contract.contract.setupDate),
-                                  style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
+                                  style: theme.textTheme.bodySmall,
                                 ),
                               ],
-                            )
+                            ),
+                            if (!contract.contract.closed)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  BadgeButton(
+                                    onTap: () async => await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => PaymentCreatePage(contractTableData: contract.contract)),
+                                    ),
+                                    text: '+ Toleg',
+                                  ),
+                                  const SizedBox(width: 10),
+                                  BadgeButton(
+                                    onTap: () async => await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => ServiceCreatePage(contractTableData: contract.contract)),
+                                    ),
+                                    text: '+ Hyzmat',
+                                  ),
+                                ],
+                              ),
                           ],
                         ),
                       ),
@@ -243,26 +248,5 @@ class _ContractPage extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String getPaymentDate(ContractTableData contractTableData) {
-    if (contractTableData.closed) return "yapyk";
-    return formattingDate(contractTableData.nextPaymentTime);
-  }
-
-  (Color, Color) getPaymentColor(ContractTableData contract, AppTheme theme) {
-    DateTime currentDate = DateTime.now();
-    Duration difference = contract.nextPaymentTime.difference(currentDate);
-    int daysDiff = difference.inDays;
-
-    if (contract.closed) {
-      return (theme.colorTheme.success, theme.colorTheme.onSuccess);
-    } else if (daysDiff > -1 && daysDiff < 6) {
-      return (theme.colorTheme.warning, theme.colorTheme.onWarning);
-    } else if (daysDiff > 5) {
-      return (theme.colorTheme.success, theme.colorTheme.onSuccess);
-    } else {
-      return (theme.colorTheme.error, theme.colorTheme.onError);
-    }
   }
 }

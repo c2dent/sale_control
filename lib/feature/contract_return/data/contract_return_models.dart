@@ -27,12 +27,14 @@ class ContractReturnData {
   final ContractTableData contract;
   final EmployeeTableData creator;
   final ClientTableData client;
+  final RegionTableData region;
 
   const ContractReturnData({
     required this.contract,
     required this.creator,
     required this.contractReturn,
     required this.client,
+    required this.region,
   });
 
   String get clientName => "${client.firstName} ${client.lastName}";

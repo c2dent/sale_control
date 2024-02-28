@@ -16,7 +16,7 @@ import 'package:hasap_admin/feature/contract_return/presentation/create/bloc/con
 class ContractReturnCreatePage extends StatelessWidget {
   final ContractReturnData? contractReturn;
 
-  const ContractReturnCreatePage({Key? key, this.contractReturn}) : super(key: key);
+  const ContractReturnCreatePage({super.key, this.contractReturn});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class ContractReturnCreatePage extends StatelessWidget {
         builder: (_, state) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text("Toleg goshmak"),
+              title: const Text("Yzyna almak"),
             ),
             body: state.map(
               empty: (_) => const Center(child: CircularProgressIndicator()),
@@ -43,6 +43,7 @@ class ContractReturnCreatePage extends StatelessWidget {
     sr.when(
       showDioError: (error, notifier) => ErrorSnackbar.show(context: context, text: error.safeCustom!.error),
       successNotify: (text) => SuccessSnackbar.show(context: context, text: text),
+      errorNotify: (text) => ErrorSnackbar.show(context: context, text: text),
       created: () => Navigator.pop(context, true),
     );
   }
@@ -51,7 +52,7 @@ class ContractReturnCreatePage extends StatelessWidget {
 class _ContractReturnCreatePage extends StatelessWidget {
   final ContractReturnCreateStateData state;
 
-  const _ContractReturnCreatePage({required this.state, Key? key}) : super(key: key);
+  const _ContractReturnCreatePage({required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -78,13 +79,11 @@ class _ContractReturnCreatePage extends StatelessWidget {
                       }),
                   const SizedBox(height: 16),
                   SelectContractDropdown(
-                    contract: state.data.contract,
+                    initialContract: state.data.contract,
                     onChange: (contract) {
                       bloc.add(ContractReturnCreateEvent.selectContract(contract: contract));
                     },
-                    getContracts: () async {
-                      return await bloc.interactor.getContracts();
-                    },
+                    items: state.data.contracts,
                   ),
                   const SizedBox(height: 10),
                   AppTextField(

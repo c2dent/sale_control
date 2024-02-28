@@ -29,6 +29,7 @@ class ContractReturnCreateSR with _$ContractReturnCreateSR {
   }) = _ShowDioErrorSnackbar;
 
   const factory ContractReturnCreateSR.successNotify({required String text}) = _SuccessNotify;
+  const factory ContractReturnCreateSR.errorNotify({required String text}) = _ErrorNotify;
 
   const factory ContractReturnCreateSR.created() = _ClientCreated;
 }
@@ -47,6 +48,7 @@ class ContractReturnCreateState with _$ContractReturnCreateState {
     required TextEditingController reason,
     required DateTime date,
     required ContractData? contract,
+    required List<ContractData> contracts,
     required ContractReturnData? contractReturn,
   }) = ContractReturnCreateStateData;
 }

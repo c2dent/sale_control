@@ -1,38 +1,55 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
+import 'package:hasap_admin/core/models/drawer_item.dart';
 
-class DrawerMenu extends StatelessWidget {
-  const DrawerMenu({Key? key}) : super(key: key);
+class DrawerMenu extends StatefulWidget {
+  final int index;
+
+  const DrawerMenu({Key? key, required this.index}) : super(key: key);
+
+  @override
+  State<DrawerMenu> createState() => _DrawerMenuState();
+}
+
+class _DrawerMenuState extends State<DrawerMenu> {
+  int screenIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    AppTheme theme = AppTheme.of(context);
+    screenIndex = widget.index;
 
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: theme.colorTheme.primary,
-            ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("FILTER", style: TextStyle(color: theme.colorTheme.onPrimary))
-                ],
-              )
+    List<DrawerItem> items = [
+      const DrawerItem(label: 'Profile', icon: Icon(Icons.contact_mail_outlined), selectedIcon: Icon(Icons.contact_mail), pathRoute: '/profile'),
+      const DrawerItem(label: 'Şertnamalar', icon: Icon(Icons.assignment_outlined), selectedIcon: Icon(Icons.assignment), pathRoute: '/contract_list'),
+      const DrawerItem(label: 'Tölegler', icon: Icon(Icons.attach_money_outlined), selectedIcon: Icon(Icons.attach_money), pathRoute: '/payment_list'),
+      const DrawerItem(label: 'Hyzmatlar', icon: Icon(Icons.room_service_outlined), selectedIcon: Icon(Icons.room_service), pathRoute: '/service_list'),
+      const DrawerItem(label: 'Yzyna alnan', icon: Icon(Icons.reply_outlined), selectedIcon: Icon(Icons.reply), pathRoute: '/return_list'),
+    ];
+
+    void handleScreenChanged(int selectedScreen) {
+      setState(() {
+        screenIndex = selectedScreen;
+        context.router.replaceNamed(items[selectedScreen].pathRoute);
+      });
+    }
+
+    return NavigationDrawer(
+      onDestinationSelected: handleScreenChanged,
+      selectedIndex: screenIndex,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(28, 16, 16, 10),
+          child: Text(
+            'Menu',
+            style: Theme.of(context).textTheme.titleSmall,
           ),
-
-          ListTile(leading: const Icon(Icons.contact_mail), title: const Text("Profile"), onTap: () => context.router.replaceNamed('/profile')),
-          ListTile(leading: const Icon(Icons.assignment), title: const Text("Şertnamalar"), onTap: () => context.router.replaceNamed('/contract_list')),
-          ListTile(leading: const Icon(Icons.attach_money), title: const Text("Tölegler"), onTap: () => context.router.replaceNamed('/payment_list')),
-          ListTile(leading: const Icon(Icons.room_service), title: const Text("Hyzmatlar"), onTap: () => context.router.replaceNamed('/service_list')),
-          ListTile(leading: const Icon(Icons.reply), title: const Text("Gaÿtarmalar"), onTap: () => context.router.replaceNamed('/return_list'))
-        ],
-      ),
+        ),
+        ...items.map((item) => NavigationDrawerDestination(
+              icon: item.icon,
+              label: Text(item.label),
+              selectedIcon: item.selectedIcon,
+            )),
+      ],
     );
   }
 }

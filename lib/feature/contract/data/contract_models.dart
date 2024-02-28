@@ -62,3 +62,29 @@ class ContractData {
 
   String get creatorName => "${creator.firstName} ${creator.lastName}";
 }
+
+class ContractDataDetail {
+  final ContractTableData contract;
+  final EmployeeTableData creator;
+  final ClientTableData client;
+  final ContractReturnTableData? contractReturn;
+  final List<PaymentTableData> payments;
+  final List<ServiceTableData> services;
+  final RegionTableData region;
+  final RegionTableData regionParent;
+  final List<EmployeeTableData> employees;
+
+  ContractDataDetail({
+    required this.contract,
+    required this.creator,
+    required this.client,
+    required this.payments,
+    required this.services,
+    required this.region,
+    required this.regionParent,
+    required this.employees,
+    required this.contractReturn,
+  });
+
+  String get regionName => "${regionParent.name} > ${region.name}";
+}

@@ -1,30 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:hasap_admin/core/widgets/c_dropdown_search.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 
 class SelectContractDropdown extends StatelessWidget {
   final void Function(ContractData?) onChange;
-  final ContractData? contract;
-  final Future<List<ContractData>> Function() getContracts;
-  final List<ContractData>? items;
+  final ContractData? initialContract;
+  final List<ContractData> items;
 
-  const SelectContractDropdown({Key? key, required this.contract, required this.onChange, required this.getContracts, this.items}) : super(key: key);
+  const SelectContractDropdown({super.key, required this.initialContract, required this.onChange, required this.items});
+
+  List<DropdownMenuEntry<ContractData>> getItems() {
+    List<DropdownMenuEntry<ContractData>> contracts = [];
+    for (ContractData item in items) {
+      contracts.add(DropdownMenuEntry<ContractData>(value: item, label: item.clientName));
+    }
+    return contracts;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return CDropDownSearch(
-      label: "Shertnama",
-      selectedItem: contract,
-      itemAsString: (ContractData contract) => contract.clientName,
-      onChanged: (ContractData? contract) {
+    return DropdownMenu<ContractData>(
+      enableFilter: true,
+      requestFocusOnTap: true,
+      expandedInsets: EdgeInsets.zero,
+      initialSelection: initialContract,
+      inputDecorationTheme: const InputDecorationTheme(
+        isDense: true,
+        contentPadding: EdgeInsets.only(left: 8),
+        border: OutlineInputBorder(),
+      ),
+      label: const Text("Shertnama"),
+      dropdownMenuEntries: getItems(),
+      onSelected: (ContractData? contract) {
         onChange(contract);
       },
-      validation: (ContractData? contract) {
-        if (contract == null) return "Hokman saylamaly";
-        return null;
-      },
-      asyncItems: (String? filter) => getContracts(),
-      compareFn: (item, sItem) => item.contract.id == sItem.contract.id,
     );
   }
 }

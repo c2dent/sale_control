@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
-import 'package:hasap_admin/core/widgets/c_dropdown_search.dart';
+import 'package:hasap_admin/core/storage/datebase/app_database.dart';
 import 'package:hasap_admin/core/widgets/form/date.dart';
 import 'package:hasap_admin/core/widgets/form/select_contract_dropdown.dart';
 import 'package:hasap_admin/core/widgets/form/text_field.dart';
@@ -17,14 +17,14 @@ import 'package:hasap_admin/feature/service/presentation/create/bloc/service_cre
 @RoutePage()
 class ServiceCreatePage extends StatelessWidget {
   final ServiceData? service;
-  final ContractData? contractData;
+  final ContractTableData? contractTableData;
 
-  const ServiceCreatePage({super.key, this.service, this.contractData});
+  const ServiceCreatePage({super.key, this.service, this.contractTableData});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ServiceCreateBloc>(
-        create: (context) => GetIt.I.get()..add(ServiceCreateEvent.init(service: service, contractData: contractData)),
+        create: (context) => GetIt.I.get()..add(ServiceCreateEvent.init(service: service, contract: contractTableData)),
         child: SrBlocBuilder<ServiceCreateBloc, ServiceCreateState, ServiceCreateSR>(
           onSR: _onSingleResult,
           builder: (_, state) {
@@ -50,7 +50,7 @@ class ServiceCreatePage extends StatelessWidget {
 class _CoalCreatePage extends StatelessWidget {
   final ServiceCreateStateData state;
 
-  const _CoalCreatePage({required this.state, Key? key}) : super(key: key);
+  const _CoalCreatePage({required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -77,23 +77,22 @@ class _CoalCreatePage extends StatelessWidget {
                       }),
                   const SizedBox(height: 10),
                   SelectContractDropdown(
-                    contract: state.contract,
+                    initialContract: state.contract,
                     onChange: (ContractData? contract) => bloc.add(ServiceCreateEvent.selectContractor(contract: contract)),
-                    getContracts: () async => bloc.interactor.getContracts(),
+                    items: state.data.contracts,
                   ),
                   const SizedBox(height: 10),
-
-                  CDropDownSearch<ServiceType>(
-                    label: "Hyzmat",
-                    selectedItem: state.type,
-                    itemAsString: (ServiceType type) => type.name,
-                    onChanged: (ServiceType? type) => bloc.add(ServiceCreateEvent.selectType(type: type)),
-                    validation: (ServiceType? type) {
-                      if (type == null) return "Hokman saylamaly";
-                      return null;
-                    },
-                    items: ServiceType.values,
-                    compareFn: (item, sItem) => item.value == sItem.value,
+                  DropdownMenu<ServiceType>(
+                    expandedInsets: EdgeInsets.zero,
+                    initialSelection: state.type,
+                    inputDecorationTheme: const InputDecorationTheme(
+                      isDense: true,
+                      contentPadding: EdgeInsets.only(left: 8),
+                      border: OutlineInputBorder(),
+                    ),
+                    label: const Text("Hyzmat"),
+                    dropdownMenuEntries: ServiceType.values.map((e) => DropdownMenuEntry<ServiceType>(value: e, label: e.name)).toList(),
+                    onSelected: (ServiceType? type) => bloc.add(ServiceCreateEvent.selectType(type: type)),
                   ),
                   const SizedBox(height: 10),
                   AppTextField(
@@ -109,7 +108,6 @@ class _CoalCreatePage extends StatelessWidget {
                     maxLines: 4,
                   ),
                   const SizedBox(height: 10),
-
                   ElevatedButton(
                     onPressed: () {
                       if (state.formKey.currentState!.validate()) {

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
-import 'package:hasap_admin/core/models/employee.dart';
 import 'package:hasap_admin/core/models/region.dart';
+import 'package:hasap_admin/core/storage/datebase/app_database.dart';
+import 'package:hasap_admin/core/widgets/form/date.dart';
 import 'package:hasap_admin/core/widgets/form/number_field.dart';
 import 'package:hasap_admin/core/widgets/form/select_employee_dropdown.dart';
 import 'package:hasap_admin/core/widgets/form/select_region_dropdown.dart';
@@ -50,11 +51,12 @@ class ContractCreatePage extends StatelessWidget {
 class _ContractCreatePage extends StatelessWidget {
   final ContractCreateStateData state;
 
-  const _ContractCreatePage({required this.state, Key? key}) : super(key: key);
+  const _ContractCreatePage({required this.state});
 
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<ContractCreateBloc>();
+    ThemeData theme = Theme.of(context);
 
     if (state.data.isLoading) {
       return const Center(child: CircularProgressIndicator());
@@ -75,7 +77,7 @@ class _ContractCreatePage extends StatelessWidget {
                     label: "Ady",
                     required: true,
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 18),
                   AppTextField(
                     controller: state.lastName,
                     label: "Familiyasy",
@@ -97,24 +99,56 @@ class _ContractCreatePage extends StatelessWidget {
                     maxLines: 4,
                   ),
                   const SizedBox(height: 10),
-                  AppTextField(
+                  AppNumberField(
+                    prefix: const Text("+993 "),
                     controller: state.phone,
                     label: "Nomer belgisi",
                     required: true,
                   ),
                   const SizedBox(height: 10),
-                  AppTextField(
+                  AppNumberField(
+                    prefix: const Text("+993 "),
                     controller: state.phone2,
                     label: "Nomer belgisi 2",
                     required: false,
                   ),
                   const SizedBox(height: 10),
                   SelectEmployeeDropdown(
-                    onChange: (Employee? employee) => bloc.add(ContractCreateEvent.selectAdvertiser(employee: employee)),
+                    onChange: (EmployeeTableData? employee) => bloc.add(ContractCreateEvent.selectAdvertiser(employee: employee)),
                     employee: state.advertiser,
-                    getEmployees: () async => bloc.interactor.getEmployees({}),
+                    employees: state.employees,
                   ),
                   const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Text("Gurnalan wagty: ", style: theme.textTheme.bodyLarge),
+                      const SizedBox(width: 15),
+                      Expanded(
+                        child: FormDate(
+                            defaultValue: state.data.setupDate,
+                            onConfirm: (date) {
+                              bloc.add(ContractCreateEvent.selectDate(date: date));
+                            }),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  if (state.data.contract != null) ...[
+                    Row(
+                      children: [
+                        Text("Geljekki toleg wagty: ", style: theme.textTheme.bodyLarge),
+                        const SizedBox(width: 15),
+                        Expanded(
+                          child: FormDate(
+                              defaultValue: state.data.nextPaymentDate,
+                              onConfirm: (date) {
+                                bloc.add(ContractCreateEvent.selectNextPaymentDate(date: date));
+                              }),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10)
+                  ],
                   AppNumberField(
                     controller: state.priceAmount,
                     label: "Bahasy",

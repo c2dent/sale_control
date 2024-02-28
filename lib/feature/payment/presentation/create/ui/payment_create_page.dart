@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
+import 'package:hasap_admin/core/storage/datebase/app_database.dart';
 import 'package:hasap_admin/core/widgets/form/date.dart';
 import 'package:hasap_admin/core/widgets/form/number_field.dart';
 import 'package:hasap_admin/core/widgets/form/select_contract_dropdown.dart';
 import 'package:hasap_admin/core/widgets/snackbar/error_snackbar.dart';
 import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
-import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/payment/data/payment_models.dart';
 import 'package:hasap_admin/feature/payment/presentation/create/bloc/payment_create_bloc.dart';
 import 'package:hasap_admin/feature/payment/presentation/create/bloc/payment_create_bloc_models.dart';
@@ -16,14 +16,14 @@ import 'package:hasap_admin/feature/payment/presentation/create/bloc/payment_cre
 @RoutePage()
 class PaymentCreatePage extends StatelessWidget {
   final PaymentData? payment;
-  final ContractData? contractData;
+  final ContractTableData? contractTableData;
 
-  const PaymentCreatePage({Key? key, this.payment, this.contractData}) : super(key: key);
+  const PaymentCreatePage({super.key, this.payment, this.contractTableData});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PaymentCreateBloc>(
-      create: (context) => GetIt.I.get()..add(PaymentCreateEvent.init(payment: payment, contractData: contractData)),
+      create: (context) => GetIt.I.get()..add(PaymentCreateEvent.init(payment: payment, contract: contractTableData)),
       child: SrBlocBuilder<PaymentCreateBloc, PaymentCreateState, PaymentCreateSR>(
         onSR: _onSingleResult,
         builder: (_, state) {
@@ -45,6 +45,7 @@ class PaymentCreatePage extends StatelessWidget {
     sr.when(
       showDioError: (error, notifier) => ErrorSnackbar.show(context: context, text: error.safeCustom!.error),
       successNotify: (text) => SuccessSnackbar.show(context: context, text: text),
+      errorNotify: (text) => ErrorSnackbar.show(context: context, text: text),
       created: () => Navigator.pop(context, true),
     );
   }
@@ -53,7 +54,7 @@ class PaymentCreatePage extends StatelessWidget {
 class _PaymentCratePage extends StatelessWidget {
   final PaymentCreateStateData state;
 
-  const _PaymentCratePage({required this.state, Key? key}) : super(key: key);
+  const _PaymentCratePage({required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -86,13 +87,11 @@ class _PaymentCratePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   SelectContractDropdown(
-                    contract: state.data.contract,
+                    initialContract: state.data.contract,
                     onChange: (contract) {
                       bloc.add(PaymentCreateEvent.selectContract(contract: contract));
                     },
-                    getContracts: () async {
-                      return await bloc.paymentInteractor.getContracts();
-                    },
+                    items: state.data.contracts,
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(

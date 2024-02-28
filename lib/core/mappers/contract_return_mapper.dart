@@ -1,17 +1,17 @@
 import 'package:drift/drift.dart';
-import 'package:hasap_admin/arch/key_value_store_migrator/key_value_store.dart';
 import 'package:hasap_admin/core/models/sync/contract_return_sync.dart';
+import 'package:hasap_admin/core/models/user.dart';
+import 'package:hasap_admin/core/services/settings_service.dart';
 import 'package:hasap_admin/core/storage/datebase/app_database.dart';
-import 'package:hasap_admin/core/storage/sharedPrefs/store_keys.dart';
 import 'package:hasap_admin/feature/contract_return/presentation/create/bloc/contract_return_create_bloc_models.dart';
 import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
 
 @injectable
 class ContractReturnMapper {
-  final KeyValueStore _store;
+  final SettingsService _settingsService;
 
-  ContractReturnMapper(this._store);
+  ContractReturnMapper(this._settingsService);
 
   static ContractReturnTableCompanion fromContractReturnSync(ContractReturnSync contractReturnSync) {
     return ContractReturnTableCompanion(
@@ -29,13 +29,12 @@ class ContractReturnMapper {
 
   Future<ContractReturnTableCompanion> fromContractReturnCreateStateData({required ContractReturnCreateStateData data, required bool forCreate}) async {
     var uuid = const Uuid();
-    String? officeId = await _store.read(StoreKeys.prefsCurrentOfficeId);
-    String? employeeId = await _store.read(StoreKeys.prefsCurrentEmployeeId);
+    User? user = await _settingsService.getCurrentUser();
 
     return ContractReturnTableCompanion(
         id: Value(forCreate ? uuid.v4() : data.contractReturn!.contractReturn.id),
-        officeId: Value(forCreate ? officeId! : data.contractReturn!.contractReturn.officeId),
-        creatorId: Value(forCreate ? employeeId : data.contractReturn!.contractReturn.creatorId),
+        officeId: Value(forCreate ? user!.office.id : data.contractReturn!.contractReturn.officeId),
+        creatorId: Value(forCreate ? user?.employee.id : data.contractReturn!.contractReturn.creatorId),
         contractId: Value(data.contract!.contract.id),
         date: Value(data.date),
         reason: Value(data.reason.text),

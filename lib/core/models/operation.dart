@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hasap_admin/core/models/employee.dart';
 import 'package:hasap_admin/core/models/office.dart';
-import 'package:hasap_admin/core/models/user.dart';
 
 part 'operation.freezed.dart';
 part 'operation.g.dart';

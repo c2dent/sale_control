@@ -23,15 +23,19 @@ abstract class ContractInteractor {
 
   Future<Either<DriftRequestError<DefaultDriftError>, bool>> updateDb(ContractTableCompanion companion, ClientTableCompanion clientCompanion);
 
+  Future<Either<DriftRequestError<DefaultDriftError>, ContractDataDetail>> detail(String id);
+
   Future<Either<DriftRequestError<DefaultDriftError>, List<Region>>> getAllRegions();
 
   Future<List<Region>> getRegions(Region? region);
+
+  Future<Either<DriftRequestError<DefaultDriftError>, RegionTableData>> getRegionById(int id);
 
   Future<List<Client>> getClients();
 
   Future<List<Office>> getOffices(Map<String, String>? params);
 
-  Future<List<Employee>> getEmployees(Map<String, String>? params);
+  Future<List<EmployeeTableData>> getEmployees();
 }
 
 @Singleton(as: ContractInteractor)
@@ -60,14 +64,11 @@ class ContractInteractorImpl extends ContractInteractor {
   }
 
   @override
-  Future<List<Employee>> getEmployees(Map<String, String>? params) async {
-    final result = await employeeRepository.getEmployees(params);
-
-    if (result.isLeft) {
-      return [];
-    }
-
-    return result.right;
+  Future<List<EmployeeTableData>> getEmployees() async {
+    List<EmployeeTableData> employees = [];
+    final result = await employeeRepository.list();
+    if (result.isRight) employees = result.right;
+    return employees;
   }
 
   @override
@@ -121,5 +122,15 @@ class ContractInteractorImpl extends ContractInteractor {
   @override
   Future<Either<DriftRequestError<DefaultDriftError>, List<Region>>> getAllRegions() {
     return regionRepository.getAllRegionsDb();
+  }
+
+  @override
+  Future<Either<DriftRequestError<DefaultDriftError>, ContractDataDetail>> detail(String id) {
+    return repository.detail(id);
+  }
+
+  @override
+  Future<Either<DriftRequestError<DefaultDriftError>, RegionTableData>> getRegionById(int id) {
+    return regionRepository.getById(id);
   }
 }

@@ -27,10 +27,10 @@ class _TemplateAppState extends State<TemplateApp> {
   @override
   Widget build(BuildContext context) {
     return _ThemebleWidget(
-        themebleBuilder: (themeState) => _ThemedApp(
-          environment: widget.appEnvironment,
-          appTheme: themeState,
-        ),
+      themebleBuilder: (themeState) => _ThemedApp(
+        environment: widget.appEnvironment,
+        appTheme: themeState,
+      ),
     );
   }
 }
@@ -81,24 +81,8 @@ class _ThemedApp extends StatelessWidget {
     return MaterialApp.router(
       //В данном примере перечислены лишь некоторые из возможных настроек, подробнее про настройки смотри в ThemeData
       theme: ThemeData(
-        colorScheme: ColorScheme(
-          primary: appTheme.colorTheme.primary,
-          onPrimary: appTheme.colorTheme.onPrimary,
-
-          secondary: appTheme.colorTheme.secondary,
-          onSecondary: appTheme.colorTheme.onSecondary,
-
-          surface: appTheme.colorTheme.surface,
-          onSurface: appTheme.colorTheme.onSurface,
-
-          background: appTheme.colorTheme.background,
-          secondaryContainer: appTheme.colorTheme.secondaryBackground,
-          onBackground: appTheme.colorTheme.onBackground,
-
-          error: appTheme.colorTheme.error,
-          onError: appTheme.colorTheme.onError,
-          brightness: appTheme.colorTheme.brightness,
-        ),
+        useMaterial3: true,
+        colorScheme: appTheme.colorTheme.getColorScheme(),
         textTheme: TextTheme(
           bodyLarge: appTheme.textTheme.normal20,
           displayLarge: appTheme.textTheme.h5Bold,
@@ -107,15 +91,6 @@ class _ThemedApp extends StatelessWidget {
           bodySmall: appTheme.textTheme.normal16,
           titleMedium: appTheme.textTheme.bold16,
           titleSmall: appTheme.textTheme.bold14,
-        ),
-        shadowColor: appTheme.colorTheme.onBackground,
-        bottomSheetTheme: BottomSheetThemeData(
-          backgroundColor: appTheme.colorTheme.surface,
-          elevation: 8,
-          modalElevation: 16,
-        ),
-        bottomAppBarTheme: BottomAppBarTheme(
-          color: appTheme.colorTheme.surface,
         ),
       ),
       showPerformanceOverlay: environment.debugOptions.showPerformanceOverlay,

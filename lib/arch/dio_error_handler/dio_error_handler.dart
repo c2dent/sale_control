@@ -94,7 +94,7 @@ class DioErrorHandlerImpl<DE> implements DioErrorHandler<DE> {
     } on DioError catch (e) {
       return Either.left(await _processDioError(e));
     } on Exception catch (e) {
-      logger.e('При обработке запоса была выброшена ошибка', e);
+      logger.e('При обработке запоса была выброшена ошибка', error: e);
       return Either.left(CommonResponseError.undefinedError(e));
     }
   }
@@ -108,7 +108,7 @@ class DioErrorHandlerImpl<DE> implements DioErrorHandler<DE> {
     if (exception.type == DioErrorType.cancel) return false;
     final response = exception.response;
     if (response == null) {
-      logger.w('Ошибка обработки ответа сетевого запроса:', exception.message);
+      logger.w('Ошибка обработки ответа сетевого запроса:', error: exception.message);
 
       return true;
     }
@@ -174,7 +174,7 @@ class DioErrorHandlerImpl<DE> implements DioErrorHandler<DE> {
         }
         // ignore: avoid_catching_errors
       } on TypeError catch (e) {
-        logger.w('Ответ c ошибкой от сервера \n $responseData \n не соответсвует контракту ApiError', e);
+        logger.w('Ответ c ошибкой от сервера \n $responseData \n не соответсвует контракту ApiError', error: e);
       }
     }
 

@@ -14,7 +14,10 @@ part 'employee_dao.g.dart';
 class EmployeeDao extends DatabaseAccessor<AppDatabase> with _$EmployeeDaoMixin {
   final DriftErrorHandler<DefaultDriftError> _errorHandler = GetIt.instance.get<DriftErrorHandler<DefaultDriftError>>();
 
-  EmployeeDao(AppDatabase db) : super(db);
+  EmployeeDao(super.db);
+
+  Future<Either<DriftRequestError<DefaultDriftError>, List<EmployeeTableData>>> list() async =>
+      await _errorHandler.processRequest(() => (select(employeeTable)..where((tbl) => tbl.isDeleted.equals(false))).get());
 
   Future<Either<DriftRequestError<DefaultDriftError>, int>> insertEmployee(EmployeeTableCompanion employee) async =>
       await _errorHandler.processRequest(() => into(db.employeeTable).insert(employee));

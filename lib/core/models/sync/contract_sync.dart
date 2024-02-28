@@ -15,6 +15,7 @@ class ContractSync with _$ContractSync {
     @JsonKey(name: "month_count") required int monthCount,
     @JsonKey(name: "cost_price") required int costPrice,
     @JsonKey(name: "debt_on_month") required int debtOnMonth,
+    @JsonKey(name: "next_payment_time") required DateTime nextPaymentTime,
     @JsonKey(name: "price_amount") required int priceAmount,
     @JsonKey(name: "paid_months") required int paidMonths,
     @JsonKey(name: "paid_amount") required int paidAmount,

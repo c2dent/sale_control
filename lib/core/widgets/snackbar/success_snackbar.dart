@@ -18,17 +18,16 @@ class SuccessSnackbar {
 
     final snackBarAction = (actionLabel != null && actionPressedCallback != null)
         ? SnackBarAction(
-      textColor: colorTheme.onSuccess,
-      label: actionLabel,
-      onPressed: actionPressedCallback,
-    )
+            textColor: colorTheme.primary,
+            label: actionLabel,
+            onPressed: actionPressedCallback,
+          )
         : null;
 
-    ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(text),
-          backgroundColor: colorTheme.success,
-          action: snackBarAction,
-        ));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(text, style: TextStyle(color: colorTheme.onPrimary)),
+      backgroundColor: colorTheme.primary,
+      action: snackBarAction,
+    ));
   }
 }

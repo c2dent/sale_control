@@ -19,21 +19,21 @@ class OfficeSyncService implements TableSync {
   TypeStoreKey<String> get updateDatetimeKey => StoreKeys.prefsOfficeLastUpdateDateKey;
 
   @override
-  Future<void> incomingSync(Map<String, String> params) async {
+  Future<bool> incomingSync(Map<String, String> params) async {
     final result = await _officeApiService.getList(params);
 
-    if (result.isLeft) {
-      return;
-    }
+    if (result.isLeft) return false;
 
     List<OfficeSync> offices = result.right;
     for (OfficeSync office in offices) {
       OfficeTableCompanion officeTableCompanion = OfficeMapper.fromOfficeSync(office);
       final result = await _officeDao.isExists(office.id);
-      if (result.isLeft) return;
+      if (result.isLeft) return false;
 
-      result.right ? await _officeDao.updateOffice(officeTableCompanion) : await _officeDao.insertOffice(officeTableCompanion);
+      final res = result.right ? await _officeDao.updateOffice(officeTableCompanion) : await _officeDao.insertOffice(officeTableCompanion);
+      if (res.isLeft) return false;
     }
+    return true;
   }
 
   @override

@@ -19,21 +19,20 @@ class EmployeeSyncService implements TableSync {
   TypeStoreKey<String> get updateDatetimeKey => StoreKeys.prefsEmployeeLastUpdateDateKey;
 
   @override
-  Future<void> incomingSync(Map<String, String> params) async {
+  Future<bool> incomingSync(Map<String, String> params) async {
     final result = await _employeeApiService.getEmployeesSync(params);
-
-    if (result.isLeft) {
-      return;
-    }
+    if (result.isLeft) return false;
 
     List<EmployeeSync> employees = result.right;
     for (EmployeeSync employee in employees) {
       EmployeeTableCompanion employeeTableCompanion = EmployeeMapper.fromEmployeeSync(employee);
       final result = await _employeeDao.isExists(employee.id);
-      if (result.isLeft) return;
+      if (result.isLeft) return false;
 
-      result.right ? await _employeeDao.updateEmployee(employeeTableCompanion) : await _employeeDao.insertEmployee(employeeTableCompanion);
+      final res = result.right ? await _employeeDao.updateEmployee(employeeTableCompanion) : await _employeeDao.insertEmployee(employeeTableCompanion);
+      if (res.isLeft) return false;
     }
+    return true;
   }
 
   @override

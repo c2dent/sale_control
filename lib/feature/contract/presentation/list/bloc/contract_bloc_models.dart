@@ -23,6 +23,8 @@ class ContractSR with _$ContractSR{
   const factory ContractSR.successNotify({required String text}) = _SuccessNotify;
 
   const factory ContractSR.delete({required Contract contract}) = _ContractDeleted;
+
+  const factory ContractSR.logout() = _ContractLogout;
 }
 
 @freezed

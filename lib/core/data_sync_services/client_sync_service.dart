@@ -19,20 +19,22 @@ class ClientSyncService implements TableSync {
   TypeStoreKey<String> get updateDatetimeKey => StoreKeys.prefsClientLastUpdateDateKey;
 
   @override
-  Future<void> incomingSync(Map<String, String> params) async {
+  Future<bool> incomingSync(Map<String, String> params) async {
     final result = await _clientApiService.getClientsSync(params);
-    if (result.isLeft) return;
+    if (result.isLeft) return false;
 
     List<ClientSync> clients = result.right;
     for (ClientSync client in clients) {
       ClientTableCompanion clientTableCompanion = ClientMapper.fromClientSync(client);
-       final result = await _clientDao.isExists(client.id);
-       if (result.isLeft) return;
+      final result = await _clientDao.isExists(client.id);
+      if (result.isLeft) return false;
 
-       if (result.right != null && !result.right!.isSynced && result.right!.modifiedAt.isAfter(client.modifiedAt)) return;
+      if (result.right != null && !result.right!.isSynced && result.right!.modifiedAt.isAfter(client.modifiedAt)) return false;
 
-      result.right != null ? await _clientDao.updateClient(clientTableCompanion) : await _clientDao.insertClient(clientTableCompanion);
+      final update = result.right != null ? await _clientDao.updateClient(clientTableCompanion) : await _clientDao.insertClient(clientTableCompanion);
+      if (update.isLeft) return false;
     }
+    return true;
   }
 
   @override

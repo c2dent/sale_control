@@ -23,6 +23,8 @@ abstract class ServiceRepository {
   Future<Either<DriftRequestError<DefaultDriftError>, bool>> updateDb(ServiceTableCompanion companion);
 
   Future<Either<DriftRequestError<DefaultDriftError>, bool>> deleteDb(String id);
+
+  Future<Either<DriftRequestError<DefaultDriftError>, ServiceDetail>> detail(String id);
 }
 
 @Singleton(as: ServiceRepository)
@@ -70,5 +72,10 @@ class ServiceRepositoryImpl extends ServiceRepository {
   @override
   Future<Either<DriftRequestError<DefaultDriftError>, bool>> deleteDb(String id) {
     return _dao.deleteService(id);
+  }
+
+  @override
+  Future<Either<DriftRequestError<DefaultDriftError>, ServiceDetail>> detail(String id) {
+    return _dao.detail(id);
   }
 }

@@ -3,6 +3,8 @@ import 'package:hasap_admin/arch/key_value_store_migrator/key_value_store.dart';
 import 'package:hasap_admin/core/models/employee.dart';
 import 'package:hasap_admin/core/models/region.dart';
 import 'package:hasap_admin/core/models/sync/client_sync.dart';
+import 'package:hasap_admin/core/models/user.dart';
+import 'package:hasap_admin/core/services/settings_service.dart';
 import 'package:hasap_admin/core/storage/datebase/app_database.dart';
 import 'package:hasap_admin/core/storage/sharedPrefs/store_keys.dart';
 import 'package:hasap_admin/feature/client/data/client_models.dart';
@@ -13,9 +15,9 @@ import 'package:uuid/uuid.dart';
 
 @injectable
 class ClientMapper {
-  final KeyValueStore _store;
+  final SettingsService _settingsService;
 
-  ClientMapper(this._store);
+  ClientMapper(this._settingsService);
 
   static ClientTableCompanion fromClientSync(ClientSync clientSync) {
     return ClientTableCompanion(
@@ -79,19 +81,18 @@ class ClientMapper {
 
   Future<ClientTableCompanion> fromStateData({required ContractCreateStateData data, required bool forCreate}) async {
     var uuid = const Uuid();
-    String? officeId = await _store.read(StoreKeys.prefsCurrentOfficeId);
-    String? employeeId = await _store.read(StoreKeys.prefsCurrentEmployeeId);
+    User? currentUser = await _settingsService.getCurrentUser();
 
     return ClientTableCompanion(
       id: Value(forCreate ? uuid.v4() : data.contract!.client.id),
       firstName: Value(data.firstName.text),
       lastName: Value(data.lastName.text),
       phone: Value(data.phone.text),
-      phone2: Value(data.phone2.text),
+      phone2: Value(data.phone2.text != "" ? data.phone2.text : null),
       description: Value(data.description.text),
       regionId: Value(data.region!.id),
-      creatorId: Value(forCreate ? employeeId : data.contract!.client.creatorId),
-      officeId: Value(forCreate ? officeId : data.contract!.client.officeId),
+      creatorId: Value(forCreate ? currentUser!.employee.id : data.contract!.client.creatorId),
+      officeId: Value(forCreate ? currentUser?.office.id : data.contract!.client.officeId),
       createdAt: Value(forCreate ? DateTime.now() : data.contract!.client.createdAt),
       modifiedAt: Value(DateTime.now()),
       isSynced: const Value(false),

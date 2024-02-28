@@ -1,17 +1,17 @@
 import 'package:drift/drift.dart';
-import 'package:hasap_admin/arch/key_value_store_migrator/key_value_store.dart';
 import 'package:hasap_admin/core/models/sync/payment_sync.dart';
+import 'package:hasap_admin/core/models/user.dart';
+import 'package:hasap_admin/core/services/settings_service.dart';
 import 'package:hasap_admin/core/storage/datebase/app_database.dart';
-import 'package:hasap_admin/core/storage/sharedPrefs/store_keys.dart';
 import 'package:hasap_admin/feature/payment/presentation/create/bloc/payment_create_bloc_models.dart';
 import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
 
 @injectable
 class PaymentMapper {
-  final KeyValueStore store;
+  final SettingsService _settingsService;
 
-  PaymentMapper(this.store);
+  PaymentMapper(this._settingsService);
 
   PaymentTableCompanion fromPaymentSync(PaymentSync paymentSync) {
     return PaymentTableCompanion(
@@ -32,8 +32,7 @@ class PaymentMapper {
 
   Future<PaymentTableCompanion> fromPaymentCreateState(PaymentCreateState state, bool forCreate) async {
     var uuid = const Uuid();
-    String? officeId = await store.read(StoreKeys.prefsCurrentOfficeId);
-    String? employeeId = await store.read(StoreKeys.prefsCurrentEmployeeId);
+    User? user = await _settingsService.getCurrentUser();
 
     return PaymentTableCompanion(
       id: Value(forCreate ? uuid.v4() : state.data.payment!.payment.id),
@@ -46,8 +45,8 @@ class PaymentMapper {
       isSynced: const Value(false),
       isDeleted: const Value(false),
       operationId: Value(forCreate ? "" : state.data.payment!.payment.operationId),
-      creatorId: Value(forCreate ? employeeId : state.data.payment!.creator.id),
-      officeId: Value(forCreate ? officeId!: state.data.payment!.payment.officeId),
+      creatorId: Value(forCreate ? user?.employee.id : state.data.payment!.creator.id),
+      officeId: Value(forCreate ? user!.office.id : state.data.payment!.payment.officeId),
     );
   }
 

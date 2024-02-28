@@ -21,7 +21,7 @@ class CustomProgressBar extends StatelessWidget {
           Container(
             width: MediaQuery.of(context).size.width * progress,
             decoration: BoxDecoration(
-              color: theme.colorTheme.success, // Цвет пройденной части линии
+              color: theme.colorTheme.primary, // Цвет пройденной части линии
               borderRadius: BorderRadius.circular(5),
             ),
           ),

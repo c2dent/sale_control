@@ -21,7 +21,6 @@ class SelectSort extends StatefulWidget implements CustomFilterWidget<String> {
 }
 
 class _SelectSortState extends State<SelectSort> {
-
   String value = "";
 
   @override
@@ -32,32 +31,30 @@ class _SelectSortState extends State<SelectSort> {
       value = widget._value.get();
     });
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      child: SizedBox(
-        width: double.infinity,
-        child: DropdownButton<String>(
-          value: value,
-          items: getItems(appTheme),
-          onChanged: (item) {
-            widget._value.set(item!);
-            widget.onChange();
-            setState(() {
-              value = item;
-            });
-          },
-          borderRadius: const BorderRadius.all(Radius.circular(5)),
-        ),
+    return DropdownMenu<String>(
+      expandedInsets: EdgeInsets.zero,
+      inputDecorationTheme: const InputDecorationTheme(
+        isDense: true,
+        contentPadding: EdgeInsets.only(left: 8),
+        border: OutlineInputBorder(),
       ),
+      label: const Text("Yzygiderlik"),
+      initialSelection: value,
+      onSelected: (item) {
+        widget._value.set(item!);
+        widget.onChange();
+        setState(() {
+          value = item;
+        });
+      },
+      dropdownMenuEntries: getItems(appTheme),
     );
   }
 
-
-
-  List<DropdownMenuItem<String>> getItems(AppTheme theme) {
-    List<DropdownMenuItem<String>> items = [];
+  List<DropdownMenuEntry<String>> getItems(AppTheme theme) {
+    List<DropdownMenuEntry<String>> items = [];
     for (ContractSortType item in ContractSortType.values) {
-      items.add(DropdownMenuItem<String>(value: item.value, child: Text(item.name, style: theme.textTheme.title1)));
+      items.add(DropdownMenuEntry<String>(value: item.value, label: item.name));
     }
     return items;
   }

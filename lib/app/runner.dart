@@ -34,7 +34,7 @@ class Runner{
     runZonedGuarded(
           () => runApp(TemplateApp(appEnvironment: appEnvironment)),
           (err, stack) async {
-        GetIt.I.get<Logger>().e('Critical Error:', err, stack);
+        GetIt.I.get<Logger>().e('Critical Error:', error: err, stackTrace: stack);
       },
     );
 

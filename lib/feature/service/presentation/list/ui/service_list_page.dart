@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hasap_admin/app/theme/bloc/app_theme.dart';
 import 'package:hasap_admin/arch/sr_bloc/sr_bloc_builder.dart';
 import 'package:hasap_admin/core/widgets/drawer_menu.dart';
 import 'package:hasap_admin/core/widgets/filter_screen.dart';
@@ -11,6 +10,8 @@ import 'package:hasap_admin/core/widgets/snackbar/success_snackbar.dart';
 import 'package:hasap_admin/core/widgets/utils.dart';
 import 'package:hasap_admin/feature/service/data/service_models.dart';
 import 'package:hasap_admin/feature/service/presentation/create/ui/service_create_page.dart';
+import 'package:hasap_admin/feature/service/presentation/detail/ui/service_detail_page.dart';
+import 'package:hasap_admin/feature/service/presentation/helper.dart';
 import 'package:hasap_admin/feature/service/presentation/list/bloc/service_bloc.dart';
 import 'package:hasap_admin/feature/service/presentation/list/bloc/service_bloc_models.dart';
 
@@ -26,7 +27,7 @@ class ServiceListPage extends StatelessWidget {
         onSR: _onSingleResult,
         builder: (context, state) {
           final bloc = context.read<ServiceBloc>();
-          AppTheme theme = AppTheme.of(context);
+          ThemeData theme = Theme.of(context);
 
           return Scaffold(
               appBar: AppBar(
@@ -44,7 +45,7 @@ class ServiceListPage extends StatelessWidget {
                       icon: const Icon(Icons.filter_alt_rounded))
                 ],
               ),
-              drawer: const DrawerMenu(),
+              drawer: const DrawerMenu(index: 3),
               floatingActionButton: FloatingActionButton(
                 onPressed: () async {
                   bool? service = await Navigator.push(
@@ -56,8 +57,8 @@ class ServiceListPage extends StatelessWidget {
                     bloc.add(const ServiceEvent.filter());
                   }
                 },
-                backgroundColor: theme.colorTheme.primary,
-                child: const Icon(Icons.add_circle_outline),
+                backgroundColor: theme.colorScheme.primary,
+                child: Icon(Icons.add_circle_outline, color: theme.colorScheme.onPrimary),
               ),
               body: state.map(
                 empty: (_) => const Center(child: CircularProgressIndicator()),
@@ -83,11 +84,11 @@ class _ServicePage extends StatelessWidget {
   final ServiceBloc bloc;
   final ServiceState state;
 
-  const _ServicePage({Key? key, required this.bloc, required this.state}) : super(key: key);
+  const _ServicePage({required this.bloc, required this.state});
 
   @override
   Widget build(BuildContext context) {
-    AppTheme theme = AppTheme.of(context);
+    ThemeData theme = Theme.of(context);
     Offset tapPosition = Offset.zero;
     final bloc = context.read<ServiceBloc>();
 
@@ -103,7 +104,7 @@ class _ServicePage extends StatelessWidget {
             child: Center(
               child: Text(
                 "Hic zat tapylmadyy",
-                style: theme.textTheme.title2.copyWith(color: theme.colorTheme.textSecondary),
+                style: theme.textTheme.bodyLarge,
               ),
             ),
           ),
@@ -121,104 +122,88 @@ class _ServicePage extends StatelessWidget {
               itemCount: state.data.services.length,
               itemBuilder: (context, index) {
                 ServiceData service = state.data.services[index];
-                return GestureDetector(
-                  onTapDown: (details) => tapPosition = details.globalPosition,
-                  onLongPress: () => showContextMenu(
-                    context,
-                    tapPosition,
-                    edit: () async {
-                      bool? updateService = await Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ServiceCreatePage(service: service)),
-                      );
+                final amountColor = getBgColorAmount(service.getType, theme);
 
-                      if (updateService != null) {
-                        bloc.add(const ServiceEvent.filter());
-                      }
-                    },
-                    delete: () => bloc.add(ServiceEvent.delete(service: service)),
-                  ),
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(vertical: 3),
-                    padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                    decoration: BoxDecoration(
-                      color: theme.colorTheme.surface,
-                      borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
-                        BoxShadow(
-                          color: theme.colorTheme.onSecondary,
-                          blurRadius: 2,
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
+                return Container(
+                  margin: const EdgeInsets.symmetric(vertical: 3),
+                  padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                  child: GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ServiceDetailPage(serviceTableData: service.service)),
                     ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    service.clientName,
-                                    style: theme.textTheme.title1.copyWith(fontSize: 20),
+                    onTapDown: (details) => tapPosition = details.globalPosition,
+                    onLongPress: () => showContextMenu(
+                      context,
+                      tapPosition,
+                      edit: () async {
+                        bool? updateService = await Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ServiceCreatePage(service: service)),
+                        );
+
+                        if (updateService != null) {
+                          bloc.add(const ServiceEvent.filter());
+                        }
+                      },
+                      delete: () => bloc.add(ServiceEvent.delete(service: service)),
+                    ),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  service.clientName,
+                                  style: theme.textTheme.bodyLarge,
+                                ),
+                                if (!service.service.isSynced) const Icon(Icons.sync, color: Colors.blueAccent)
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(service.getType.name, style: theme.textTheme.titleMedium),
+                                if (service.service.amount > 0)
+                                  Card(
+                                    color: amountColor.$1,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                    child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                        child: Text("${formatCurrency(service.service.amount)} тмт",
+                                            style: TextStyle(color: amountColor.$2, fontWeight: FontWeight.bold))),
                                   ),
-                                  if (!service.service.isSynced) const Icon(Icons.sync, color: Colors.blueAccent)
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(service.getType.name, style: theme.textTheme.title1),
-                                  if (service.service.amount > 0)
-                                    Card(
-                                      color: getBgColorAmount(service.getType, theme),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                      child: Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                          child: Text("${formatCurrency(service.service.amount)} тмт",
-                                              style: TextStyle(color: theme.colorTheme.onSuccess, fontWeight: FontWeight.bold))),
-                                    ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    child: Text(
-                                      service.creatorName,
-                                      style: theme.textTheme.title2,
-                                    ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    service.creatorName,
+                                    style: theme.textTheme.bodyMedium,
                                   ),
-                                  Text(
-                                    formattingDateTime(service.service.createdAt),
-                                    style: theme.textTheme.subtitle.copyWith(color: theme.colorTheme.textSecondary),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
+                                ),
+                                Text(
+                                  formattingDateTime(service.service.createdAt),
+                                  style: theme.textTheme.bodyMedium,
+                                ),
+                              ],
+                            )
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 );
               },
-            ))
+            )),
+            const SizedBox(height: 40),
           ],
         ));
-  }
-}
-
-Color getBgColorAmount(ServiceType type, AppTheme theme) {
-  switch (type.operationType) {
-    case 'OUTCOME':
-      return theme.colorTheme.error.withOpacity(0.7);
-    case 'INCOME':
-      return theme.colorTheme.success.withOpacity(0.7);
-    default:
-      return Colors.blueAccent.withOpacity(0.7);
   }
 }

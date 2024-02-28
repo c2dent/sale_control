@@ -26,12 +26,15 @@ class ServiceCreateBloc extends SrBloc<ServiceCreateEvent, ServiceCreateState, S
 
   Future<void> _init(ServiceCreateEventInit event, Emitter<ServiceCreateState> emit) async {
     final contracts = await interactor.getContracts();
-    ContractData? contractData = event.contractData;
+    ContractData? contractData;
+
     for (var contract in contracts) {
+      if (contract.contract.id == event.contract?.id) contractData = contract;
       if (contract.contract.id == event.service?.service.contractId) contractData = contract;
     }
 
     emit(ServiceCreateState.data(
+        contracts: contracts,
         isLoading: false,
         formKey: GlobalKey<FormState>(),
         date: event.service?.service.date ?? DateTime.now(),

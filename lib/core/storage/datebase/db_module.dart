@@ -27,7 +27,7 @@ abstract class DbModule {
         migrationLogics: {
           // MigrationV2AddTableOffice(),
         },
-        schemaVersion: 1,
+        schemaVersion: 2,
         observer: observer,
       ),
     );

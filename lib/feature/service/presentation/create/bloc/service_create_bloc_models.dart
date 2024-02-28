@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
+import 'package:hasap_admin/core/storage/datebase/app_database.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/service/data/service_models.dart';
 
@@ -9,7 +10,7 @@ part 'service_create_bloc_models.freezed.dart';
 
 @freezed
 class ServiceCreateEvent with _$ServiceCreateEvent {
-  const factory ServiceCreateEvent.init({ServiceData? service, ContractData? contractData}) = ServiceCreateEventInit;
+  const factory ServiceCreateEvent.init({ServiceData? service, ContractTableData? contract}) = ServiceCreateEventInit;
   const factory ServiceCreateEvent.create() = ServiceCreateEventCreate;
   const factory ServiceCreateEvent.update() = ServiceCreateEventUpdate;
   const factory ServiceCreateEvent.selectDate({required DateTime date}) = ServiceCreateEventSelectDate;
@@ -44,6 +45,7 @@ class ServiceCreateState with _$ServiceCreateState {
     required TextEditingController amount,
     required ServiceType? type,
     required ContractData? contract,
+    required List<ContractData> contracts,
     required ServiceData? service,
   }) = ServiceCreateStateData;
 }

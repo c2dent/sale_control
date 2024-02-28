@@ -77,3 +77,29 @@ class ServiceData {
 
   ServiceType get getType => ServiceType.getServiceTypeFromString(service.type);
 }
+
+class ServiceDetail {
+  final ServiceTableData service;
+  final ContractTableData contract;
+  final EmployeeTableData creator;
+  final ClientTableData client;
+  final RegionTableData region;
+  final RegionTableData regionParent;
+
+  const ServiceDetail({
+    required this.service,
+    required this.creator,
+    required this.client,
+    required this.region,
+    required this.regionParent,
+    required this.contract,
+  });
+
+  String get clientName => "${client.firstName} ${client.lastName}";
+
+  String get creatorName => "${creator.firstName} ${creator.lastName}";
+
+  ServiceType get getType => ServiceType.getServiceTypeFromString(service.type);
+
+  String get regionName => "${regionParent.name} > ${region.name}";
+}

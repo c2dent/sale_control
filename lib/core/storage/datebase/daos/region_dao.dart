@@ -16,7 +16,7 @@ part 'region_dao.g.dart';
 class RegionDao extends DatabaseAccessor<AppDatabase> with _$RegionDaoMixin {
   final DriftErrorHandler<DefaultDriftError> _errorHandler = GetIt.instance.get<DriftErrorHandler<DefaultDriftError>>();
 
-  RegionDao(AppDatabase db) : super(db);
+  RegionDao(super.db);
 
   Future<Either<DriftRequestError<DefaultDriftError>, List<Region>>> getAllRegions() async {
     return await _errorHandler.processRequest(() async {
@@ -33,13 +33,20 @@ class RegionDao extends DatabaseAccessor<AppDatabase> with _$RegionDaoMixin {
     });
   }
 
-  Future<void> insertRegion(RegionTableCompanion region) => into(db.regionTable).insert(region);
+  Future<Either<DriftRequestError<DefaultDriftError>, RegionTableData>> getById(int id) async =>
+      await _errorHandler.processRequest(() async => await (select(regionTable)..where((tbl) => tbl.id.equals(id))).get().then((value) => value.first));
 
-  Future<void> updateRegion(RegionTableCompanion region) => update(db.regionTable).replace(region);
+  Future<Either<DriftRequestError<DefaultDriftError>, int>> insertRegion(RegionTableCompanion region) =>
+      _errorHandler.processRequest(() async => into(db.regionTable).insert(region));
 
-  Future<void> deleteRegion(RegionTableCompanion region) => delete(db.regionTable).delete(region);
+  Future<Either<DriftRequestError<DefaultDriftError>, bool>> updateRegion(RegionTableCompanion region) =>
+      _errorHandler.processRequest(() async => update(db.regionTable).replace(region));
 
-  Future<bool> isExists(int id) => (select(db.regionTable)..where((tbl) => tbl.id.equals(id))).getSingleOrNull().then((value) => value != null);
+  Future<Either<DriftRequestError<DefaultDriftError>, int>> deleteRegion(RegionTableCompanion region) =>
+      _errorHandler.processRequest(() async => delete(db.regionTable).delete(region));
+
+  Future<Either<DriftRequestError<DefaultDriftError>, bool>> isExists(int id) =>
+      _errorHandler.processRequest(() async => (select(db.regionTable)..where((tbl) => tbl.id.equals(id))).getSingleOrNull().then((value) => value != null));
 
   Future<Either<DriftRequestError<DefaultDriftError>, List<Region>>> getRegionsByParams(Map<String, String> params) async {
     String queryLevel0 = 'SELECT region.name, region.level, region.id, (SELECT COUNT(*) FROM region_table WHERE parent_id = region.id) AS "children_count" '

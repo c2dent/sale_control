@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hasap_admin/arch/drift_error_handler/models/drift_error_models.dart';
 import 'package:hasap_admin/core/infrastructure/notify_error_snackbar.dart';
+import 'package:hasap_admin/core/storage/datebase/app_database.dart';
 import 'package:hasap_admin/feature/contract/data/contract_models.dart';
 import 'package:hasap_admin/feature/payment/data/payment_models.dart';
 
@@ -9,7 +10,7 @@ part 'payment_create_bloc_models.freezed.dart';
 
 @freezed
 class PaymentCreateEvent with _$PaymentCreateEvent {
-  const factory PaymentCreateEvent.init({PaymentData? payment, ContractData? contractData}) = PaymentCreateEventInit;
+  const factory PaymentCreateEvent.init({PaymentData? payment, ContractTableData? contract}) = PaymentCreateEventInit;
 
   const factory PaymentCreateEvent.create() = PaymentCreateEventCreate;
 
@@ -28,6 +29,7 @@ class PaymentCreateSR with _$PaymentCreateSR {
   }) = _ShowDioErrorSnackbar;
 
   const factory PaymentCreateSR.successNotify({required String text}) = _SuccessNotify;
+  const factory PaymentCreateSR.errorNotify({required String text}) = _ErrorNotify;
 
   const factory PaymentCreateSR.created() = _ClientCreated;
 }
@@ -47,6 +49,7 @@ class PaymentCreateState with _$PaymentCreateState {
     required TextEditingController comment,
     required DateTime date,
     required ContractData? contract,
+    required List<ContractData> contracts,
     required PaymentData? payment,
   }) = PaymentCreateStateData;
 }

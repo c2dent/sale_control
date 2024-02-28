@@ -15,7 +15,31 @@ part 'service_dao.g.dart';
 class ServiceDao extends DatabaseAccessor<AppDatabase> with _$ServiceDaoMixin {
   final DriftErrorHandler<DefaultDriftError> _errorHandler = GetIt.instance.get<DriftErrorHandler<DefaultDriftError>>();
 
-  ServiceDao(AppDatabase db) : super(db);
+  ServiceDao(super.db);
+
+  Future<Either<DriftRequestError<DefaultDriftError>, ServiceDetail>> detail(String id) async =>
+      await _errorHandler.processRequest(() async => await (select(serviceTable)
+                ..where((tbl) => tbl.isDeleted.equals(false))
+                ..orderBy([(t) => OrderingTerm(expression: t.createdAt, mode: OrderingMode.desc)]))
+              .join([
+            leftOuterJoin(db.employeeTable, db.employeeTable.id.equalsExp(serviceTable.creatorId), useColumns: true),
+            leftOuterJoin(db.contractTable, db.contractTable.id.equalsExp(serviceTable.contractId), useColumns: true),
+            leftOuterJoin(db.clientTable, db.clientTable.id.equalsExp(db.contractTable.clientId), useColumns: true),
+            leftOuterJoin(db.regionTable, db.regionTable.id.equalsExp(db.clientTable.regionId), useColumns: true),
+          ]).map((row) async {
+            RegionTableData region = row.readTable(db.regionTable);
+            RegionTableData regionParent =
+                await (select(db.regionTable)..where((tbl) => tbl.parentId.equals(region.parentId ?? 1000))).get().then((value) => value.first);
+
+            return ServiceDetail(
+              service: row.readTable(db.serviceTable),
+              creator: row.readTable(db.employeeTable),
+              client: row.readTable(db.clientTable),
+              region: region,
+              contract: row.readTable(db.contractTable),
+              regionParent: regionParent,
+            );
+          }).get().then((value) => value.first));
 
   Future<Either<DriftRequestError<DefaultDriftError>, List<ServiceData>>> getAll() async =>
       await _errorHandler.processRequest(() async => await (select(serviceTable)

@@ -19,7 +19,7 @@ class ContractDao extends DatabaseAccessor<AppDatabase> with _$ContractDaoMixin 
   final DriftErrorHandler<DefaultDriftError> _errorHandler = GetIt.instance.get<DriftErrorHandler<DefaultDriftError>>();
   final KeyValueStore store = GetIt.instance.get<KeyValueStore>(); // todo добавит фильтр по оффису
 
-  ContractDao(AppDatabase db) : super(db);
+  ContractDao(super.db);
 
   Future<Either<DriftRequestError<DefaultDriftError>, List<ContractData>>> getAllContracts(Map<String, CustomFilterWidget>? filters) async =>
       await _errorHandler.processRequest(() async {
@@ -37,12 +37,62 @@ class ContractDao extends DatabaseAccessor<AppDatabase> with _$ContractDaoMixin 
         }
 
         if (filters != null && filters.containsKey('sort')) {
-          if (filters['sort']?.getValue() == 'paymentDate') query = query..orderBy([OrderingTerm.asc(contractTable.nextPaymentTime)]);
+          if (filters['sort']?.getValue() == 'paymentDate') {
+            query = query
+              ..orderBy([OrderingTerm.asc(contractTable.nextPaymentTime)])
+              ..where(contractTable.closed.equals(false));
+          }
         }
 
         return await query
             .map((row) => ContractData(contract: row.readTable(contractTable), creator: row.readTable(employeeTable), client: row.readTable(clientTable)))
             .get();
+      });
+
+  Future<Either<DriftRequestError<DefaultDriftError>, ContractDataDetail>> getContractDetail(String id) async => await _errorHandler.processRequest(() async {
+        return await (select(db.contractTable)..where((tbl) => tbl.id.equals(id)))
+            .join([
+              leftOuterJoin(clientTable, clientTable.id.equalsExp(contractTable.clientId), useColumns: true),
+              leftOuterJoin(regionTable, regionTable.id.equalsExp(clientTable.regionId), useColumns: true),
+              leftOuterJoin(employeeTable, employeeTable.id.equalsExp(contractTable.creatorId), useColumns: true),
+            ])
+            .map((row) async {
+              ContractTableData contract = row.readTable(db.contractTable);
+              ClientTableData client = row.readTable(db.clientTable);
+              EmployeeTableData employee = row.readTable(db.employeeTable);
+              RegionTableData region = row.readTable(db.regionTable);
+
+              List<PaymentTableData> payments =
+                  await (select(db.paymentTable)..where((tbl) => tbl.contractId.equals(contract.id) & tbl.isDeleted.equals(false))).get();
+
+              List<ServiceTableData> services =
+                  await (select(db.serviceTable)..where((tbl) => tbl.contractId.equals(contract.id) & tbl.isDeleted.equals(false))).get();
+
+              List<EmployeeTableData> employees = await (select(db.employeeTable)..where((tbl) => tbl.isDeleted.equals(false))).get();
+
+              RegionTableData regionParent =
+                  await (select(db.regionTable)..where((tbl) => tbl.parentId.equals(region.parentId ?? 1000))).get().then((value) => value.first);
+
+              ContractReturnTableData? contractReturn =
+                  await (select(db.contractReturnTable)..where((tbl) => tbl.contractId.equals(id) & tbl.isDeleted.equals(false))).get().then((value) {
+                if (value.isNotEmpty) return value.first;
+                return null;
+              });
+
+              return ContractDataDetail(
+                contract: contract,
+                creator: employee,
+                client: client,
+                payments: payments,
+                services: services,
+                region: region,
+                regionParent: regionParent,
+                employees: employees,
+                contractReturn: contractReturn,
+              );
+            })
+            .get()
+            .then((value) => value.first);
       });
 
   Future<Either<DriftRequestError<DefaultDriftError>, int>> insertContract(ContractTableCompanion contract) async =>

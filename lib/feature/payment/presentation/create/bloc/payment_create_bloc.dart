@@ -26,12 +26,14 @@ class PaymentCreateBloc extends SrBloc<PaymentCreateEvent, PaymentCreateState, P
 
   FutureOr<void> _init(PaymentCreateEventInit event, Emitter<PaymentCreateState> emit) async {
     final contracts = await paymentInteractor.getContracts();
-    ContractData? contractData = event.contractData;
+    ContractData? contractData;
     for (var item in contracts) {
+      if (item.contract.id == event.contract?.id) contractData = item;
       if (item.contract.id == event.payment?.payment.contractId) contractData = item;
     }
 
     emit(PaymentCreateState.data(
+      contracts: contracts,
       isLoading: false,
       formKey: GlobalKey<FormState>(),
       amount: TextEditingController(text: event.payment?.payment.paidAmount.toString()),
@@ -44,6 +46,12 @@ class PaymentCreateBloc extends SrBloc<PaymentCreateEvent, PaymentCreateState, P
 
   FutureOr<void> _create(PaymentCreateEventCreate event, Emitter<PaymentCreateState> emit) async {
     emit(state.data.copyWith(isLoading: true));
+
+    if (state.data.contract == null) {
+      addSr(const PaymentCreateSR.errorNotify(text: "Shertnama saylanylmadyk"));
+      emit(state.data.copyWith(isLoading: false));
+      return;
+    }
 
     final result = await paymentInteractor.create(await _paymentMapper.fromPaymentCreateState(state, true));
 

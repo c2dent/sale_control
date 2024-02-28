@@ -11,23 +11,20 @@ class AppTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("$label:", style: const TextStyle(fontSize: 19), textAlign: TextAlign.start),
-        const SizedBox(height: 3),
         TextFormField(
-            controller: controller,
-            maxLines: maxLines ?? 1,
-            decoration: InputDecoration(
-              filled: true,
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(7)),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 7, vertical: 0),
-            ),
-            style: const TextStyle(fontSize: 19),
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+            isDense: true,
+            labelText: label,
+            border: const OutlineInputBorder(),
+          ),
+          controller: controller,
+          maxLines: maxLines ?? 1,
+          style: const TextStyle(fontSize: 19),
           validator: required ? textFieldRequired : null,
         ),
       ],

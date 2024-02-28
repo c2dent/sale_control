@@ -17,8 +17,8 @@ class SrBlocBuilder<B extends SrBloc<Object?, S, SR>, S, SR> extends StatelessWi
     required this.builder,
     this.bloc,
     this.buildWhen,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

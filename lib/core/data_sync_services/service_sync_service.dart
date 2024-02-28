@@ -19,18 +19,20 @@ class ServiceSyncService implements TableSync {
   TypeStoreKey<String> get updateDatetimeKey => StoreKeys.prefsServiceLastUpdateDateKey;
 
   @override
-  Future<void> incomingSync(Map<String, String> params) async {
+  Future<bool> incomingSync(Map<String, String> params) async {
     final result = await _apiService.listSync(params);
-    if (result.isLeft) return;
+    if (result.isLeft) return false;
 
     List<ServiceSync> services = result.right;
     for (ServiceSync service in services) {
       ServiceTableCompanion companion = ServiceMapper.fromServiceSync(service);
       final result = await _dao.isExists(service.id);
-      if (result.isLeft) return;
+      if (result.isLeft) return false;
 
-      result.right ? await _dao.updateService(companion) : _dao.insertService(companion);
+      final res = result.right ? await _dao.updateService(companion) : await _dao.insertService(companion);
+      if (res.isLeft) return false;
     }
+    return true;
   }
 
   @override

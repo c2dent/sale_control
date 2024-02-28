@@ -36,7 +36,8 @@ class _FilterScreenState extends State<FilterScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              widget.filters['sort'] as Widget,
+              const SizedBox(height: 10),
+              SizedBox(width: double.infinity ,child: widget.filters['sort'] as Widget),
               const SizedBox(height: 10),
               Center(
                 child: TextButton(
@@ -44,7 +45,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     widget.reset();
                     Navigator.pop(context);
                   },
-                  child: const Text("Сброс"),
+                  child: const Text("Arassalamak"),
                 ),
               ),
             ],

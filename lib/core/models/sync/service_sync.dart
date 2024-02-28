@@ -9,6 +9,7 @@ class ServiceSync with _$ServiceSync {
   const factory ServiceSync({
     required String id,
     @JsonKey(name: 'contract') required String contractId,
+    @JsonKey(name: 'operation') required String operationId,
     @JsonKey(name: 'type') required String type,
     required String comment,
     required int amount,

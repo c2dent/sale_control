@@ -19,21 +19,20 @@ class RegionSyncService implements TableSync {
   TypeStoreKey<String> get updateDatetimeKey => StoreKeys.prefsRegionLastUpdateDateKey;
 
   @override
-  Future<void> incomingSync(Map<String, String> params) async {
+  Future<bool> incomingSync(Map<String, String> params) async {
     final result = await regionApiService.getRegionsSync(params);
-
-    if (result.isLeft) {
-      return;
-    }
+    if (result.isLeft) return false;
 
     List<RegionSync> regions = result.right;
-
     for (RegionSync region in regions) {
       RegionTableCompanion regionTableCompanion = RegionSyncMapper.fromRegionSync(region);
-      bool isExists = await regionDao.isExists(region.id);
+      final isExists = await regionDao.isExists(region.id);
+      if (isExists.isLeft) return false;
 
-      isExists ? await regionDao.updateRegion(regionTableCompanion) : await regionDao.insertRegion(regionTableCompanion);
+      final res = isExists.right ? await regionDao.updateRegion(regionTableCompanion) : await regionDao.insertRegion(regionTableCompanion);
+      if (res.isLeft) return false;
     }
+    return true;
   }
 
   @override

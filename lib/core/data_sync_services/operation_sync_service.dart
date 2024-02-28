@@ -20,18 +20,20 @@ class OperationSyncService implements TableSync {
   TypeStoreKey<String> get updateDatetimeKey => StoreKeys.prefsOperationLastUpdateDateKey;
 
   @override
-  Future<void> incomingSync(Map<String, String> params) async{
+  Future<bool> incomingSync(Map<String, String> params) async{
     final result = await _apiService.getOperationsSync(params);
-    if (result.isLeft) return;
+    if (result.isLeft) return false;
 
     List<OperationSync> operations = result.right;
     for (OperationSync operation in operations) {
       OperationTableCompanion operationTableCompanion = _mapper.fromOperationSync(operation);
       final result = await _dao.isExists(operation.id);
-      if (result.isLeft) return;
+      if (result.isLeft) return false;
 
-      result.right ? await _dao.updateOperation(operationTableCompanion) : await _dao.insertOperation(operationTableCompanion);
+      final res = result.right ? await _dao.updateOperation(operationTableCompanion) : await _dao.insertOperation(operationTableCompanion);
+      if (res.isLeft) return false;
     }
+    return true;
   }
 
   @override
